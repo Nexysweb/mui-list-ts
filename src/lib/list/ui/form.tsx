@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface InputValue {
+export interface InputValue {
   name: string;
   value: string;
 }
