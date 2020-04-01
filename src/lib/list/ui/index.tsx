@@ -53,9 +53,9 @@ export const PaginationWrapper = (
 
 interface PaginationUnitProps {
   children: React.ReactNode | JSX.Element;
-  isActive: boolean;
-  isDisabled: boolean;
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  isActive?: boolean;
+  isDisabled?: boolean;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export const PaginationUnit = (

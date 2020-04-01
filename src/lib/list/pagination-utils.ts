@@ -4,11 +4,20 @@
  * @param  {[type]} nPerPage number of rows per page
  * @return {[type]}          number of pages
  */
-export const getNPage = (n, nPerPage) => {
-  return Math.ceil(n/nPerPage);
+export const getNPage = (n: number, nPerPage: number): number => {
+  return Math.ceil(n / nPerPage);
+};
+
+interface GetPaginationReturn {
+  idx: number;
+  nPerPage: number;
+  nPage: number;
 }
 
-export const getPagination = (n, nPerPageIn) => {
+export const getPagination = (
+  n: number,
+  nPerPageIn: number
+): GetPaginationReturn => {
   const nPerPage = nPerPageIn || 10;
   const nPage = getNPage(n, nPerPage);
   const idx = 1;
@@ -17,8 +26,8 @@ export const getPagination = (n, nPerPageIn) => {
     idx,
     nPerPage,
     nPage
-  }
-}
+  };
+};
 
 /**
  * get list of page based on the index (-i means that there's a gap - we do not use null so that it can than be used as an index)
@@ -26,7 +35,7 @@ export const getPagination = (n, nPerPageIn) => {
  * @param  {[type]} nPage the total amount of pages
  * @return {[type]}       [1, null, idx - 1, idx, idx + 1, null, nPage]
  */
-export const getPageTiles = (idx, nPage) => {
+export const getPageTiles = (idx: number, nPage: number): any[] => {
   if (idx < 1) {
     idx = 1;
   }
@@ -54,10 +63,10 @@ export const getPageTiles = (idx, nPage) => {
   }
 
   if (idx === 1 && nPage > 3) {
-    arr.push(3)
+    arr.push(3);
   }
 
-  if (b1 > 2  && nPage > 4) {
+  if (b1 > 2 && nPage > 4) {
     arr.unshift(-1);
   }
 
@@ -74,4 +83,4 @@ export const getPageTiles = (idx, nPage) => {
   }
 
   return arr;
-}
+};
