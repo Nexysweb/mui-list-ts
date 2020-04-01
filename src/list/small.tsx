@@ -117,7 +117,7 @@ const def: Definition<Animal, Continent> = [
 ];
 
 const Small = (): JSX.Element => (
-  <List data={data} def={def} config={{ search: true }} nPerPage="3" />
+  <List data={data} def={def} config={{ search: true }} nPerPage={3} />
 );
 
 export default Small;

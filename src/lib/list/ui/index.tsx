@@ -153,7 +153,7 @@ interface CheckboxInputValue {
 }
 
 interface FilterUnitProps {
-  filter: boolean | Filter<any, any>;
+  filter?: boolean | Filter<any, any>;
   filters: any;
   name: string;
   onChange: (inputValue: InputValue | CheckboxInputValue) => void;
