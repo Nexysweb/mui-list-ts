@@ -56,9 +56,10 @@ interface Props {
 
 interface InnerProps {
   def: Definition<any>;
-  data: any;
+  data?: any;
   nPerPage?: number;
   config?: any;
+  asyncData?: () => Promise<any>;
 }
 
 const ListSuper = ({
