@@ -58,7 +58,7 @@ interface InnerProps {
   def: Definition<any>;
   data: any;
   nPerPage?: number;
-  config: any;
+  config?: any;
 }
 
 const ListSuper = ({
