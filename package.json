@@ -9,7 +9,7 @@
   "scripts": {
     "lint": "eslint './src/**/*.{js,jsx,ts,tsx}'",
     "start": "react-scripts start",
-    "buildpackage": "babel src/lib --out-dir dist/; rm dist/**.test.js",
+    "buildpackage": "babel src/lib --out-dir dist/ --extensions '.ts,.tsx'; rm dist/**.test.js",
     "build": "PUBLIC_URL=/mui-list react-scripts build;rm -rf docs;mv build docs;cp docs/index.html docs/404.html",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.8.3",
+    "@babel/preset-typescript": "^7.9.0",
     "@material-ui/core": "^4.9.0",
     "@material-ui/icons": "^4.5.1",
     "@material-ui/lab": "^4.0.0-alpha.40",
