@@ -37,7 +37,7 @@ const stateDefault: State = {
   pageIdx: 1
 };
 
-interface Props {
+export interface Props {
   HeaderUnit: typeof HeaderUnit;
   FilterUnit: typeof FilterUnit;
   OrderController: typeof OrderController;
@@ -53,7 +53,7 @@ interface Props {
   Pagination: (props: PaginationProps) => JSX.Element | null;
 }
 
-interface InnerProps {
+export interface InnerProps {
   def: Definition<any>;
   data?: any;
   nPerPage?: number;

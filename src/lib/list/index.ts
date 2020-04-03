@@ -15,6 +15,7 @@ import {
   PaginationWrapper
 } from './ui';
 import ListSuper from './list-super';
+//import {InnerProps, Props} from './list-super';
 import PaginationSuper from './pagination';
 import * as OrderUtils from './order-utils';
 
