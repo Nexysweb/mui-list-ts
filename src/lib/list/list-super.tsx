@@ -21,7 +21,7 @@ import { Definition } from 'shared/types/definition';
 import { order, orderWithPagination } from './order-utils';
 import { applyFilter, addRemoveToArray } from './filter-utils';
 
-const LoaderDefault = (): JSX.Element => <p>Loading...</p>;
+//const LoaderDefault = (): JSX.Element => <p>Loading...</p>;
 
 interface State {
   sortAttribute: string | null;
@@ -51,7 +51,6 @@ interface Props {
   ListBody: typeof ListBody;
   RecordInfo: typeof RecordInfo;
   Pagination: (props: PaginationProps) => JSX.Element | null;
-  Loader?: typeof LoaderDefault;
 }
 
 interface InnerProps {
@@ -75,8 +74,7 @@ const ListSuper = ({
   ListHeader,
   ListBody,
   RecordInfo,
-  Pagination,
-  Loader = LoaderDefault
+  Pagination
 }: Props) =>
   function InnerListSuper(props: InnerProps): JSX.Element {
     const [state, setState] = useState(stateDefault);
@@ -214,11 +212,7 @@ const ListSuper = ({
 
     return (
       <ListWrapper>
-        <GlobalSearch
-          config={config}
-          onChange={v => setFilter(v)}
-          filters={filters}
-        />
+        <GlobalSearch config={config} onChange={setFilter} filters={filters} />
         <ListContainer>
           <ListHeader>
             <Row>{renderHeaders()}</Row>

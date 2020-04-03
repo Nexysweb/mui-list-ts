@@ -3,7 +3,16 @@ import Utils from '@nexys/utils';
 export const compareString = (main: string, searchString: string): boolean =>
   main.toLowerCase().indexOf(searchString.toLowerCase()) > -1;
 
-export const compare = (main: any, search: any, d?: any): boolean => {
+interface Search {
+  value: string;
+  func: (d: any, searchValue: string) => boolean;
+}
+
+export const compare = (
+  main: string | number,
+  search: string | Search,
+  d?: any
+): boolean => {
   const mainType = typeof main;
   const searchType = typeof search;
 
@@ -11,7 +20,7 @@ export const compare = (main: any, search: any, d?: any): boolean => {
     // here casting the `main` so that it can match with the search even if not of the same type
     switch (mainType) {
       case 'string':
-        return compareString(main, search);
+        return compareString(main as string, search as string);
       case 'number':
         return main === Number(search);
       default:
@@ -20,11 +29,13 @@ export const compare = (main: any, search: any, d?: any): boolean => {
   }
 
   if (searchType === 'object') {
-    if (search.value.length === 0) {
+    const searchObj = search as Search;
+
+    if (searchObj.value.length === 0) {
       return true;
     }
 
-    return search.func(d, search.value);
+    return searchObj.func(d, searchObj.value);
   }
 
   return false;
