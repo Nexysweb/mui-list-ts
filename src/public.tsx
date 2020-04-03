@@ -7,7 +7,7 @@ const Default = (): JSX.Element => (
     <p>Select an option from the menu above</p>
 
     <p>
-      <a href="https://github.com/Nexysweb/mui-list">
+      <a href="https://github.com/Nexysweb/mui-list-ts">
         <CodeIcon /> Source
       </a>{' '}
       available under MIT license.
