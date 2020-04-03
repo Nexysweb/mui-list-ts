@@ -10,7 +10,7 @@
     "lint": "eslint './src/**/*.{js,jsx,ts,tsx}'",
     "start": "react-scripts start",
     "buildpackage": "tsc",
-    "build": "PUBLIC_URL=/mui-list react-scripts build;rm -rf docs;mv build docs;cp docs/index.html docs/404.html",
+    "build": "PUBLIC_URL=/mui-list-ts react-scripts build;rm -rf docs;mv build docs;cp docs/index.html docs/404.html",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
