@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Filter } from 'shared/types/filter';
+import { Filter } from '../../types/filter';
 import Alert from '../../components/alert';
 import { paginationBoundaries } from '../order-utils';
 import { SearchUnit, InputValue } from './form';

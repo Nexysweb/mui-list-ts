@@ -2,7 +2,7 @@ import React from 'react';
 import { Checkbox } from '@material-ui/core';
 
 import { Definition } from '../lib/types/definition';
-import { List } from 'lib/list';
+import { List } from '../lib/list';
 
 // data taken from
 import data, { CountryName, OfficialAndCommon } from 'world-countries';
