@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Grid } from '@material-ui/core';
 
-import { Definition } from 'shared/types/definition';
+import { Definition } from '../lib/types/definition';
 import { List } from 'lib/list';
 
 // data taken from

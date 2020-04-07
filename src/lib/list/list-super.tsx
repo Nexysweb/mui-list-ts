@@ -17,7 +17,7 @@ import {
   ListBody
 } from './ui';
 import { InnerProps as PaginationProps } from './pagination';
-import { Definition } from 'shared/types/definition';
+import { Definition } from '../types/definition';
 import { order, orderWithPagination } from './order-utils';
 import { applyFilter, addRemoveToArray } from './filter-utils';
 
@@ -28,13 +28,15 @@ interface State {
   sortDescAsc: boolean;
   filters: any;
   pageIdx: number;
+  data: Array<any>;
 }
 
 const stateDefault: State = {
   sortAttribute: null,
   sortDescAsc: true,
   filters: {},
-  pageIdx: 1
+  pageIdx: 1,
+  data: []
 };
 
 export interface Props {
@@ -83,8 +85,8 @@ const ListSuper = ({
     //const [ loading, setLoading ] = useState(true);
     //const [ n, setN ] = useState(0);
 
-    const { def, data, nPerPage = 5, config = {} } = props; // todo asyn , asyncData = false
-    const { filters, pageIdx, sortAttribute, sortDescAsc } = state;
+    const { def, nPerPage = 5, config = {}, asyncData } = props; // todo asyn , asyncData = false
+    const { filters, pageIdx, sortAttribute, sortDescAsc, data } = state;
 
     // this manages both strings and categories
     const setFilter = (v: any): void => {
@@ -201,7 +203,15 @@ const ListSuper = ({
     setN(fData.length);
     setPData(orderWithPagination(order(fData, sortAttribute, sortDescAsc), pageIdx, nPerPage));
   }*/
-
+    if (data.length === 0) {
+      if (asyncData)
+        asyncData().then(res => {
+          setState({ ...state, data: res });
+        });
+      else {
+        setState({ ...state, data: props.data });
+      }
+    }
     const fData = applyFilter(data, filters);
     const n = fData.length;
     const fpData = orderWithPagination(

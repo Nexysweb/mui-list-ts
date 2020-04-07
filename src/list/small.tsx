@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Definition } from 'shared/types/definition';
+import { Definition } from '../lib/types/definition';
 import { List } from 'lib/list';
 
 interface Continent {
