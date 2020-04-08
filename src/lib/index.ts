@@ -1,3 +1,3 @@
-import * as List from './list';
+import * as List from './list/index';
 
 export default List;
