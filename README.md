@@ -6,7 +6,7 @@
 
 Multi-purpose list for MUI
 
-See here: https://nexysweb.github.io/mui-list/
+See here: https://nexysweb.github.io/mui-list-ts/
 
 ## References
 
