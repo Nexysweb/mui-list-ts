@@ -9,7 +9,7 @@
   "scripts": {
     "lint": "eslint './src/**/*.{js,jsx,ts,tsx}'",
     "start": "react-scripts start",
-    "buildpackage": "tsc src/lib/index.ts  --allowSyntheticDefaultImports --target esnext --jsx react --outDir dist/",
+    "buildpackage": "tsc",
     "build": "PUBLIC_URL=/mui-list-ts react-scripts build;rm -rf docs;mv build docs;cp docs/index.html docs/404.html",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
