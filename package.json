@@ -4,7 +4,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.8.3",
-    "@nexys/utils": "^3.5.15"
+    "@nexys/utils": "^3.7.13"
   },
   "scripts": {
     "lint": "eslint './src/**/*.{js,jsx,ts,tsx}'",
