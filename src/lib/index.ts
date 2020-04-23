@@ -11,4 +11,4 @@ import * as Types from './types';
 
 //const List = ListSuper( {HeaderUnit, FilterUnit, OrderController, ColCell, GlobalSearch, NoRow, Row, ListWrapper, ListContainer, ListHeader, ListBody, RecordInfo, Pagination} );
 
-export { PaginationSuper, ListSuper, OrderUtils, Types }; 
+export { PaginationSuper, ListSuper, OrderUtils, Types };
