@@ -209,7 +209,9 @@ const ListSuper = ({
           setState({ ...state, data: res });
         });
       else {
-        setState({ ...state, data: props.data });
+        if (props.data.length) {
+          setState({ ...state, data: props.data });
+        }
       }
     }
     const fData = applyFilter(data, filters);
