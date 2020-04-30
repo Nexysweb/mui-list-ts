@@ -6,6 +6,15 @@
     "@babel/runtime": "^7.8.3",
     "@nexys/utils": "^3.7.13"
   },
+  "keywords": [
+    "typescript",
+    "mui-list",
+    "datatable"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://https://github.com/Nexysweb/mui-list-ts.git"
+  },
   "scripts": {
     "lint": "eslint './src/**/*.{js,jsx,ts,tsx}'",
     "start": "react-scripts start",
