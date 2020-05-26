@@ -55,11 +55,15 @@ export interface Props {
   Pagination: (props: PaginationProps) => JSX.Element | null;
 }
 
+export interface ConfigProps {
+  search: boolean // displays a global search box
+}
+
 export interface InnerProps {
   def: Definition<any>;
   data?: any;
   nPerPage?: number;
-  config?: any;
+  config?: ConfigProps;
   asyncData?: () => Promise<any>;
 }
 
