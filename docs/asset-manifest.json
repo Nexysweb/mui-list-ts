@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/mui-list-ts/static/css/main.5ecd60fb.chunk.css",
-    "main.js": "/mui-list-ts/static/js/main.5c287987.chunk.js",
-    "main.js.map": "/mui-list-ts/static/js/main.5c287987.chunk.js.map",
+    "main.js": "/mui-list-ts/static/js/main.36da3b17.chunk.js",
+    "main.js.map": "/mui-list-ts/static/js/main.36da3b17.chunk.js.map",
     "runtime-main.js": "/mui-list-ts/static/js/runtime-main.0dad660d.js",
     "runtime-main.js.map": "/mui-list-ts/static/js/runtime-main.0dad660d.js.map",
     "static/js/2.5f22c5c6.chunk.js": "/mui-list-ts/static/js/2.5f22c5c6.chunk.js",
     "static/js/2.5f22c5c6.chunk.js.map": "/mui-list-ts/static/js/2.5f22c5c6.chunk.js.map",
     "index.html": "/mui-list-ts/index.html",
-    "precache-manifest.ee2a8d9130eb3d330b810747987d3e6a.js": "/mui-list-ts/precache-manifest.ee2a8d9130eb3d330b810747987d3e6a.js",
+    "precache-manifest.4305215f1b2aca5ce3bed23f9d057439.js": "/mui-list-ts/precache-manifest.4305215f1b2aca5ce3bed23f9d057439.js",
     "service-worker.js": "/mui-list-ts/service-worker.js",
     "static/css/main.5ecd60fb.chunk.css.map": "/mui-list-ts/static/css/main.5ecd60fb.chunk.css.map",
     "static/js/2.5f22c5c6.chunk.js.LICENSE.txt": "/mui-list-ts/static/js/2.5f22c5c6.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.0dad660d.js",
     "static/js/2.5f22c5c6.chunk.js",
     "static/css/main.5ecd60fb.chunk.css",
-    "static/js/main.5c287987.chunk.js"
+    "static/js/main.36da3b17.chunk.js"
   ]
 }
