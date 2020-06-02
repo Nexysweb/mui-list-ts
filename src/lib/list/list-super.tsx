@@ -88,6 +88,11 @@ const ListSuper = ({
     const { def, config = {}, asyncData } = props; // todo asyn , asyncData = false
     const { filters, pageIdx, sortAttribute, sortDescAsc, data } = state;
     const nPerPage = config.nPerPage || props.nPerPage || 25;
+    if (props.nPerPage) {
+      console.warn(
+        'The use of nPerPage in props is deprecated. Add nPerPage to the config object prop.'
+      );
+    }
 
     // this manages both strings and categories
     const setFilter = (v: any): void => {
