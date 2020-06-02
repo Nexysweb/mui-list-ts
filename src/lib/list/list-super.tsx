@@ -85,12 +85,7 @@ const ListSuper = ({
     //const [ loading, setLoading ] = useState(true);
     //const [ n, setN ] = useState(0);
 
-    const {
-      def,
-      nPerPage = 5,
-      config = { pagination: true },
-      asyncData
-    } = props; // todo asyn , asyncData = false
+    const { def, nPerPage = 5, config = {}, asyncData } = props; // todo asyn , asyncData = false
     const { filters, pageIdx, sortAttribute, sortDescAsc, data } = state;
 
     // this manages both strings and categories
@@ -227,6 +222,8 @@ const ListSuper = ({
       nPerPage
     );
 
+    const showPagination = config.pagination ? config.pagination : true;
+
     return (
       <ListWrapper>
         <GlobalSearch config={config} onChange={setFilter} filters={filters} />
@@ -240,7 +237,7 @@ const ListSuper = ({
 
         <RecordInfo n={n} idx={pageIdx} nPerPage={nPerPage} />
 
-        {config.pagination && (
+        {showPagination && n > nPerPage && (
           <Pagination
             n={n}
             nPerPage={nPerPage}
