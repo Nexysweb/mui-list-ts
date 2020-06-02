@@ -5,7 +5,7 @@ import { Filter } from './filter';
 interface DefinitionItem<T, K> {
   name: string;
   key?: string;
-  label?: string;
+  label?: string | React.ReactNode | JSX.Element;
   title?: string;
   filter?: boolean | Filter<T, K>;
   sort?: boolean;

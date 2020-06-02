@@ -1,4 +1,5 @@
 import React from 'react';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { Definition } from '../lib/types/definition';
 import { List } from '../lib/list';
@@ -58,7 +59,11 @@ const Main = (): JSX.Element => {
   const columns: Definition<Country> = [
     {
       name: 'name',
-      label: 'Name',
+      label: (
+        <Tooltip title="Something about name">
+          <span>Name</span>
+        </Tooltip>
+      ),
       render: renderNameLink
     },
     {
