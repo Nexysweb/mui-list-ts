@@ -85,8 +85,9 @@ const ListSuper = ({
     //const [ loading, setLoading ] = useState(true);
     //const [ n, setN ] = useState(0);
 
-    const { def, nPerPage = 5, config = {}, asyncData } = props; // todo asyn , asyncData = false
+    const { def, config = {}, asyncData } = props; // todo asyn , asyncData = false
     const { filters, pageIdx, sortAttribute, sortDescAsc, data } = state;
+    const nPerPage = config.nPerPage || props.nPerPage || 25;
 
     // this manages both strings and categories
     const setFilter = (v: any): void => {
