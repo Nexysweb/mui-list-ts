@@ -1,4 +1,3 @@
-import * as Filter from './filter';
-import * as Definition from './definition';
-
-export { Filter, Definition };
+export * from './config';
+export * from './definition';
+export * from './filter';

@@ -17,7 +17,7 @@ import {
   ListBody
 } from './ui';
 import { InnerProps as PaginationProps } from './pagination';
-import { Definition } from '../types/definition';
+import { Config, Definition } from '../types';
 import { order, orderWithPagination } from './order-utils';
 import { applyFilter, addRemoveToArray } from './filter-utils';
 
@@ -59,7 +59,7 @@ export interface InnerProps {
   def: Definition<any>;
   data?: any;
   nPerPage?: number;
-  config?: any;
+  config?: Config;
   asyncData?: () => Promise<any>;
 }
 
@@ -85,8 +85,14 @@ const ListSuper = ({
     //const [ loading, setLoading ] = useState(true);
     //const [ n, setN ] = useState(0);
 
-    const { def, nPerPage = 5, config = {}, asyncData } = props; // todo asyn , asyncData = false
+    const { def, config = {}, asyncData } = props; // todo asyn , asyncData = false
     const { filters, pageIdx, sortAttribute, sortDescAsc, data } = state;
+    const nPerPage = config.nPerPage || props.nPerPage || 25;
+    if (props.nPerPage) {
+      console.warn(
+        'The use of nPerPage in props is deprecated. Add nPerPage to the config object prop.'
+      );
+    }
 
     // this manages both strings and categories
     const setFilter = (v: any): void => {
@@ -222,6 +228,8 @@ const ListSuper = ({
       nPerPage
     );
 
+    const showPagination = config.pagination ? config.pagination : true;
+
     return (
       <ListWrapper>
         <GlobalSearch config={config} onChange={setFilter} filters={filters} />
@@ -234,12 +242,15 @@ const ListSuper = ({
         </ListContainer>
 
         <RecordInfo n={n} idx={pageIdx} nPerPage={nPerPage} />
-        <Pagination
-          n={n}
-          nPerPage={nPerPage}
-          idx={pageIdx}
-          onClick={changePage}
-        />
+
+        {showPagination && n > nPerPage && (
+          <Pagination
+            n={n}
+            nPerPage={nPerPage}
+            idx={pageIdx}
+            onClick={changePage}
+          />
+        )}
 
         <NoRow n={n} />
       </ListWrapper>
