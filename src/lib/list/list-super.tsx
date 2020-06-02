@@ -228,7 +228,8 @@ const ListSuper = ({
       nPerPage
     );
 
-    const showPagination = config.pagination ? config.pagination : true;
+    const showPagination =
+      typeof config.pagination !== 'undefined' ? config.pagination : true;
 
     return (
       <ListWrapper>
