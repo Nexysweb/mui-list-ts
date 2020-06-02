@@ -17,7 +17,7 @@ import {
   ListBody
 } from './ui';
 import { InnerProps as PaginationProps } from './pagination';
-import { Definition } from '../types/definition';
+import { Config, Definition } from '../types';
 import { order, orderWithPagination } from './order-utils';
 import { applyFilter, addRemoveToArray } from './filter-utils';
 
@@ -59,7 +59,7 @@ export interface InnerProps {
   def: Definition<any>;
   data?: any;
   nPerPage?: number;
-  config?: any;
+  config?: Config;
   asyncData?: () => Promise<any>;
 }
 
@@ -85,7 +85,12 @@ const ListSuper = ({
     //const [ loading, setLoading ] = useState(true);
     //const [ n, setN ] = useState(0);
 
-    const { def, nPerPage = 5, config = {}, asyncData } = props; // todo asyn , asyncData = false
+    const {
+      def,
+      nPerPage = 5,
+      config = { pagination: true },
+      asyncData
+    } = props; // todo asyn , asyncData = false
     const { filters, pageIdx, sortAttribute, sortDescAsc, data } = state;
 
     // this manages both strings and categories
@@ -234,12 +239,15 @@ const ListSuper = ({
         </ListContainer>
 
         <RecordInfo n={n} idx={pageIdx} nPerPage={nPerPage} />
-        <Pagination
-          n={n}
-          nPerPage={nPerPage}
-          idx={pageIdx}
-          onClick={changePage}
-        />
+
+        {config.pagination && (
+          <Pagination
+            n={n}
+            nPerPage={nPerPage}
+            idx={pageIdx}
+            onClick={changePage}
+          />
+        )}
 
         <NoRow n={n} />
       </ListWrapper>

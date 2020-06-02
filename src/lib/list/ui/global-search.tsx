@@ -1,11 +1,10 @@
 import React from 'react';
 
+import { Config } from '../../types';
 import { InputValue, SearchUnit } from './form';
 
 interface Props {
-  config: {
-    search?: any;
-  };
+  config: Config;
   filters: any;
   onChange: (inputValue: InputValue) => void;
 }
