@@ -96,7 +96,7 @@ interface HeaderUnitProps {
 export const HeaderUnit = (props: HeaderUnitProps): JSX.Element => {
   const { children } = props;
 
-  return <TableCell>{children}</TableCell>;
+  return <TableCell style={{ fontWeight: 'bold' }}>{children}</TableCell>;
 };
 
 interface PopoverFilterProps {

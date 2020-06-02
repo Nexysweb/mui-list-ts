@@ -1,7 +1,6 @@
 import React from 'react';
-import Tooltip from '@material-ui/core/Tooltip';
 
-import { Definition } from '../lib/types/definition';
+import { Config, Definition } from '../lib/types';
 import { List } from '../lib/list';
 
 // data taken from
@@ -59,11 +58,7 @@ const Main = (): JSX.Element => {
   const columns: Definition<Country> = [
     {
       name: 'name',
-      label: (
-        <Tooltip title="Something about name">
-          <span>Name</span>
-        </Tooltip>
-      ),
+      label: 'Name',
       render: renderNameLink
     },
     {
@@ -87,10 +82,14 @@ const Main = (): JSX.Element => {
     }
   ];
 
+  const config: Config = {
+    pagination: false
+  };
+
   return (
     <>
       <h2>Simple table example</h2>
-      <List data={data} def={columns} />
+      <List data={data} def={columns} config={config} />
     </>
   );
 };
