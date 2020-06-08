@@ -15,9 +15,6 @@ import {
 } from './ui';
 
 import ListSuper from './list-super';
-import * as OrderUtils from './order-utils';
-
-import PaginationSuper from './pagination';
 import PaginationMaterial from './pagination-material';
 
 // by default we use the pagination from Material UI
@@ -39,4 +36,4 @@ const List = ListSuper({
   Pagination
 });
 
-export { PaginationSuper, ListSuper, OrderUtils, List };
+export default List;

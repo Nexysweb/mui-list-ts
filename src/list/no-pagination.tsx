@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Config, Definition } from '../lib/types';
-import { List } from '../lib/list';
+import List from '../lib/list';
 
 // data taken from
 import data, { CountryName, OfficialAndCommon } from 'world-countries';
