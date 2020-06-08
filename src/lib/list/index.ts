@@ -10,16 +10,18 @@ import {
   ListWrapper,
   ListContainer,
   ListHeader,
-  ListBody,
-  PaginationUnit,
-  PaginationWrapper
+  ListBody
+  //PaginationUnit,PaginationWrapper
 } from './ui';
+
 import ListSuper from './list-super';
-//import {InnerProps, Props} from './list-super';
-import PaginationSuper from './pagination';
 import * as OrderUtils from './order-utils';
 
-const Pagination = PaginationSuper({ PaginationUnit, PaginationWrapper });
+import PaginationSuper from './pagination';
+import PaginationMaterial from './pagination-material';
+
+// by default we use the pagination from Material UI
+const Pagination = PaginationMaterial; // PaginationSuper({ PaginationUnit, PaginationWrapper });
 
 const List = ListSuper({
   HeaderUnit,
