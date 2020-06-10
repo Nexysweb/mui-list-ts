@@ -1,13 +1,14 @@
 import React from 'react';
 
 import { Config } from '../../types';
-import { InputValue, SearchUnit } from './form';
-
+import { SearchUnit } from './form';
 interface Props {
   config: Config;
   filters: any;
-  onChange: (inputValue: InputValue) => void;
+  onChange: (inputValue: {name: 'globalSearch', value:any}) => void;
 }
+
+const keyName = 'globalSearch'
 
 const GlobalSearch = (props: Props): JSX.Element | null => {
   const { onChange, filters, config } = props;
@@ -16,12 +17,12 @@ const GlobalSearch = (props: Props): JSX.Element | null => {
     return null;
   }
 
-  const key = 'globalSearch';
-  const value = filters[key];
+  
+  const value = filters[keyName];
 
   return (
     <div className="pull-right">
-      <SearchUnit onChange={onChange} name={key} value={value} />
+      <SearchUnit onChange={(k) => onChange({name: keyName, value: k.value})} name={keyName} value={value} />
     </div>
   );
 };

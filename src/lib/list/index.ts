@@ -20,7 +20,7 @@ import PaginationMaterial from './pagination-material';
 // by default we use the pagination from Material UI
 const Pagination = PaginationMaterial; // PaginationSuper({ PaginationUnit, PaginationWrapper });
 
-const List = ListSuper({
+const List = <A>(props:any) => ListSuper<A>({
   HeaderUnit,
   FilterUnit,
   OrderController,
@@ -34,6 +34,6 @@ const List = ListSuper({
   ListBody,
   RecordInfo,
   Pagination
-});
+})(props);
 
 export default List;

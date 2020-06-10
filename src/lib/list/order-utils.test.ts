@@ -1,9 +1,16 @@
+import { SortCompareOut } from '../types/definition'
 import { getAttribute, order } from './order-utils';
 
-test('getAttribute', () => {
-  const a = { name: { first: 'Michaël' } };
+interface A {
+  name: {
+    first: string
+  }
+}
 
-  expect(getAttribute('name.first', a)).toEqual('michaël');
+test('getAttribute', () => {
+  const a = { name: 'Michaël' };
+
+  expect(getAttribute('name', a)).toEqual( 'michaël' );
 });
 
 test('order', () => {
@@ -12,6 +19,17 @@ test('order', () => {
   const r = order(data, 'name', true);
 
   const e = [{ name: 'Alban' }, { name: 'Michaël' }, { name: 'Nicholas' }];
+
+  expect(r).toEqual(e);
+});
+
+test('order custom', () => {
+  const data = [{ name: { first: 'Nicholas' } }, { name: { first: 'Michaël' } }, { name: { first: 'Alban' } }, { name: { first: 'Bernard' } }];
+  const f = (input: A): SortCompareOut => input.name.first
+
+  const r = order(data, f, true);
+
+  const e = [{ name: { first: 'Alban' } }, { name: { first: 'Bernard' } }, { name: { first: 'Michaël' } }, { name: { first: 'Nicholas' } }];
 
   expect(r).toEqual(e);
 });

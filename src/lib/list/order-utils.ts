@@ -1,40 +1,51 @@
-import NexysUtil from '@nexys/utils';
-const { get } = NexysUtil.ds;
+import {SortCompareOut} from '../types/definition'
 
-export const getAttribute = (attribute: any, a: any): any => {
-  const ac = get(attribute, a);
+export const getAttribute = <A>(attribute: keyof A, a: A): SortCompareOut => {
+  const ac:string = String(a[attribute]);
 
-  if (typeof ac === 'string') {
-    return ac.toLocaleLowerCase();
+  if (typeof ac === 'number' && typeof ac === 'boolean') {
+    return ac;
   }
 
-  return ac;
+  return String(ac).toLocaleLowerCase();
 };
 
-export const order = (
-  data: any[],
-  sortAttribute: string,
-  sortDescAsc: boolean
-): any[] => {
+const getCompareAttributes = <A>(a: A, b: A, attributeOrFunc: keyof A | ((input: A) => SortCompareOut)):{ac:SortCompareOut, bc:SortCompareOut} => {
+  if (typeof attributeOrFunc === 'function') {
+    const ac = attributeOrFunc(a)
+    const bc = attributeOrFunc(b)
+
+    return { ac, bc }
+  }
+
+  const ac = getAttribute<A>(attributeOrFunc, a);
+  const bc = getAttribute<A>(attributeOrFunc, b);
+
+  return { ac, bc }
+}
+
+const compareFunc = <A>(a: A, b: A, attributeOrFunc: keyof A | ((input: A) => SortCompareOut)): number => {
+  const { ac, bc } = getCompareAttributes<A>(a, b, attributeOrFunc)
+
+  if (ac < bc) {
+    return -1;
+  }
+  if (ac > bc) {
+    return 1;
+  }
+  return 0;
+};
+
+export const order = <A>(
+  data: A[],
+  sortAttribute: keyof A | ((input: A) => SortCompareOut),
+  sortDescAsc: boolean,
+): A[] => {
   if (!sortAttribute) {
     return data;
   }
 
-  // use function in utils
-  const compare = (a: any, b: any, attribute: string): number => {
-    const ac = getAttribute(attribute, a);
-    const bc = getAttribute(attribute, b);
-
-    if (ac < bc) {
-      return -1;
-    }
-    if (ac > bc) {
-      return 1;
-    }
-    return 0;
-  };
-
-  const ordered = data.sort((a, b) => compare(a, b, sortAttribute));
+  const ordered:A[] = data.sort((a, b) => compareFunc<A>(a, b, sortAttribute));
 
   if (sortDescAsc === false) {
     return ordered.reverse();
@@ -53,11 +64,11 @@ export const paginationBoundaries = (
   return { start, end };
 };
 
-export const orderWithPagination = (
-  data: any[],
+export const orderWithPagination = <A>(
+  data: A[],
   idx: number,
   nPerPage: number
-): any[] => {
+): A[] => {
   const { start, end } = paginationBoundaries(idx, nPerPage);
 
   return data.slice(start, end);

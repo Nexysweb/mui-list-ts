@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 
 import Utils from '@nexys/utils';
 
+
 import {
   GlobalSearch,
   HeaderUnit,
-  FilterUnit,
   OrderController,
   Row,
   ColCell,
@@ -14,30 +14,30 @@ import {
   ListWrapper,
   ListContainer,
   ListHeader,
-  ListBody
+  ListBody,
+  FilterUnit
 } from './ui';
 import { InnerProps as PaginationProps } from './pagination';
-import { Config, Definition } from '../types';
+import { Config, Definition, DefinitionItem, SortCompareOut } from '../types';
 import { order, orderWithPagination } from './order-utils';
-import { applyFilter, addRemoveToArray } from './filter-utils';
+import { applyFilter, addRemoveToArray, toFilterArray } from './filter-utils';
 
 //const LoaderDefault = (): JSX.Element => <p>Loading...</p>;
 
-interface State {
-  sortAttribute: string | null;
+interface State<A> {
+  sortAttribute?: (keyof A);
   sortDescAsc: boolean;
-  filters: any;
+  filters: {[k in keyof A | 'globalSearch']?: any},//TFilterUnit<A>[];
   pageIdx: number;
-  data: Array<any>;
+  data: A[];
 }
 
-const stateDefault: State = {
-  sortAttribute: null,
+const stateDefault = <A,>(): State<A> => ({
   sortDescAsc: true,
   filters: {},
   pageIdx: 1,
   data: []
-};
+});
 
 export interface Props {
   HeaderUnit: typeof HeaderUnit;
@@ -55,15 +55,15 @@ export interface Props {
   Pagination: (props: PaginationProps) => JSX.Element | null;
 }
 
-export interface InnerProps {
-  def: Definition<any>;
-  data?: any;
+export interface InnerProps<A> {
+  def: Definition<A>;
+  data?: A[];
   nPerPage?: number;
   config?: Config;
   asyncData?: () => Promise<any>;
 }
 
-const ListSuper = ({
+const ListSuper = <A,>({
   HeaderUnit,
   FilterUnit,
   OrderController,
@@ -78,8 +78,8 @@ const ListSuper = ({
   RecordInfo,
   Pagination
 }: Props) =>
-  function InnerListSuper(props: InnerProps): JSX.Element {
-    const [state, setState] = useState(stateDefault);
+  function InnerListSuper(props: InnerProps<A>): JSX.Element {
+    const [state, setState] = useState<State<A>>(stateDefault<A>());
     // todo async
     //const [ fpData, setPData ] = useState([]);
     //const [ loading, setLoading ] = useState(true);
@@ -95,7 +95,7 @@ const ListSuper = ({
     }
 
     // this manages both strings and categories
-    const setFilter = (v: any): void => {
+    const setFilter = (v: {name: keyof A | 'globalSearch', value: any}): void => {
       if (v.value === null || v.value === '') {
         delete filters[v.name];
       } else {
@@ -128,7 +128,7 @@ const ListSuper = ({
      * @return {[type]}         [description]
      * todo: allow custom ordering
      */
-    const setOrder = (name: string, descAsc: boolean | null = null): void => {
+    const setOrder = (name: keyof A, descAsc: boolean | null = null): void => {
       if (descAsc === null) {
         descAsc = !sortDescAsc;
       }
@@ -148,12 +148,16 @@ const ListSuper = ({
       }
     };
 
+    const isSort = (h: DefinitionItem<A>): boolean => {
+      return (typeof h.sort === 'boolean' && h.sort === true) || typeof h.sort === 'object'
+    }
+
     const renderHeaders = (): JSX.Element[] => {
       return def.map((h, i) => {
         const label = h.label === null ? null : h.label || h.name;
 
         const order =
-          typeof h.sort === 'boolean' && h.sort === true ? (
+          isSort(h) ? (
             <OrderController
               descAsc={sortDescAsc}
               onClick={(): void => setOrder(h.name)}
@@ -215,20 +219,21 @@ const ListSuper = ({
           setState({ ...state, data: res });
         });
       else {
-        if (props.data.length) {
+        if (props.data && props.data.length) {
           setState({ ...state, data: props.data });
         }
       }
     }
-    const fData = applyFilter(data, filters);
-    const n = fData.length;
-    const fpData = orderWithPagination(
-      order(fData, sortAttribute ? sortAttribute : '', sortDescAsc),
+    const fData:A[] = applyFilter(data, toFilterArray<A>(filters));
+    const n:number = fData.length;
+
+    const fpData:A[] = sortAttribute ? orderWithPagination(
+      order<A>(fData, getSort<A>(def, sortAttribute), sortDescAsc),
       pageIdx,
       nPerPage
-    );
+    ) : fData;
 
-    const showPagination =
+    const showPagination:boolean =
       typeof config.pagination !== 'undefined' ? config.pagination : true;
 
     return (
@@ -259,3 +264,16 @@ const ListSuper = ({
   };
 
 export default ListSuper;
+
+const getSort = <A,>(def: DefinitionItem<A>[], sortAttribute: keyof A):(keyof A | ((input: A) => SortCompareOut)) | keyof A => {
+  const i = def.find(x => x.name=== sortAttribute)
+  if (!i || !i.sort) {
+    throw Error('sort attribute could not be matched')
+  }
+
+  if (typeof i.sort === 'object' && 'func' in i.sort) {
+    return i.sort.func
+  }
+
+  return sortAttribute;
+}

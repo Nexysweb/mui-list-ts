@@ -1,5 +1,3 @@
-import Utils from '@nexys/utils';
-
 export const compareString = (main: string, searchString: string): boolean =>
   main.toLowerCase().indexOf(searchString.toLowerCase()) > -1;
 
@@ -8,9 +6,15 @@ interface Search {
   func: (d: any, searchValue: string) => boolean;
 }
 
+export type FilterSearchValue = (string | number | boolean)
+export const toFilterArray = <A>(filters:{[k in keyof A]?:FilterSearchValue}):FilterUnit<A>[] => Object.entries(filters).map(([k, v]) => ({name: k as keyof A, value: v as FilterSearchValue}))
+// above is generalization of
+// const filterArray:FilterUnit<Animal>[] = Object.entries(filters).map(([k, v]) => ({name: k as keyof Animal, value: v as FilterSearchValue}))
+
+
 export const compare = (
-  main: string | number,
-  search: string | Search,
+  main: any,
+  search: string | number | boolean, //| Search,
   d?: any
 ): boolean => {
   const mainType = typeof main;
@@ -28,7 +32,7 @@ export const compare = (
     }
   }
 
-  if (searchType === 'object') {
+  /*if (searchType === 'object') {
     const searchObj = search as Search;
 
     if (searchObj.value.length === 0) {
@@ -36,7 +40,7 @@ export const compare = (
     }
 
     return searchObj.func(d, searchObj.value);
-  }
+  }*/
 
   return false;
 };
@@ -58,31 +62,41 @@ export const searchInObjectLinear = (
     })
     .reduce((a, b) => a || b);
 
-export const applyFilter = (data: any[], filters: any): any[] => {
-  const filterArray = Object.keys(filters).map(f => {
-    return { name: f, value: filters[f] };
-  });
+export type FilterFunc<A> = ((d: A, searchValue: any[]) => boolean)
+export type FilterUnit<A> = {name: keyof A | 'globalSearch' , value: string | number | boolean | {value: any, func:FilterFunc<A> } }
+
+
+// todo here unfortunately `k` cant be typed as keyof A, typescript bug/limitation?
+export const applyFilter = <A>(data: A[], filterArray:FilterUnit<A>[]):A[] => { //filters: {[k : string]:any}): A[] => {
+  //const filterArray:{name: string, value: any}[] = Object.entries(filters).map(([name, value]:[string,any]) => ({name, value}))
 
   if (filterArray.length === 0) {
     return data;
   }
 
-  return data.filter(d => {
+  console.log(filterArray)
+
+  return data.filter((d:A) => {
     return filterArray
       .map(f => {
-        const searchString = f.value;
-        const key = f.name;
-        const main = Utils.ds.get(key, d);
-
-        if (key === 'globalSearch') {
-          return searchInObject(searchString, d);
+        if (f.name === 'globalSearch' && typeof f.value === 'string') {
+          return searchInObject(f.value, d);
         }
 
-        if (main === null) {
-          return true;
+        if (f.name !== 'globalSearch') {
+          const key:keyof A = f.name;
+
+          if (typeof f.value === 'object') {
+            if(typeof f.value.func === 'function' && f.value.value && Array.isArray(f.value.value) && f.value.value.length >0) {
+              return f.value.func(d, f.value.value)
+            }
+            return true;
+          }
+          
+          return compare(d[key], f.value, d);
         }
 
-        return compare(main, searchString, d);
+        return true;
       })
       .reduce((a, b) => a && b);
   });

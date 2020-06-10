@@ -3,7 +3,7 @@ import React from 'react';
 import { Filter } from '../../types/filter';
 import Alert from '../../components/alert';
 import { paginationBoundaries } from '../order-utils';
-import { SearchUnit, InputValue } from './form';
+import { SearchUnit } from './form';
 import GlobalSearch from './global-search';
 
 import {
@@ -144,22 +144,22 @@ export const PopoverFilter = (props: PopoverFilterProps): JSX.Element => {
   );
 };
 
-interface CheckboxInputValue {
-  name: string;
+interface CheckboxInputValue<A> {
+  name: keyof A;
   value: {
     func: Function;
     value: number | string;
   };
 }
 
-interface FilterUnitProps {
-  filter?: boolean | Filter<any, any>;
+interface FilterUnitProps<A> {
+  filter?: boolean | Filter<A>;
   filters: any;
-  name: string;
-  onChange: (inputValue: InputValue | CheckboxInputValue) => void;
+  name: keyof A;
+  onChange: (inputValue: {name: keyof A, value: any} | CheckboxInputValue<A>) => void;
 }
 
-export const FilterUnit = (props: FilterUnitProps): JSX.Element | null => {
+export const FilterUnit = <A,>(props: FilterUnitProps<A>): JSX.Element | null => {
   const { filter, filters, name, onChange } = props;
 
   if (
@@ -168,7 +168,7 @@ export const FilterUnit = (props: FilterUnitProps): JSX.Element | null => {
   ) {
     return (
       <PopoverFilter>
-        <SearchUnit name={name} value={filters[name]} onChange={onChange} />
+        <SearchUnit name={name} value={filters[name]} onChange={(v) => onChange({name, value: v.value})} />
       </PopoverFilter>
     );
   }
@@ -185,16 +185,16 @@ export const FilterUnit = (props: FilterUnitProps): JSX.Element | null => {
         {filter.options.map((option, i) => (
           <span key={i}>
             <input
-              checked={v.includes(option.id)}
+              checked={v.includes(option.key)}
               type="checkbox"
               onChange={(): void =>
                 onChange({
                   name,
-                  value: { value: option.id, func: filter.func }
+                  value: { value: option.key, func: filter.func }
                 })
               }
             />{' '}
-            {option.name}
+            {option.value}
             <br />
           </span>
         ))}
