@@ -74,7 +74,7 @@ export const applyFilter = <A>(data: A[], filterArray:FilterUnit<A>[]):A[] => { 
     return data;
   }
 
-  console.log(filterArray)
+  //console.log(filterArray)
 
   return data.filter((d:A) => {
     return filterArray
@@ -87,8 +87,14 @@ export const applyFilter = <A>(data: A[], filterArray:FilterUnit<A>[]):A[] => { 
           const key:keyof A = f.name;
 
           if (typeof f.value === 'object') {
-            if(typeof f.value.func === 'function' && f.value.value && Array.isArray(f.value.value) && f.value.value.length >0) {
-              return f.value.func(d, f.value.value)
+            if(typeof f.value.func === 'function' && f.value.value) {
+              if (Array.isArray(f.value.value) && f.value.value.length >0) {
+                return f.value.func(d, f.value.value)
+              } else {
+                //console.log('h')
+                //console.log(f.value.value)
+                return f.value.func(d, f.value.value.value)
+              }
             }
             return true;
           }

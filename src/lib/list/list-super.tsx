@@ -95,20 +95,30 @@ const ListSuper = <A,>({
     }
 
     // this manages both strings and categories
-    const setFilter = (v: {name: keyof A | 'globalSearch', value: any}): void => {
+    const setFilter = (v: {name: keyof A | 'globalSearch', value: any, type?:string}): void => {
       if (v.value === null || v.value === '') {
         delete filters[v.name];
       } else {
         // if object
         if (typeof v.value !== 'string') {
-          if (!filters[v.name]) {
-            filters[v.name] = { value: [], func: v.value.func };
+          if(v.type === 'category') {
+            if (!filters[v.name]) {
+              filters[v.name] = { value: [], func: v.value.func };
+            }
+
+            filters[v.name].value = addRemoveToArray(
+              v.value.value,
+              filters[v.name].value
+            );
           }
 
-          filters[v.name].value = addRemoveToArray(
-            v.value.value,
-            filters[v.name].value
-          );
+
+          if (!filters[v.name]) {
+            filters[v.name] = { value: null, func: v.value.func };
+          }
+
+          filters[v.name].value = v.value === '' ? null : v.value;
+
         } else {
           // if string
           filters[v.name] = v.value === '' ? null : v.value;

@@ -108,7 +108,10 @@ const def: Definition<Animal> = [
     },
     render: (x) => x.location.name
   },
-  { name: 'country', label: 'Country', filter: true, render: (x) => x.country.name },
+  { name: 'country', label: 'Country', filter: {
+    type: 'string',
+    func: (a, b): boolean => a.country.name.toLocaleLowerCase().includes((b as unknown as string).toLocaleLowerCase())
+  }, render: (x) => x.country.name },
   { name: 'amount', label: 'A long label', filter: true },
   { name: 'int', label: 'd', filter: true },
   { name: 'date', label: 'a date', filter: true },
