@@ -5,24 +5,29 @@ export interface InputValue {
   value: string;
 }
 
-interface Props {
-  name: string;
+interface Props<A> {
+  name: keyof A;
   onChange: (inputValue: InputValue) => void;
   value: string;
 }
 
-export const SearchUnit = (props: Props): JSX.Element => {
+export const SearchUnit = <A,>(props: Props<A>): JSX.Element => {
   const [value, setValue] = React.useState(props.value || '');
   const { name, onChange } = props;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const value = e.target.value;
-    const v: InputValue = { name, value };
+    const v: InputValue = { name: String(name), value };
     setValue(value);
     onChange(v);
   };
 
   return (
-    <input value={value} type="text" name={name} onChange={handleChange} />
+    <input
+      value={value}
+      type="text"
+      name={String(name)}
+      onChange={handleChange}
+    />
   );
 };

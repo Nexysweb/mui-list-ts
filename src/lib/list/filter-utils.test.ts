@@ -3,7 +3,9 @@ import {
   compare,
   compareString,
   searchInObject,
-  addRemoveToArray
+  addRemoveToArray,
+  toFilterArray,
+  FilterSearchValue
 } from './filter-utils';
 
 test('compareString', () => {
@@ -29,7 +31,13 @@ test('compare', () => {
   expect(compare(345, '346')).toEqual(false);
 });
 
-const data = [
+interface Animal {
+  name: string;
+  location: string;
+  country: { name: string };
+}
+
+const data: Animal[] = [
   { name: 'Sheep', location: 'Europe', country: { name: 'United Kingdom' } },
   { name: 'Tiger', location: 'Asia', country: { name: 'India' } },
   { name: 'Elephant', location: 'Africa', country: { name: 'Tanzania' } },
@@ -40,22 +48,22 @@ const data = [
 ];
 
 test('filter 1', () => {
-  const filters = { name: 'el' };
+  const filters: { [k in keyof Animal]?: FilterSearchValue } = { name: 'el' };
   const fData = [
     { name: 'Elephant', location: 'Africa', country: { name: 'Tanzania' } },
     { name: 'Antelope', location: 'Africa', country: { name: 'Namibia' } }
   ];
 
-  expect(applyFilter(data, filters)).toEqual(fData);
+  expect(applyFilter(data, toFilterArray(filters))).toEqual(fData);
 });
 
 test('filter 2', () => {
-  const filters = { name: 'el', 'country.name': 'an' };
+  const filters = { name: 'sh', location: 'eu' };
   const fData = [
-    { name: 'Elephant', location: 'Africa', country: { name: 'Tanzania' } }
+    { name: 'Sheep', location: 'Europe', country: { name: 'United Kingdom' } }
   ];
 
-  expect(applyFilter(data, filters)).toEqual(fData);
+  expect(applyFilter(data, toFilterArray(filters))).toEqual(fData);
 });
 
 test('addRemoveToArray', () => {
