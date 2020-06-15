@@ -95,7 +95,7 @@ const data: Animal[] = [
   }
 ];
 
-const options = [af, eu, as, am].map(v => ({key: v.id, value: v.name}))
+const options = [af, eu, as, am].map(v => ({ key: v.id, value: v.name }));
 
 const def: Definition<Animal> = [
   { name: 'name', filter: true, sort: true },
@@ -106,12 +106,20 @@ const def: Definition<Animal> = [
       func: (a, b): boolean => b.includes(a.location.id),
       options
     },
-    render: (x) => x.location.name
+    render: (x): string => x.location.name
   },
-  { name: 'country', label: 'Country', filter: {
-    type: 'string',
-    func: (a, b): boolean => a.country.name.toLocaleLowerCase().includes((b as unknown as string).toLocaleLowerCase())
-  }, render: (x) => x.country.name },
+  {
+    name: 'country',
+    label: 'Country',
+    filter: {
+      type: 'string',
+      func: (a, b): boolean =>
+        a.country.name
+          .toLocaleLowerCase()
+          .includes(((b as unknown) as string).toLocaleLowerCase())
+    },
+    render: (x): string => x.country.name
+  },
   { name: 'amount', label: 'A long label', filter: true },
   { name: 'int', label: 'd', filter: true },
   { name: 'date', label: 'a date', filter: true },
@@ -123,7 +131,7 @@ const def: Definition<Animal> = [
 ];
 
 const Small = (): JSX.Element => (
-  <List data={data} def={def} config={{ search: true,nPerPage:3 }} />
+  <List data={data} def={def} config={{ search: true, nPerPage: 3 }} />
 );
 
 export default Small;

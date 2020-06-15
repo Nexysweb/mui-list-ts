@@ -156,34 +156,41 @@ interface FilterUnitProps<A> {
   filter?: boolean | Filter<A>;
   filters: any;
   name: keyof A;
-  onChange: (inputValue: {name: keyof A, value: any} | CheckboxInputValue<A>) => void;
+  onChange: (
+    inputValue: { name: keyof A; value: any } | CheckboxInputValue<A>
+  ) => void;
 }
 
-export const FilterUnit = <A,>(props: FilterUnitProps<A>): JSX.Element | null => {
+export const FilterUnit = <A,>(
+  props: FilterUnitProps<A>
+): JSX.Element | null => {
   const { filter, filters, name, onChange } = props;
 
-  if (
-    (typeof filter === 'boolean' && filter === true)
-  ) {
+  if (typeof filter === 'boolean' && filter === true) {
     return (
       <PopoverFilter>
-        <SearchUnit name={name} value={filters[name]} onChange={(v) => onChange({name, value: v.value})} />
+        <SearchUnit
+          name={name}
+          value={filters[name]}
+          onChange={(v): void => onChange({ name, value: v.value })}
+        />
       </PopoverFilter>
     );
   }
 
-  if (
-    (typeof filter === 'object' && filter.type === 'string')
-  ) {
+  if (typeof filter === 'object' && filter.type === 'string') {
     return (
       <PopoverFilter>
-        <SearchUnit name={name} value={filters[name]} onChange={(v) => {
-
-          onChange({
-            name,
-            value: { value: v.value, func: filter.func }
-          })
-        }}/>
+        <SearchUnit
+          name={name}
+          value={filters[name]}
+          onChange={(v): void => {
+            onChange({
+              name,
+              value: { value: v.value, func: filter.func }
+            });
+          }}
+        />
       </PopoverFilter>
     );
   }

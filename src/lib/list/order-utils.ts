@@ -1,7 +1,7 @@
-import {SortCompareOut} from '../types/definition'
+import { SortCompareOut } from '../types/definition';
 
 export const getAttribute = <A>(attribute: keyof A, a: A): SortCompareOut => {
-  const ac:string = String(a[attribute]);
+  const ac = String(a[attribute]);
 
   if (typeof ac === 'number' && typeof ac === 'boolean') {
     return ac;
@@ -10,22 +10,30 @@ export const getAttribute = <A>(attribute: keyof A, a: A): SortCompareOut => {
   return String(ac).toLocaleLowerCase();
 };
 
-const getCompareAttributes = <A>(a: A, b: A, attributeOrFunc: keyof A | ((input: A) => SortCompareOut)):{ac:SortCompareOut, bc:SortCompareOut} => {
+const getCompareAttributes = <A>(
+  a: A,
+  b: A,
+  attributeOrFunc: keyof A | ((input: A) => SortCompareOut)
+): { ac: SortCompareOut; bc: SortCompareOut } => {
   if (typeof attributeOrFunc === 'function') {
-    const ac = attributeOrFunc(a)
-    const bc = attributeOrFunc(b)
+    const ac = attributeOrFunc(a);
+    const bc = attributeOrFunc(b);
 
-    return { ac, bc }
+    return { ac, bc };
   }
 
   const ac = getAttribute<A>(attributeOrFunc, a);
   const bc = getAttribute<A>(attributeOrFunc, b);
 
-  return { ac, bc }
-}
+  return { ac, bc };
+};
 
-const compareFunc = <A>(a: A, b: A, attributeOrFunc: keyof A | ((input: A) => SortCompareOut)): number => {
-  const { ac, bc } = getCompareAttributes<A>(a, b, attributeOrFunc)
+const compareFunc = <A>(
+  a: A,
+  b: A,
+  attributeOrFunc: keyof A | ((input: A) => SortCompareOut)
+): number => {
+  const { ac, bc } = getCompareAttributes<A>(a, b, attributeOrFunc);
 
   if (ac < bc) {
     return -1;
@@ -39,13 +47,13 @@ const compareFunc = <A>(a: A, b: A, attributeOrFunc: keyof A | ((input: A) => So
 export const order = <A>(
   data: A[],
   sortAttribute: keyof A | ((input: A) => SortCompareOut),
-  sortDescAsc: boolean,
+  sortDescAsc: boolean
 ): A[] => {
   if (!sortAttribute) {
     return data;
   }
 
-  const ordered:A[] = data.sort((a, b) => compareFunc<A>(a, b, sortAttribute));
+  const ordered: A[] = data.sort((a, b) => compareFunc<A>(a, b, sortAttribute));
 
   if (sortDescAsc === false) {
     return ordered.reverse();

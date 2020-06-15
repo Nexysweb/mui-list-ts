@@ -5,10 +5,10 @@ import { SearchUnit } from './form';
 interface Props {
   config: Config;
   filters: any;
-  onChange: (inputValue: {name: 'globalSearch', value:any}) => void;
+  onChange: (inputValue: { name: 'globalSearch'; value: any }) => void;
 }
 
-const keyName = 'globalSearch'
+const keyName = 'globalSearch';
 
 const GlobalSearch = (props: Props): JSX.Element | null => {
   const { onChange, filters, config } = props;
@@ -17,12 +17,15 @@ const GlobalSearch = (props: Props): JSX.Element | null => {
     return null;
   }
 
-  
   const value = filters[keyName];
 
   return (
     <div className="pull-right">
-      <SearchUnit onChange={(k) => onChange({name: keyName, value: k.value})} name={keyName} value={value} />
+      <SearchUnit
+        onChange={(k): void => onChange({ name: keyName, value: k.value })}
+        name={keyName}
+        value={value}
+      />
     </div>
   );
 };

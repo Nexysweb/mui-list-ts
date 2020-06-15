@@ -1,4 +1,7 @@
-interface OptionUnit {key: any, value: string}
+interface OptionUnit {
+  key: any;
+  value: string;
+}
 
 export interface Filter<T> {
   type: string;

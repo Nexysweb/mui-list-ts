@@ -20,20 +20,21 @@ import PaginationMaterial from './pagination-material';
 // by default we use the pagination from Material UI
 const Pagination = PaginationMaterial; // PaginationSuper({ PaginationUnit, PaginationWrapper });
 
-const List = <A>(props:any) => ListSuper<A>({
-  HeaderUnit,
-  FilterUnit,
-  OrderController,
-  ColCell,
-  GlobalSearch,
-  NoRow,
-  Row,
-  ListWrapper,
-  ListContainer,
-  ListHeader,
-  ListBody,
-  RecordInfo,
-  Pagination
-})(props);
+const List = <A>(props: any): JSX.Element =>
+  ListSuper<A>({
+    HeaderUnit,
+    FilterUnit,
+    OrderController,
+    ColCell,
+    GlobalSearch,
+    NoRow,
+    Row,
+    ListWrapper,
+    ListContainer,
+    ListHeader,
+    ListBody,
+    RecordInfo,
+    Pagination
+  })(props);
 
 export default List;

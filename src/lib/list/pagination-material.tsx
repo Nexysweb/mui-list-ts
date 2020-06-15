@@ -42,7 +42,7 @@ const Pagination = (props: InnerProps): JSX.Element | null => {
     <div className={classes.root}>
       <PaginationMaterial
         page={idx}
-        onChange={(_a: any, b: number) => onClick(b)}
+        onChange={(_a: any, b: number): void => onClick(b)}
         count={nPage}
       />
     </div>

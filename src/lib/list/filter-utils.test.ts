@@ -32,12 +32,12 @@ test('compare', () => {
 });
 
 interface Animal {
-  name: string,
-  location: string,
-  country: {name: string}
+  name: string;
+  location: string;
+  country: { name: string };
 }
 
-const data :Animal[]= [
+const data: Animal[] = [
   { name: 'Sheep', location: 'Europe', country: { name: 'United Kingdom' } },
   { name: 'Tiger', location: 'Asia', country: { name: 'India' } },
   { name: 'Elephant', location: 'Africa', country: { name: 'Tanzania' } },
@@ -48,12 +48,12 @@ const data :Animal[]= [
 ];
 
 test('filter 1', () => {
-  const filters:{[k in keyof Animal]?:FilterSearchValue} = { name: 'el' };
+  const filters: { [k in keyof Animal]?: FilterSearchValue } = { name: 'el' };
   const fData = [
     { name: 'Elephant', location: 'Africa', country: { name: 'Tanzania' } },
     { name: 'Antelope', location: 'Africa', country: { name: 'Namibia' } }
   ];
-  
+
   expect(applyFilter(data, toFilterArray(filters))).toEqual(fData);
 });
 

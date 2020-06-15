@@ -5,7 +5,7 @@ export interface InputValue {
   value: string;
 }
 
-interface Props<A,> {
+interface Props<A> {
   name: keyof A;
   onChange: (inputValue: InputValue) => void;
   value: string;
@@ -23,6 +23,11 @@ export const SearchUnit = <A,>(props: Props<A>): JSX.Element => {
   };
 
   return (
-    <input value={value} type="text" name={String(name)} onChange={handleChange} />
+    <input
+      value={value}
+      type="text"
+      name={String(name)}
+      onChange={handleChange}
+    />
   );
 };

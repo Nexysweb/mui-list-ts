@@ -81,11 +81,13 @@ const Sorting = <A,>(): JSX.Element => {
         const k = keys[0];
         return `${x.currencies[k].name} (${k})`;
       },
-      sort: {func:(x:Country) => {
-        const s = Object.keys(x.currencies)[0] || ''
+      sort: {
+        func: (x: Country): string => {
+          const s = Object.keys(x.currencies)[0] || '';
 
-        return s
-      }}
+          return s;
+        }
+      }
     }
   ];
 
@@ -94,7 +96,11 @@ const Sorting = <A,>(): JSX.Element => {
   return (
     <>
       <h2>Table with sorting capabilities example</h2>
-      <p>The Capital column is sorted according to the value in the field whereas currencies follows a custom sort <small>See the source of this file for details</small></p>
+      <p>
+        The Capital column is sorted according to the value in the field whereas
+        currencies follows a custom sort{' '}
+        <small>See the source of this file for details</small>
+      </p>
       <List<Country> data={data} def={columns} config={config} />
     </>
   );

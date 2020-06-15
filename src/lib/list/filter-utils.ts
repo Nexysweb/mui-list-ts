@@ -6,11 +6,16 @@ interface Search {
   func: (d: any, searchValue: string) => boolean;
 }
 
-export type FilterSearchValue = (string | number | boolean)
-export const toFilterArray = <A>(filters:{[k in keyof A]?:FilterSearchValue}):FilterUnit<A>[] => Object.entries(filters).map(([k, v]) => ({name: k as keyof A, value: v as FilterSearchValue}))
+export type FilterSearchValue = string | number | boolean;
+export const toFilterArray = <A>(
+  filters: { [k in keyof A]?: FilterSearchValue }
+): FilterUnit<A>[] =>
+  Object.entries(filters).map(([k, v]) => ({
+    name: k as keyof A,
+    value: v as FilterSearchValue
+  }));
 // above is generalization of
 // const filterArray:FilterUnit<Animal>[] = Object.entries(filters).map(([k, v]) => ({name: k as keyof Animal, value: v as FilterSearchValue}))
-
 
 export const compare = (
   main: any,
@@ -62,12 +67,18 @@ export const searchInObjectLinear = (
     })
     .reduce((a, b) => a || b);
 
-export type FilterFunc<A> = ((d: A, searchValue: any[]) => boolean)
-export type FilterUnit<A> = {name: keyof A | 'globalSearch' , value: string | number | boolean | {value: any, func:FilterFunc<A> } }
-
+export type FilterFunc<A> = (d: A, searchValue: any[]) => boolean;
+export type FilterUnit<A> = {
+  name: keyof A | 'globalSearch';
+  value: string | number | boolean | { value: any; func: FilterFunc<A> };
+};
 
 // todo here unfortunately `k` cant be typed as keyof A, typescript bug/limitation?
-export const applyFilter = <A>(data: A[], filterArray:FilterUnit<A>[]):A[] => { //filters: {[k : string]:any}): A[] => {
+export const applyFilter = <A>(
+  data: A[],
+  filterArray: FilterUnit<A>[]
+): A[] => {
+  //filters: {[k : string]:any}): A[] => {
   //const filterArray:{name: string, value: any}[] = Object.entries(filters).map(([name, value]:[string,any]) => ({name, value}))
 
   if (filterArray.length === 0) {
@@ -76,7 +87,7 @@ export const applyFilter = <A>(data: A[], filterArray:FilterUnit<A>[]):A[] => { 
 
   //console.log(filterArray)
 
-  return data.filter((d:A) => {
+  return data.filter((d: A) => {
     return filterArray
       .map(f => {
         if (f.name === 'globalSearch' && typeof f.value === 'string') {
@@ -84,21 +95,21 @@ export const applyFilter = <A>(data: A[], filterArray:FilterUnit<A>[]):A[] => { 
         }
 
         if (f.name !== 'globalSearch') {
-          const key:keyof A = f.name;
+          const key: keyof A = f.name;
 
           if (typeof f.value === 'object') {
-            if(typeof f.value.func === 'function' && f.value.value) {
-              if (Array.isArray(f.value.value) && f.value.value.length >0) {
-                return f.value.func(d, f.value.value)
+            if (typeof f.value.func === 'function' && f.value.value) {
+              if (Array.isArray(f.value.value) && f.value.value.length > 0) {
+                return f.value.func(d, f.value.value);
               } else {
                 //console.log('h')
                 //console.log(f.value.value)
-                return f.value.func(d, f.value.value.value)
+                return f.value.func(d, f.value.value.value);
               }
             }
             return true;
           }
-          
+
           return compare(d[key], f.value, d);
         }
 
