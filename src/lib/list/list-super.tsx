@@ -17,27 +17,14 @@ import {
   FilterUnit
 } from './ui';
 import { InnerProps as PaginationProps } from './pagination';
-import { Config, Definition, DefinitionItem, SortCompareOut } from '../types';
+import { Config, Definition, DefinitionItem } from '../types';
 import { order, orderWithPagination } from './order-utils';
-import { applyFilter, addRemoveToArray, toFilterArray } from './filter-utils';
-
-//const LoaderDefault = (): JSX.Element => <p>Loading...</p>;
-
-const getSort = <A,>(
-  def: DefinitionItem<A>[],
-  sortAttribute: keyof A
-): (keyof A | ((input: A) => SortCompareOut)) | keyof A => {
-  const i = def.find(x => x.name === sortAttribute);
-  if (!i || !i.sort) {
-    throw Error('sort attribute could not be matched');
-  }
-
-  if (typeof i.sort === 'object' && 'func' in i.sort) {
-    return i.sort.func;
-  }
-
-  return sortAttribute;
-};
+import {
+  applyFilter,
+  toFilterArray,
+  getSort,
+  updateFilters
+} from './filter-utils';
 
 interface State<A> {
   sortAttribute?: keyof A;
@@ -109,47 +96,17 @@ const ListSuper = <A,>({
       );
     }
 
-    // this manages both strings and categories
-    const setFilter = (v: {
+    const handleFilterChange = (v: {
       name: keyof A | 'globalSearch';
       value: any;
       type?: string;
     }): void => {
-      if (v.value === null || v.value === '') {
-        delete filters[v.name];
-      } else {
-        // if object
-        if (typeof v.value !== 'string') {
-          if (v.type === 'category') {
-            if (!filters[v.name]) {
-              filters[v.name] = { value: [], func: v.value.func };
-            }
-
-            filters[v.name].value = addRemoveToArray(
-              v.value.value,
-              filters[v.name].value
-            );
-
-            if (filters[v.name].value.length === 0) {
-              delete filters[v.name];
-            }
-          } else {
-            if (!filters[v.name]) {
-              filters[v.name] = { value: null, func: v.value.func };
-            }
-
-            filters[v.name].value = v.value === '' ? null : v.value;
-          }
-        } else {
-          // if string
-          filters[v.name] = v.value === '' ? null : v.value;
-        }
-      }
+      const newFilters = updateFilters<A>(filters, v);
 
       // when a filter is applied, the page index is reset
       const pageIdx = 1;
 
-      setState({ ...state, filters, pageIdx });
+      setState({ ...state, filters: newFilters, pageIdx });
     };
 
     /**
@@ -203,7 +160,7 @@ const ListSuper = <A,>({
             filters={filters}
             name={h.name}
             filter={h.filter}
-            onChange={setFilter}
+            onChange={handleFilterChange}
           />
         );
 
@@ -275,7 +232,11 @@ const ListSuper = <A,>({
 
     return (
       <ListWrapper>
-        <GlobalSearch config={config} onChange={setFilter} filters={filters} />
+        <GlobalSearch
+          config={config}
+          onChange={handleFilterChange}
+          filters={filters}
+        />
         <ListContainer>
           <ListHeader>
             <Row>{renderHeaders()}</Row>

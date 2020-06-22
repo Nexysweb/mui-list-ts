@@ -1,3 +1,5 @@
+import { DefinitionItem, SortCompareOut } from '../types';
+
 export const compareString = (main: string, searchString: string): boolean =>
   main.toLowerCase().indexOf(searchString.toLowerCase()) > -1;
 
@@ -134,4 +136,63 @@ export const addRemoveToArray = <T = any>(v: T, a: T[] = []): T[] => {
   a.push(v);
 
   return a;
+};
+
+export const getSort = <A>(
+  def: DefinitionItem<A>[],
+  sortAttribute: keyof A
+): (keyof A | ((input: A) => SortCompareOut)) | keyof A => {
+  const i = def.find(x => x.name === sortAttribute);
+  if (!i || !i.sort) {
+    throw Error('sort attribute could not be matched');
+  }
+
+  if (typeof i.sort === 'object' && 'func' in i.sort) {
+    return i.sort.func;
+  }
+
+  return sortAttribute;
+};
+
+export const updateFilters = <A>(
+  filters: any,
+  v: {
+    name: keyof A | 'globalSearch';
+    value: any;
+    type?: string;
+  }
+): { [k in keyof A | 'globalSearch']?: any } => {
+  if (v.value === null || v.value === '') {
+    delete filters[v.name];
+  } else {
+    // if object
+    if (typeof v.value !== 'string') {
+      if (v.type === 'category') {
+        if (!filters[v.name]) {
+          filters[v.name] = { value: [], func: v.value.func };
+        }
+
+        filters[v.name].value = addRemoveToArray(
+          v.value.value,
+          filters[v.name].value
+        );
+
+        if (filters[v.name].value.length === 0) {
+          delete filters[v.name];
+        }
+      } else {
+        if (!filters[v.name]) {
+          filters[v.name] = { value: null, func: v.value.func };
+        }
+
+        filters[v.name].value = v.value === '' ? null : v.value;
+      }
+    } else {
+      // if string
+      filters[v.name] = v.value === '' ? null : v.value;
+    }
+  }
+
+  // setState({ ...state, filters, pageIdx });
+  return filters;
 };

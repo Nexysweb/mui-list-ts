@@ -1,3 +1,5 @@
+import { DefinitionItem, SortCompareOut } from '../types';
+
 import {
   applyFilter,
   compare,
@@ -5,7 +7,8 @@ import {
   searchInObject,
   addRemoveToArray,
   toFilterArray,
-  FilterSearchValue
+  FilterSearchValue,
+  getSort
 } from './filter-utils';
 
 test('compareString', () => {
@@ -72,4 +75,52 @@ test('addRemoveToArray', () => {
   expect(addRemoveToArray(3, [3, 2])).toEqual([2]);
   expect(addRemoveToArray(4, [3, 2])).toEqual([3, 2, 4]);
   expect(addRemoveToArray(4, [4])).toEqual([]);
+});
+
+interface DummyShape {
+  name: string;
+  value: string;
+}
+describe('getSort', () => {
+  describe('sort function is NOT defined', () => {
+    it('should return right attribute', () => {
+      const def: DefinitionItem<DummyShape>[] = [
+        {
+          name: 'name',
+          sort: true
+        },
+        {
+          name: 'value'
+        }
+      ];
+      const sortAttribute = getSort(def, 'name');
+      expect(sortAttribute).toBe('name');
+    });
+  });
+
+  describe('sort function is defined properly', () => {
+    it('should return right the sort function', () => {
+      const def: DefinitionItem<DummyShape>[] = [
+        {
+          name: 'name',
+          sort: {
+            func: (): SortCompareOut => {
+              return 1;
+            }
+          }
+        },
+        {
+          name: 'value'
+        }
+      ];
+      const sortFunction = getSort(def, 'name');
+
+      // the if is only for typescript
+      if (typeof sortFunction === 'function') {
+        expect(sortFunction({ name: 'test', value: 'val' })).toBe(1);
+      } else {
+        throw new Error('Something went wrong');
+      }
+    });
+  });
 });
