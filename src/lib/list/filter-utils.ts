@@ -185,11 +185,11 @@ export const updateFilters = <A>(
           filters[v.name] = { value: null, func: v.value.func };
         }
 
-        filters[v.name].value = v.value === '' ? null : v.value;
+        filters[v.name].value = v.value;
       }
     } else {
       // if string
-      filters[v.name] = v.value === '' ? null : v.value;
+      filters[v.name] = v.value;
     }
   }
 

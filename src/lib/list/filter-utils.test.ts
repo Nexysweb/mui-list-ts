@@ -8,7 +8,8 @@ import {
   addRemoveToArray,
   toFilterArray,
   FilterSearchValue,
-  getSort
+  getSort,
+  updateFilters
 } from './filter-utils';
 
 test('compareString', () => {
@@ -81,6 +82,15 @@ interface DummyShape {
   name: string;
   value: string;
 }
+
+interface CompliciatedDummyShape {
+  name: {
+    common: string;
+    native: string;
+  };
+  short: string;
+}
+
 describe('getSort', () => {
   describe('sort function is NOT defined', () => {
     it('should return right attribute', () => {
@@ -121,6 +131,148 @@ describe('getSort', () => {
       } else {
         throw new Error('Something went wrong');
       }
+    });
+  });
+});
+
+describe('updateFilters', () => {
+  describe('value is null', () => {
+    it('should remove proper filter', () => {
+      const filters = {
+        name: 'John'
+      };
+
+      const newFilters = updateFilters<DummyShape>(filters, {
+        name: 'name',
+        value: null
+      });
+
+      expect(newFilters.name).toBe(undefined);
+    });
+  });
+
+  describe('value is empty string', () => {
+    it('should remove proper filter', () => {
+      const filters = {
+        name: 'John'
+      };
+
+      const newFilters = updateFilters<DummyShape>(filters, {
+        name: 'name',
+        value: ''
+      });
+
+      expect(newFilters.name).toBe(undefined);
+    });
+  });
+
+  describe('value is something else', () => {
+    describe('value is a string', () => {
+      it('should add proper filter', () => {
+        const filters = {};
+
+        const newFilters = updateFilters<DummyShape>(filters, {
+          name: 'name',
+          value: 'John'
+        });
+
+        expect(newFilters.name).toBe('John');
+      });
+    });
+
+    describe('value is an object', () => {
+      describe('type is category', () => {
+        it('should add proper filter', () => {
+          const filters = {};
+
+          let newFilters = updateFilters<CompliciatedDummyShape>(filters, {
+            type: 'category',
+            name: 'name',
+            value: {
+              value: 'DO',
+              func: (): boolean => true
+            }
+          });
+
+          expect(newFilters.name.value.length).toBe(1);
+          expect(newFilters.name.value[0]).toBe('DO');
+
+          newFilters = updateFilters<CompliciatedDummyShape>(filters, {
+            type: 'category',
+            name: 'name',
+            value: {
+              value: 'JO',
+              func: (): boolean => true
+            }
+          });
+
+          expect(newFilters.name.value.length).toBe(2);
+          expect(newFilters.name.value[0]).toBe('DO');
+          expect(newFilters.name.value[1]).toBe('JO');
+        });
+
+        it('should remove proper filter', () => {
+          const filters = {};
+
+          let newFilters = updateFilters<CompliciatedDummyShape>(filters, {
+            type: 'category',
+            name: 'name',
+            value: {
+              value: 'DO',
+              func: (): boolean => true
+            }
+          });
+
+          expect(newFilters.name.value.length).toBe(1);
+
+          newFilters = updateFilters<CompliciatedDummyShape>(filters, {
+            type: 'category',
+            name: 'name',
+            value: {
+              value: 'JO',
+              func: (): boolean => true
+            }
+          });
+
+          expect(newFilters.name.value.length).toBe(2);
+
+          newFilters = updateFilters<CompliciatedDummyShape>(filters, {
+            type: 'category',
+            name: 'name',
+            value: {
+              value: 'JO',
+              func: (): boolean => true
+            }
+          });
+
+          expect(newFilters.name.value.length).toBe(1);
+          expect(newFilters.name.value[0]).toBe('DO');
+        });
+      });
+
+      describe('type is NOT category', () => {
+        it('should add proper filter', () => {
+          const filters = {};
+
+          const newFilters = updateFilters<CompliciatedDummyShape>(filters, {
+            name: 'name',
+            value: {
+              value: 'John',
+              func: (): boolean => true
+            }
+          });
+
+          expect(newFilters.name).toMatchInlineSnapshot(`
+            Object {
+              "func": [Function],
+              "value": Object {
+                "func": [Function],
+                "value": "John",
+              },
+            }
+          `);
+        });
+      });
     });
   });
 });
