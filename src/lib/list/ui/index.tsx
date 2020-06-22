@@ -202,12 +202,14 @@ export const FilterUnit = <A,>(
     filter.type === 'category' &&
     Array.isArray(filter.options)
   ) {
+    const v = filters[name] ? filters[name].value : [];
+
     return (
       <PopoverFilter>
         {filter.options.map((option, i) => (
           <span key={i}>
             <input
-              // checked={v.includes(option.key)}
+              checked={v.includes(option.key)}
               type="checkbox"
               onChange={(): void =>
                 onChange({
