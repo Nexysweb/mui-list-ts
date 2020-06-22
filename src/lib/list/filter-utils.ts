@@ -3,10 +3,10 @@ import { DefinitionItem, SortCompareOut } from '../types';
 export const compareString = (main: string, searchString: string): boolean =>
   main.toLowerCase().indexOf(searchString.toLowerCase()) > -1;
 
-interface Search {
-  value: string;
-  func: (d: any, searchValue: string) => boolean;
-}
+// interface Search {
+//   value: string;
+//   func: (d: any, searchValue: string) => boolean;
+// }
 
 export type FilterSearchValue = string | number | boolean;
 export const toFilterArray = <A>(

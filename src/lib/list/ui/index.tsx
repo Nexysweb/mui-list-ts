@@ -197,37 +197,66 @@ export const FilterUnit = <A,>(
     );
   }
 
-  if (
-    typeof filter === 'object' &&
-    filter.type === 'category' &&
-    Array.isArray(filter.options)
-  ) {
-    const v = filters[name] ? filters[name].value : [];
+  if (typeof filter === 'object' && Array.isArray(filter.options)) {
+    if (filter.type === 'category') {
+      const v = filters[name] ? filters[name].value : [];
 
-    return (
-      <PopoverFilter>
-        {filter.options.map((option, i) => (
-          <span key={i}>
-            <input
-              checked={v.includes(option.key)}
-              type="checkbox"
-              onChange={(): void =>
-                onChange({
-                  name,
-                  value: {
-                    value: option.key,
-                    func: filter.func
-                  },
-                  type: filter.type
-                })
-              }
-            />{' '}
-            {option.value}
-            <br />
-          </span>
-        ))}
-      </PopoverFilter>
-    );
+      return (
+        <PopoverFilter>
+          {filter.options.map((option, i) => (
+            <span key={i}>
+              <input
+                checked={v.includes(option.key)}
+                type="checkbox"
+                onChange={(): void =>
+                  onChange({
+                    name,
+                    value: {
+                      value: option.key,
+                      func: filter.func
+                    },
+                    type: filter.type
+                  })
+                }
+              />{' '}
+              {option.value}
+              <br />
+            </span>
+          ))}
+        </PopoverFilter>
+      );
+    }
+
+    if (filter.type === 'select') {
+      return (
+        <PopoverFilter>
+          {filter.options.map((option, i) => (
+            <span key={i}>
+              <input
+                checked={
+                  filters[name]
+                    ? filters[name].value.value === option.key
+                    : false
+                }
+                type="radio"
+                onChange={(): void =>
+                  onChange({
+                    name,
+                    value: {
+                      value: option.key,
+                      func: filter.func
+                    },
+                    type: filter.type
+                  })
+                }
+              />{' '}
+              {option.value}
+              <br />
+            </span>
+          ))}
+        </PopoverFilter>
+      );
+    }
   }
 
   return null;

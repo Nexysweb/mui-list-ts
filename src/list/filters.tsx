@@ -103,7 +103,17 @@ const Filters = (): JSX.Element => {
     },
     {
       name: 'region',
-      title: 'Region'
+      title: 'Region',
+      filter: {
+        type: 'select',
+        func: (dataItem, filterValue): boolean => {
+          return dataItem.region === filterValue;
+        },
+        options: [
+          { key: 'Asia', value: 'Asia' },
+          { key: 'Europe', value: 'Europe' }
+        ]
+      }
     },
     {
       name: 'cca2',

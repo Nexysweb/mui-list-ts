@@ -4,7 +4,7 @@ interface OptionUnit {
 }
 
 export interface Filter<T> {
-  type: string;
+  type: 'string' | 'category' | 'select';
   func: (dataRow: T, value: any) => boolean;
   options?: OptionUnit[];
 }
