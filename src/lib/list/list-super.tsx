@@ -129,13 +129,17 @@ const ListSuper = <A,>({
               v.value.value,
               filters[v.name].value
             );
-          }
 
-          if (!filters[v.name]) {
-            filters[v.name] = { value: null, func: v.value.func };
-          }
+            if (filters[v.name].value.length === 0) {
+              delete filters[v.name];
+            }
+          } else {
+            if (!filters[v.name]) {
+              filters[v.name] = { value: null, func: v.value.func };
+            }
 
-          filters[v.name].value = v.value === '' ? null : v.value;
+            filters[v.name].value = v.value === '' ? null : v.value;
+          }
         } else {
           // if string
           filters[v.name] = v.value === '' ? null : v.value;

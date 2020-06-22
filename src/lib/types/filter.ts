@@ -5,6 +5,6 @@ interface OptionUnit {
 
 export interface Filter<T> {
   type: string;
-  func: (a: T, b: any[]) => boolean;
+  func: (dataRow: T, value: any) => boolean;
   options?: OptionUnit[];
 }

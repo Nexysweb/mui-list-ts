@@ -157,7 +157,9 @@ interface FilterUnitProps<A> {
   filters: any;
   name: keyof A;
   onChange: (
-    inputValue: { name: keyof A; value: any } | CheckboxInputValue<A>
+    inputValue:
+      | { name: keyof A; value: any; type?: string }
+      | CheckboxInputValue<A>
   ) => void;
 }
 
@@ -183,7 +185,7 @@ export const FilterUnit = <A,>(
       <PopoverFilter>
         <SearchUnit
           name={name}
-          value={filters[name]}
+          value={filters[name] ? filters[name].value.value : ''}
           onChange={(v): void => {
             onChange({
               name,
@@ -200,19 +202,21 @@ export const FilterUnit = <A,>(
     filter.type === 'category' &&
     Array.isArray(filter.options)
   ) {
-    const v = filters[name] ? filters[name].value : [];
-
     return (
       <PopoverFilter>
         {filter.options.map((option, i) => (
           <span key={i}>
             <input
-              checked={v.includes(option.key)}
+              // checked={v.includes(option.key)}
               type="checkbox"
               onChange={(): void =>
                 onChange({
                   name,
-                  value: { value: option.key, func: filter.func }
+                  value: {
+                    value: option.key,
+                    func: filter.func
+                  },
+                  type: filter.type
                 })
               }
             />{' '}

@@ -59,7 +59,15 @@ const Filters = (): JSX.Element => {
     {
       name: 'name',
       title: 'Name',
-      render: renderNameLink
+      render: renderNameLink,
+      filter: {
+        type: 'string',
+        func: (dataItem, filterValue): boolean => {
+          return dataItem.name.common
+            .toLowerCase()
+            .includes(filterValue.toLowerCase());
+        }
+      }
     },
     {
       name: 'capital',
@@ -67,7 +75,7 @@ const Filters = (): JSX.Element => {
       render: (x): string[] | string => x.capital || ''
     },
     {
-      name: 'currency',
+      name: 'currencies',
       title: 'Currency',
       render: (x): string => {
         const keys = Object.keys(x.currencies);
@@ -78,14 +86,36 @@ const Filters = (): JSX.Element => {
 
         const k = keys[0];
         return `${x.currencies[k].name} (${k})`;
+      },
+      filter: {
+        type: 'category',
+        func: (dataItem, filterValues): boolean => {
+          const filtered = Object.keys(dataItem.currencies).filter(currency =>
+            filterValues.includes(currency)
+          );
+          return Boolean(filtered.length);
+        },
+        options: [
+          { key: 'EUR', value: 'Euro' },
+          { key: 'USD', value: 'US Dollar' }
+        ]
       }
+    },
+    {
+      name: 'region',
+      title: 'Region'
+    },
+    {
+      name: 'cca2',
+      title: 'CCA2',
+      filter: true
     }
   ];
 
   return (
     <>
       <h2>Filter example</h2>
-      <List data={data} def={columns} config={{ search: true }} />
+      <List data={data} def={columns} config={{ search: true, nPerPage: 5 }} />
     </>
   );
 };
