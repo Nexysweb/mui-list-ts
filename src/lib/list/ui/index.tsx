@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Filter } from '../../types/filter';
 import Alert from '../../components/alert';
-import { paginationBoundaries } from '../order-utils';
+import { paginationBoundaries } from '../pagination-utils';
 import { SearchUnit } from './form';
 import GlobalSearch from './global-search';
 

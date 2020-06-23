@@ -61,23 +61,3 @@ export const order = <A>(
 
   return ordered;
 };
-
-export const paginationBoundaries = (
-  idx: number,
-  nPerPage: number
-): { start: number; end: number } => {
-  const start = (idx - 1) * nPerPage;
-  const end = idx * nPerPage;
-
-  return { start, end };
-};
-
-export const orderWithPagination = <A>(
-  data: A[],
-  idx: number,
-  nPerPage: number
-): A[] => {
-  const { start, end } = paginationBoundaries(idx, nPerPage);
-
-  return data.slice(start, end);
-};
