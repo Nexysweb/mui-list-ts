@@ -18,8 +18,9 @@ import {
 } from './ui';
 import { InnerProps as PaginationProps } from './pagination';
 import { Config, Definition, DefinitionItem, SortCompareOut } from '../types';
-import { order, orderWithPagination } from './order-utils';
+import { order } from './order-utils';
 import { applyFilter, addRemoveToArray, toFilterArray } from './filter-utils';
+import { withPagination } from './pagination-utils';
 
 //const LoaderDefault = (): JSX.Element => <p>Loading...</p>;
 
@@ -259,12 +260,12 @@ const ListSuper = <A,>({
     const n: number = fData.length;
 
     const fpData: A[] = sortAttribute
-      ? orderWithPagination(
+      ? withPagination(
           order<A>(fData, getSort<A>(def, sortAttribute), sortDescAsc),
           pageIdx,
           nPerPage
         )
-      : fData;
+      : withPagination(fData, pageIdx, nPerPage);
 
     const showPagination: boolean =
       typeof config.pagination !== 'undefined' ? config.pagination : true;
