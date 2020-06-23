@@ -3,7 +3,9 @@ import {
   Radio,
   RadioGroup,
   FormControlLabel,
-  FormControl
+  FormControl,
+  FormGroup,
+  Checkbox
 } from '@material-ui/core';
 
 import { Filter } from '../../types/filter';
@@ -67,26 +69,32 @@ const FilterUnit = <A,>(props: FilterUnitProps<A>): JSX.Element | null => {
 
       return (
         <PopoverFilter>
-          {filter.options.map((option, i) => (
-            <span key={i}>
-              <input
-                checked={v.includes(option.key)}
-                type="checkbox"
-                onChange={(): void =>
-                  onChange({
-                    name,
-                    value: {
-                      value: option.key,
-                      func: filter.func
-                    },
-                    type: filter.type
-                  })
-                }
-              />{' '}
-              {option.value}
-              <br />
-            </span>
-          ))}
+          <FormControl component="fieldset">
+            <FormGroup>
+              {filter.options.map((option, i) => (
+                <FormControlLabel
+                  key={i}
+                  value={option.key}
+                  control={
+                    <Checkbox
+                      checked={v.includes(option.key)}
+                      onChange={(): void =>
+                        onChange({
+                          name,
+                          value: {
+                            value: option.key,
+                            func: filter.func
+                          },
+                          type: filter.type
+                        })
+                      }
+                    />
+                  }
+                  label={option.value}
+                />
+              ))}
+            </FormGroup>
+          </FormControl>
         </PopoverFilter>
       );
     }
