@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Alert from '../../components/alert';
-import { paginationBoundaries } from '../order-utils';
+import { paginationBoundaries } from '../pagination-utils';
 import GlobalSearch from './global-search';
 import PopoverFilter from './popover-filter';
 import FilterUnit from './filter-unit';

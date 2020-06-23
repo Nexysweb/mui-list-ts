@@ -1,4 +1,10 @@
-import { getPagination, getNPage, getPageTiles } from './pagination-utils';
+import {
+  getPagination,
+  getNPage,
+  getPageTiles,
+  paginationBoundaries,
+  withPagination
+} from './pagination-utils';
 
 test('gepagination', () => {
   const r = getPagination(23, 20);
@@ -123,4 +129,38 @@ test('getPageTiles, n=10', () => {
   expect(getPageTiles(8, n)).toEqual([1, -1, 7, 8, 9, n]);
   expect(getPageTiles(9, n)).toEqual([1, -1, 8, 9, n]);
   expect(getPageTiles(n, n)).toEqual([1, -1, 8, 9, n]);
+});
+
+describe('paginationBoundaries', () => {
+  it('should return proper shape', () => {
+    const re = paginationBoundaries(1, 5);
+    expect(re.start).toBeDefined();
+    expect(re.end).toBeDefined();
+  });
+
+  it('should return correct values', () => {
+    let re = paginationBoundaries(1, 5);
+    expect(re.start).toBe(0);
+    expect(re.end).toBe(5);
+
+    re = paginationBoundaries(11, 13);
+    expect(re.start).toBe(130);
+    expect(re.end).toBe(143);
+  });
+});
+
+describe('withPagination', () => {
+  it('should slice data properly', () => {
+    const data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let paginatedData = withPagination(data, 1, 1);
+
+    expect(paginatedData.length).toBe(1);
+    expect(paginatedData[0]).toBe(1);
+
+    paginatedData = withPagination(data, 4, 2);
+
+    expect(paginatedData.length).toBe(2);
+    expect(paginatedData[0]).toBe(7);
+    expect(paginatedData[1]).toBe(8);
+  });
 });

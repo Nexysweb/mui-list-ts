@@ -18,13 +18,14 @@ import {
 } from './ui';
 import { InnerProps as PaginationProps } from './pagination';
 import { Config, Definition, DefinitionItem } from '../types';
-import { order, orderWithPagination } from './order-utils';
+import { order } from './order-utils';
 import {
   applyFilter,
   toFilterArray,
   getSort,
   updateFilters
 } from './filter-utils';
+import { withPagination } from './pagination-utils';
 
 interface State<A> {
   sortAttribute?: keyof A;
@@ -172,20 +173,21 @@ const ListSuper = <A,>({
       });
     };
 
-    const renderBody = (data: any): JSX.Element =>
-      data.map((row: any, i: number) => (
-        <tr key={i}>
-          {def.map((h, j) => {
-            return (
+    const renderBody = (data: A[]): JSX.Element => (
+      <>
+        {data.map((row, i: number) => (
+          <tr key={i}>
+            {def.map((h, j) => (
               <ColCell key={j}>
                 {h.render
                   ? h.render(row)
                   : Utils.ds.get(h.name.toString(), row)}
               </ColCell>
-            );
-          })}
-        </tr>
-      ));
+            ))}
+          </tr>
+        ))}
+      </>
+    );
 
     /*
   // todo async
@@ -220,12 +222,12 @@ const ListSuper = <A,>({
     const n: number = fData.length;
 
     const fpData: A[] = sortAttribute
-      ? orderWithPagination(
+      ? withPagination(
           order<A>(fData, getSort<A>(def, sortAttribute), sortDescAsc),
           pageIdx,
           nPerPage
         )
-      : fData;
+      : withPagination(fData, pageIdx, nPerPage);
 
     const showPagination: boolean =
       typeof config.pagination !== 'undefined' ? config.pagination : true;

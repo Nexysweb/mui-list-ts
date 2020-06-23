@@ -72,7 +72,8 @@ const Filters = (): JSX.Element => {
     {
       name: 'capital',
       title: 'Capital',
-      render: (x): string[] | string => x.capital || ''
+      render: (x): string[] | string => x.capital || '',
+      sort: true
     },
     {
       name: 'currencies',
@@ -118,14 +119,19 @@ const Filters = (): JSX.Element => {
     {
       name: 'cca2',
       title: 'CCA2',
-      filter: true
+      filter: true,
+      sort: true
     }
   ];
 
   return (
     <>
       <h2>Filter example</h2>
-      <List data={data} def={columns} config={{ search: true, nPerPage: 5 }} />
+      <List<Country>
+        data={(data as unknown) as Country[]}
+        def={columns}
+        config={{ search: true, nPerPage: 20 }}
+      />
     </>
   );
 };
