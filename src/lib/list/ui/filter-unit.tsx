@@ -58,6 +58,7 @@ const FilterUnit = <A,>(props: FilterUnitProps<A>): JSX.Element | null => {
               value: { value: v.value, func: filter.func }
             });
           }}
+          placeholder="Type to filter..."
         />
       </PopoverFilter>
     );
