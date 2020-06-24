@@ -38,8 +38,6 @@ const Pagination = (props: InnerProps): JSX.Element | null => {
 
   const { nPage } = getPagination(n, nPerPage);
 
-  console.log(idx);
-
   return (
     <div className={classes.root}>
       <PaginationMaterial

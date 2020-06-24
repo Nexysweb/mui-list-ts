@@ -1,8 +1,11 @@
-export interface AsyncDataConfig {
+export interface AsyncDataConfig<A> {
   nPerPage: number;
   pageIdx: number;
-  filters: any;
-  sort: any;
+  filters: { [k in keyof A | 'globalSearch']?: any };
+  sort: {
+    descAsc: boolean;
+    attribute?: keyof A;
+  };
 }
 
 export interface AsyncDataReturn<A> {

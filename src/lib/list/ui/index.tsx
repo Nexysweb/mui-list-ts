@@ -5,6 +5,7 @@ import { paginationBoundaries } from '../utils/pagination-utils';
 import GlobalSearch from './global-search';
 import PopoverFilter from './popover-filter';
 import FilterUnit from './filter-unit';
+import Loader from './loader';
 
 import {
   Table,
@@ -205,4 +206,4 @@ export const RecordInfo = (props: RecordInfoProps): JSX.Element | null => {
   );
 };
 
-export { FilterUnit, GlobalSearch, PopoverFilter };
+export { FilterUnit, GlobalSearch, PopoverFilter, Loader };

@@ -3,6 +3,7 @@ import React from 'react';
 import { Definition, AsyncDataConfig, AsyncDataReturn } from '../lib/types';
 import List from '../lib/list';
 import { withPagination } from '../lib/list/utils/pagination-utils';
+import { applyFilter, toFilterArray } from '../lib/list/utils/filter-utils';
 
 interface Continent {
   id: number;
@@ -125,22 +126,17 @@ const def: Definition<Animal> = [
 ];
 
 const asyncData = (
-  config: AsyncDataConfig
+  config: AsyncDataConfig<Animal>
 ): Promise<AsyncDataReturn<Animal>> => {
-  const { nPerPage, pageIdx } = config;
-  // return Promise.resolve({
-  // meta: {
-  //   n: data.length
-  // },
-  // data: withPagination(data, pageIdx, nPerPage)
-  // });
+  const { nPerPage, pageIdx, filters } = config;
+  const filteredData = applyFilter(data, toFilterArray<Animal>(filters));
   return new Promise(r => {
     setTimeout(() => {
       r({
         meta: {
-          n: data.length
+          n: filteredData.length
         },
-        data: withPagination(data, pageIdx, nPerPage)
+        data: withPagination(filteredData, pageIdx, nPerPage)
       });
     }, 1000);
   });

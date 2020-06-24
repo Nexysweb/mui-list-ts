@@ -14,7 +14,8 @@ import {
   ListContainer,
   ListHeader,
   ListBody,
-  FilterUnit
+  FilterUnit,
+  Loader
 } from './ui';
 import { InnerProps as PaginationProps } from './pagination';
 import {
@@ -32,25 +33,13 @@ import {
   updateFilters
 } from './utils/filter-utils';
 import { withPagination } from './utils/pagination-utils';
-
-interface State<A> {
-  sortAttribute?: keyof A;
-  sortDescAsc: boolean;
-  filters: { [k in keyof A | 'globalSearch']?: any }; //TFilterUnit<A>[];
-  pageIdx: number;
-  data: A[];
-  numberOfTotalRows: number;
-  loading: boolean;
-}
-
-const getInitialState = <A,>(data?: A[]): State<A> => ({
-  sortDescAsc: true,
-  filters: {},
-  pageIdx: 1,
-  data: data ? data : [],
-  numberOfTotalRows: data && data.length ? data.length : 0,
-  loading: false
-});
+import {
+  listSuperReducer,
+  getInitialState,
+  Action,
+  ActionType,
+  State
+} from './list-super-partials';
 
 export interface Props {
   HeaderUnit: typeof HeaderUnit;
@@ -73,70 +62,7 @@ export interface InnerProps<A> {
   data?: A[];
   nPerPage?: number;
   config?: Config;
-  asyncData?: (config: AsyncDataConfig) => Promise<AsyncDataReturn<A>>;
-}
-
-const Loader = (): JSX.Element => <p>Loading...</p>;
-
-enum ActionType {
-  FETCH_DATA_REQUEST = 'FETCH_DATA_REQUEST',
-  FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS',
-  FILTER_CHANGE = 'FILTER_CHANGE',
-  ORDER_CHANGE = 'ORDER_CHANGE',
-  PAGE_CHANGE = 'PAGE_CHANGE'
-}
-
-interface Action {
-  type: ActionType;
-  payload?: any;
-}
-
-function listSuperReducer<A>(state: State<A>, action: Action): State<A> {
-  if (action.type === ActionType.FETCH_DATA_REQUEST) {
-    return {
-      ...state,
-      loading: true
-    };
-  }
-
-  if (action.type === ActionType.FETCH_DATA_SUCCESS) {
-    const { data, numberOfTotalRows } = action.payload;
-    return {
-      ...state,
-      loading: false,
-      data,
-      numberOfTotalRows
-    };
-  }
-
-  if (action.type === ActionType.FILTER_CHANGE) {
-    const { filters, pageIdx } = action.payload;
-    return {
-      ...state,
-      filters,
-      pageIdx
-    };
-  }
-
-  if (action.type === ActionType.ORDER_CHANGE) {
-    const { sortDescAsc, sortAttribute, pageIdx } = action.payload;
-    return {
-      ...state,
-      sortDescAsc,
-      sortAttribute,
-      pageIdx
-    };
-  }
-
-  if (action.type === ActionType.PAGE_CHANGE) {
-    const { pageIdx } = action.payload;
-    return {
-      ...state,
-      pageIdx
-    };
-  }
-
-  return state;
+  asyncData?: (config: AsyncDataConfig<A>) => Promise<AsyncDataReturn<A>>;
 }
 
 const ListSuper = <A,>({
@@ -157,7 +83,7 @@ const ListSuper = <A,>({
   function InnerListSuper(props: InnerProps<A>): JSX.Element {
     const [state, dispatch] = useReducer<Reducer<State<A>, Action>>(
       listSuperReducer,
-      getInitialState<A>()
+      getInitialState<A>(props.data)
     );
     const { def, config = {}, asyncData } = props;
     const {
@@ -176,17 +102,20 @@ const ListSuper = <A,>({
       );
     }
 
-    const fetchData = (pageIdxA: number): void => {
+    const fetchData = (newPageIdx?: number): void => {
       if (asyncData) {
         dispatch({ type: ActionType.FETCH_DATA_REQUEST });
-        asyncData({ nPerPage, pageIdx: pageIdxA, filters: {}, sort: {} }).then(
-          res => {
-            dispatch({
-              type: ActionType.FETCH_DATA_SUCCESS,
-              payload: { data: res.data, numberOfTotalRows: res.meta.n }
-            });
-          }
-        );
+        asyncData({
+          nPerPage,
+          pageIdx: newPageIdx ? newPageIdx : pageIdx,
+          filters,
+          sort: { attribute: sortAttribute, descAsc: sortDescAsc }
+        }).then(res => {
+          dispatch({
+            type: ActionType.FETCH_DATA_SUCCESS,
+            payload: { data: res.data, numberOfTotalRows: res.meta.n }
+          });
+        });
       }
     };
 
@@ -204,6 +133,10 @@ const ListSuper = <A,>({
         type: ActionType.FILTER_CHANGE,
         payload: { filters: newFilters, pageIdx }
       });
+
+      if (asyncData) {
+        fetchData();
+      }
     };
 
     /**
@@ -287,6 +220,14 @@ const ListSuper = <A,>({
       </>
     );
 
+    const renderLoader = (): JSX.Element => (
+      <tr>
+        <ColCell colSpan={def.length}>
+          <Loader />
+        </ColCell>
+      </tr>
+    );
+
     if (data.length === 0 && asyncData && !loading) {
       fetchData(pageIdx);
     }
@@ -325,15 +266,7 @@ const ListSuper = <A,>({
           </ListHeader>
 
           <ListBody>
-            {loading ? (
-              <tr>
-                <ColCell colSpan={def.length}>
-                  <Loader />
-                </ColCell>
-              </tr>
-            ) : (
-              renderBody(asyncData ? data : fpData)
-            )}
+            {loading ? renderLoader() : renderBody(asyncData ? data : fpData)}
           </ListBody>
         </ListContainer>
 
