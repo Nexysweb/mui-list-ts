@@ -9,7 +9,7 @@
 import React from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import PaginationMaterial from '@material-ui/lab/Pagination';
-import { getPagination } from './pagination-utils';
+import { getPagination } from './utils/pagination-utils';
 
 const useStyles = makeStyles(theme =>
   createStyles({

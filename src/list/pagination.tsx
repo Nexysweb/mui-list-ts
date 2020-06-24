@@ -71,7 +71,7 @@ const Pagination = (): JSX.Element => {
       render: (x): string[] | string => x.capital || ''
     },
     {
-      name: 'currency',
+      name: 'currencies',
       title: 'Currency',
       render: (x): string => {
         const keys = Object.keys(x.currencies);
@@ -104,7 +104,11 @@ const Pagination = (): JSX.Element => {
         />
       </Grid>
 
-      <List data={data} def={columns} nPerPage={itemsPerPage} />
+      <List<Country>
+        data={(data as unknown) as Country[]}
+        def={columns}
+        config={{ nPerPage: itemsPerPage }}
+      />
     </>
   );
 };

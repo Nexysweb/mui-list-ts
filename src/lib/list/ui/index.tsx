@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { Filter } from '../../types/filter';
 import Alert from '../../components/alert';
-import { paginationBoundaries } from '../pagination-utils';
-import { SearchUnit } from './form';
+import { paginationBoundaries } from '../utils/pagination-utils';
 import GlobalSearch from './global-search';
+import PopoverFilter from './popover-filter';
+import FilterUnit from './filter-unit';
+import Loader from './loader';
 
 import {
   Table,
@@ -12,17 +13,13 @@ import {
   TableCell,
   TableRow,
   TableHead,
-  TableContainer,
-  Popover,
-  IconButton
+  TableContainer
 } from '@material-ui/core';
 
 import {
   KeyboardArrowUp as ChevronUp,
   KeyboardArrowDown as ChevronDown,
-  ArrowUpward,
-  ArrowDownward,
-  FilterList as FilterListIcon
+  UnfoldMore as SortDefault
 } from '@material-ui/icons';
 
 interface NoRowProps {
@@ -82,11 +79,12 @@ export const PaginationUnit = (
 
 interface ColCellProps {
   children: React.ReactNode | JSX.Element;
+  colSpan?: number;
 }
 
 export const ColCell = (props: ColCellProps): JSX.Element => {
-  const { children } = props;
-  return <TableCell>{children}</TableCell>;
+  const { children, colSpan } = props;
+  return <TableCell colSpan={colSpan}>{children}</TableCell>;
 };
 
 interface HeaderUnitProps {
@@ -97,134 +95,6 @@ export const HeaderUnit = (props: HeaderUnitProps): JSX.Element => {
   const { children } = props;
 
   return <TableCell style={{ fontWeight: 'bold' }}>{children}</TableCell>;
-};
-
-interface PopoverFilterProps {
-  children: React.ReactNode | JSX.Element;
-}
-
-export const PopoverFilter = (props: PopoverFilterProps): JSX.Element => {
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    null
-  );
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = (): void => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-
-  const { children } = props;
-
-  return (
-    <>
-      <IconButton onClick={handleClick}>
-        <FilterListIcon />
-      </IconButton>
-      <Popover
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center'
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center'
-        }}
-      >
-        {children}
-      </Popover>
-    </>
-  );
-};
-
-interface CheckboxInputValue<A> {
-  name: keyof A;
-  value: {
-    func: Function;
-    value: number | string;
-  };
-}
-
-interface FilterUnitProps<A> {
-  filter?: boolean | Filter<A>;
-  filters: any;
-  name: keyof A;
-  onChange: (
-    inputValue: { name: keyof A; value: any } | CheckboxInputValue<A>
-  ) => void;
-}
-
-export const FilterUnit = <A,>(
-  props: FilterUnitProps<A>
-): JSX.Element | null => {
-  const { filter, filters, name, onChange } = props;
-
-  if (typeof filter === 'boolean' && filter === true) {
-    return (
-      <PopoverFilter>
-        <SearchUnit
-          name={name}
-          value={filters[name]}
-          onChange={(v): void => onChange({ name, value: v.value })}
-        />
-      </PopoverFilter>
-    );
-  }
-
-  if (typeof filter === 'object' && filter.type === 'string') {
-    return (
-      <PopoverFilter>
-        <SearchUnit
-          name={name}
-          value={filters[name]}
-          onChange={(v): void => {
-            onChange({
-              name,
-              value: { value: v.value, func: filter.func }
-            });
-          }}
-        />
-      </PopoverFilter>
-    );
-  }
-
-  if (
-    typeof filter === 'object' &&
-    filter.type === 'category' &&
-    Array.isArray(filter.options)
-  ) {
-    const v = filters[name] ? filters[name].value : [];
-
-    return (
-      <PopoverFilter>
-        {filter.options.map((option, i) => (
-          <span key={i}>
-            <input
-              checked={v.includes(option.key)}
-              type="checkbox"
-              onChange={(): void =>
-                onChange({
-                  name,
-                  value: { value: option.key, func: filter.func }
-                })
-              }
-            />{' '}
-            {option.value}
-            <br />
-          </span>
-        ))}
-      </PopoverFilter>
-    );
-  }
-
-  return null;
 };
 
 interface OrderControllerUpAndDownProps {
@@ -247,19 +117,29 @@ export const OrderControllerUpAndDown = (
 };
 
 interface OrderControllerProps {
-  descAsc: boolean;
+  descAsc: boolean | null;
   onClick: (a: null) => void;
 }
 
 export const OrderController = (props: OrderControllerProps): JSX.Element => {
   const { onClick, descAsc } = props;
 
-  const Icon = descAsc ? ArrowUpward : ArrowDownward;
+  let Icon = SortDefault;
+  if (descAsc !== null) {
+    Icon = descAsc ? ChevronUp : ChevronDown;
+  }
 
   return (
-    <small style={{ cursor: 'pointer' }} onClick={(): void => onClick(null)}>
+    <div
+      style={{
+        cursor: 'pointer',
+        display: 'inline-block',
+        color: descAsc === null ? '#ccc' : '#000'
+      }}
+      onClick={(): void => onClick(null)}
+    >
       <Icon />
-    </small>
+    </div>
   );
 };
 
@@ -335,4 +215,4 @@ export const RecordInfo = (props: RecordInfoProps): JSX.Element | null => {
   );
 };
 
-export { GlobalSearch };
+export { FilterUnit, GlobalSearch, PopoverFilter, Loader };

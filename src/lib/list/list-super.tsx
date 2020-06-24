@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useReducer, Reducer } from 'react';
 
 import Utils from '@nexys/utils';
 
@@ -14,46 +14,32 @@ import {
   ListContainer,
   ListHeader,
   ListBody,
-  FilterUnit
+  FilterUnit,
+  Loader
 } from './ui';
 import { InnerProps as PaginationProps } from './pagination';
-import { Config, Definition, DefinitionItem, SortCompareOut } from '../types';
-import { order } from './order-utils';
-import { applyFilter, addRemoveToArray, toFilterArray } from './filter-utils';
-import { withPagination } from './pagination-utils';
-
-//const LoaderDefault = (): JSX.Element => <p>Loading...</p>;
-
-const getSort = <A,>(
-  def: DefinitionItem<A>[],
-  sortAttribute: keyof A
-): (keyof A | ((input: A) => SortCompareOut)) | keyof A => {
-  const i = def.find(x => x.name === sortAttribute);
-  if (!i || !i.sort) {
-    throw Error('sort attribute could not be matched');
-  }
-
-  if (typeof i.sort === 'object' && 'func' in i.sort) {
-    return i.sort.func;
-  }
-
-  return sortAttribute;
-};
-
-interface State<A> {
-  sortAttribute?: keyof A;
-  sortDescAsc: boolean;
-  filters: { [k in keyof A | 'globalSearch']?: any }; //TFilterUnit<A>[];
-  pageIdx: number;
-  data: A[];
-}
-
-const stateDefault = <A,>(): State<A> => ({
-  sortDescAsc: true,
-  filters: {},
-  pageIdx: 1,
-  data: []
-});
+import {
+  Config,
+  Definition,
+  DefinitionItem,
+  AsyncDataConfig,
+  AsyncDataReturn
+} from '../types';
+import { order, getSort } from './utils/order-utils';
+import {
+  applyFilter,
+  toFilterArray,
+  updateFilters
+} from './utils/filter-utils';
+import { withPagination } from './utils/pagination-utils';
+import {
+  listSuperReducer,
+  getInitialState,
+  Action,
+  ActionType,
+  State,
+  FiltersType
+} from './list-super-partials';
 
 export interface Props {
   HeaderUnit: typeof HeaderUnit;
@@ -76,7 +62,7 @@ export interface InnerProps<A> {
   data?: A[];
   nPerPage?: number;
   config?: Config;
-  asyncData?: () => Promise<any>;
+  asyncData?: (config: AsyncDataConfig<A>) => Promise<AsyncDataReturn<A>>;
 }
 
 const ListSuper = <A,>({
@@ -95,14 +81,20 @@ const ListSuper = <A,>({
   Pagination
 }: Props) =>
   function InnerListSuper(props: InnerProps<A>): JSX.Element {
-    const [state, setState] = useState<State<A>>(stateDefault<A>());
-    // todo async
-    //const [ fpData, setPData ] = useState([]);
-    //const [ loading, setLoading ] = useState(true);
-    //const [ n, setN ] = useState(0);
-
-    const { def, config = {}, asyncData } = props; // todo asyn , asyncData = false
-    const { filters, pageIdx, sortAttribute, sortDescAsc, data } = state;
+    const [state, dispatch] = useReducer<Reducer<State<A>, Action>>(
+      listSuperReducer,
+      getInitialState<A>(props.data)
+    );
+    const { def, config = {}, asyncData } = props;
+    const {
+      filters,
+      pageIdx,
+      sortAttribute,
+      sortDescAsc,
+      data,
+      numberOfTotalRows,
+      loading
+    } = state;
     const nPerPage = config.nPerPage || props.nPerPage || 25;
     if (props.nPerPage) {
       console.warn(
@@ -110,43 +102,65 @@ const ListSuper = <A,>({
       );
     }
 
-    // this manages both strings and categories
-    const setFilter = (v: {
+    const fetchData = useCallback(
+      (config?: {
+        pageIdx?: number;
+        filters?: FiltersType<A>;
+        sortAttribute?: keyof A;
+        sortDescAsc?: boolean;
+      }): void => {
+        if (asyncData) {
+          dispatch({ type: ActionType.FETCH_DATA_REQUEST });
+          asyncData({
+            nPerPage,
+            pageIdx: config && config.pageIdx ? config.pageIdx : pageIdx,
+            filters: config && config.filters ? config.filters : filters,
+            sort: {
+              attribute:
+                config && config.sortAttribute
+                  ? config.sortAttribute
+                  : sortAttribute,
+              descAsc:
+                config && typeof config.sortDescAsc !== 'undefined'
+                  ? config.sortDescAsc
+                  : sortDescAsc
+            }
+          }).then(res => {
+            dispatch({
+              type: ActionType.FETCH_DATA_SUCCESS,
+              payload: { data: res.data, numberOfTotalRows: res.meta.n }
+            });
+          });
+        }
+      },
+      [asyncData, filters, nPerPage, pageIdx, sortAttribute, sortDescAsc]
+    );
+
+    useEffect(() => {
+      fetchData();
+    }, [asyncData, fetchData]);
+
+    const handleFilterChange = (v: {
       name: keyof A | 'globalSearch';
       value: any;
       type?: string;
     }): void => {
-      if (v.value === null || v.value === '') {
-        delete filters[v.name];
-      } else {
-        // if object
-        if (typeof v.value !== 'string') {
-          if (v.type === 'category') {
-            if (!filters[v.name]) {
-              filters[v.name] = { value: [], func: v.value.func };
-            }
-
-            filters[v.name].value = addRemoveToArray(
-              v.value.value,
-              filters[v.name].value
-            );
-          }
-
-          if (!filters[v.name]) {
-            filters[v.name] = { value: null, func: v.value.func };
-          }
-
-          filters[v.name].value = v.value === '' ? null : v.value;
-        } else {
-          // if string
-          filters[v.name] = v.value === '' ? null : v.value;
-        }
-      }
+      const newFilters = updateFilters<A>(filters, v);
 
       // when a filter is applied, the page index is reset
       const pageIdx = 1;
 
-      setState({ ...state, filters, pageIdx });
+      const config = {
+        filters: newFilters,
+        pageIdx
+      };
+
+      dispatch({
+        type: ActionType.FILTER_CHANGE,
+        payload: config
+      });
+
+      fetchData(config);
     };
 
     /**
@@ -161,18 +175,20 @@ const ListSuper = <A,>({
         descAsc = !sortDescAsc;
       }
 
-      setState({
-        ...state,
-        pageIdx: 1,
-        sortDescAsc: descAsc,
-        sortAttribute: name
+      const config = { sortDescAsc: descAsc, sortAttribute: name, pageIdx: 1 };
+
+      dispatch({
+        type: ActionType.ORDER_CHANGE,
+        payload: config
       });
     };
 
     const changePage = (pageIdx: number): void => {
       // todo block beyond max page
       if (pageIdx > 0) {
-        setState({ ...state, pageIdx });
+        const config = { pageIdx };
+
+        dispatch({ type: ActionType.PAGE_CHANGE, payload: config });
       }
     };
 
@@ -189,7 +205,7 @@ const ListSuper = <A,>({
 
         const order = isSort(h) ? (
           <OrderController
-            descAsc={sortDescAsc}
+            descAsc={sortAttribute === h.name ? sortDescAsc : null}
             onClick={(): void => setOrder(h.name)}
           />
         ) : null;
@@ -200,7 +216,7 @@ const ListSuper = <A,>({
             filters={filters}
             name={h.name}
             filter={h.filter}
-            onChange={setFilter}
+            onChange={handleFilterChange}
           />
         );
 
@@ -212,73 +228,67 @@ const ListSuper = <A,>({
       });
     };
 
-    const renderBody = (data: any): JSX.Element =>
-      data.map((row: any, i: number) => (
-        <tr key={i}>
-          {def.map((h, j) => {
-            return (
+    const renderBody = (data: A[]): JSX.Element => (
+      <>
+        {data.map((row, i: number) => (
+          <tr key={i}>
+            {def.map((h, j) => (
               <ColCell key={j}>
                 {h.render
                   ? h.render(row)
                   : Utils.ds.get(h.name.toString(), row)}
               </ColCell>
-            );
-          })}
-        </tr>
-      ));
+            ))}
+          </tr>
+        ))}
+      </>
+    );
 
-    /*
-  // todo async
-  if (asyncData && loading) {
-    asyncData(state).then(p => {
-      setPData(p);
-      setN(p.length);
-      setLoading(false);
-    });
+    const renderLoader = (): JSX.Element => (
+      <tr>
+        <ColCell colSpan={def.length}>
+          <Loader />
+        </ColCell>
+      </tr>
+    );
 
-    return <Loader/>;
-  }
+    let fData: A[] = [];
+    let fpData: A[] = [];
+    let n = 0;
 
-  if(loading) {
-    const fData = applyFilter(data, filters);
-    setLoading(false);
-    setN(fData.length);
-    setPData(orderWithPagination(order(fData, sortAttribute, sortDescAsc), pageIdx, nPerPage));
-  }*/
-    if (data.length === 0) {
-      if (asyncData)
-        asyncData().then(res => {
-          setState({ ...state, data: res });
-        });
-      else {
-        if (props.data && props.data.length) {
-          setState({ ...state, data: props.data });
-        }
-      }
+    if (!asyncData) {
+      fData = applyFilter(data, toFilterArray<A>(filters));
+      n = fData.length;
+
+      fpData = sortAttribute
+        ? withPagination(
+            order<A>(fData, getSort<A>(def, sortAttribute), sortDescAsc),
+            pageIdx,
+            nPerPage
+          )
+        : withPagination(fData, pageIdx, nPerPage);
+    } else {
+      n = numberOfTotalRows;
     }
-    const fData: A[] = applyFilter(data, toFilterArray<A>(filters));
-    const n: number = fData.length;
-
-    const fpData: A[] = sortAttribute
-      ? withPagination(
-          order<A>(fData, getSort<A>(def, sortAttribute), sortDescAsc),
-          pageIdx,
-          nPerPage
-        )
-      : withPagination(fData, pageIdx, nPerPage);
 
     const showPagination: boolean =
       typeof config.pagination !== 'undefined' ? config.pagination : true;
 
     return (
       <ListWrapper>
-        <GlobalSearch config={config} onChange={setFilter} filters={filters} />
+        <GlobalSearch
+          config={config}
+          onChange={handleFilterChange}
+          filters={filters}
+        />
         <ListContainer>
           <ListHeader>
             <Row>{renderHeaders()}</Row>
           </ListHeader>
 
-          <ListBody>{renderBody(fpData)}</ListBody>
+          <ListBody>
+            {loading ? renderLoader() : renderBody(asyncData ? data : fpData)}
+          </ListBody>
         </ListContainer>
 
         <RecordInfo n={n} idx={pageIdx} nPerPage={nPerPage} />
@@ -292,7 +302,7 @@ const ListSuper = <A,>({
           />
         )}
 
-        <NoRow n={n} />
+        {!loading && <NoRow n={n} />}
       </ListWrapper>
     );
   };

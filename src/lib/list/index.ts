@@ -14,13 +14,13 @@ import {
   //PaginationUnit,PaginationWrapper
 } from './ui';
 
-import ListSuper from './list-super';
+import ListSuper, { InnerProps } from './list-super';
 import PaginationMaterial from './pagination-material';
 
 // by default we use the pagination from Material UI
 const Pagination = PaginationMaterial; // PaginationSuper({ PaginationUnit, PaginationWrapper });
 
-const List = <A>(props: any): JSX.Element =>
+const List = <A>(props: InnerProps<A>): JSX.Element =>
   ListSuper<A>({
     HeaderUnit,
     FilterUnit,

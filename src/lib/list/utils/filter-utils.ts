@@ -1,10 +1,10 @@
 export const compareString = (main: string, searchString: string): boolean =>
   main.toLowerCase().indexOf(searchString.toLowerCase()) > -1;
 
-interface Search {
-  value: string;
-  func: (d: any, searchValue: string) => boolean;
-}
+// interface Search {
+//   value: string;
+//   func: (d: any, searchValue: string) => boolean;
+// }
 
 export type FilterSearchValue = string | number | boolean;
 export const toFilterArray = <A>(
@@ -19,8 +19,7 @@ export const toFilterArray = <A>(
 
 export const compare = (
   main: any,
-  search: string | number | boolean, //| Search,
-  d?: any
+  search: string | number | boolean //| Search,
 ): boolean => {
   const mainType = typeof main;
   const searchType = typeof search;
@@ -36,16 +35,6 @@ export const compare = (
         return false;
     }
   }
-
-  /*if (searchType === 'object') {
-    const searchObj = search as Search;
-
-    if (searchObj.value.length === 0) {
-      return true;
-    }
-
-    return searchObj.func(d, searchObj.value);
-  }*/
 
   return false;
 };
@@ -110,7 +99,7 @@ export const applyFilter = <A>(
             return true;
           }
 
-          return compare(d[key], f.value, d);
+          return compare(d[key], f.value);
         }
 
         return true;
@@ -134,4 +123,47 @@ export const addRemoveToArray = <T = any>(v: T, a: T[] = []): T[] => {
   a.push(v);
 
   return a;
+};
+
+export const updateFilters = <A>(
+  filters: any,
+  v: {
+    name: keyof A | 'globalSearch';
+    value: any;
+    type?: string;
+  }
+): { [k in keyof A | 'globalSearch']?: any } => {
+  if (v.value === null || v.value === '') {
+    delete filters[v.name];
+  } else {
+    // if object
+    if (typeof v.value !== 'string') {
+      if (v.type === 'category') {
+        if (!filters[v.name]) {
+          filters[v.name] = { value: [], func: v.value.func };
+        }
+
+        filters[v.name].value = addRemoveToArray(
+          v.value.value,
+          filters[v.name].value
+        );
+
+        if (filters[v.name].value.length === 0) {
+          delete filters[v.name];
+        }
+      } else {
+        if (!filters[v.name]) {
+          filters[v.name] = { value: null, func: v.value.func };
+        }
+
+        filters[v.name].value = v.value;
+      }
+    } else {
+      // if string
+      filters[v.name] = v.value;
+    }
+  }
+
+  // setState({ ...state, filters, pageIdx });
+  return filters;
 };

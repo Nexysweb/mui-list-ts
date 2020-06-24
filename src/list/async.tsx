@@ -1,7 +1,10 @@
 import React from 'react';
 
-import { Definition } from '../lib/types/definition';
+import { Definition, AsyncDataConfig, AsyncDataReturn } from '../lib/types';
 import List from '../lib/list';
+import { withPagination } from '../lib/list/utils/pagination-utils';
+import { applyFilter, toFilterArray } from '../lib/list/utils/filter-utils';
+import { order } from '../lib/list/utils/order-utils';
 
 interface Continent {
   id: number;
@@ -97,36 +100,62 @@ const data: Animals = [
   }
 ];
 
-const def: Definition<Animal, Continent> = [
+const def: Definition<Animal> = [
   { name: 'name', filter: true, sort: true },
   {
-    name: 'location.name',
+    name: 'location',
+    render: (x): string => x.location.name,
     filter: {
       type: 'category',
       func: (a, b): boolean => b.includes(a.location.id),
-      options: [af, eu, as, am]
+      options: [
+        { key: 1, value: 'Africa' },
+        { key: 2, value: 'Europe' }
+      ]
     }
   },
-  { name: 'country.name', label: 'Country', filter: true },
+  {
+    name: 'country',
+    label: 'Country',
+    render: (x): string => x.country.name /* filter: true */
+  },
   { name: 'amount', label: 'A long label', filter: true },
   { name: 'int', label: 'd', filter: true },
   { name: 'date', label: 'a date', filter: true },
   {
-    name: 'random',
+    name: 'name',
     label: 'custom',
     render: (x): string => 'custom' + x.location.name
   }
 ];
 
-const asyncData = (): Promise<Definition<Animal, Continent>> =>
-  new Promise<Definition<Animal, Continent>>(resolve => resolve(data));
+const asyncData = (
+  config: AsyncDataConfig<Animal>
+): Promise<AsyncDataReturn<Animal>> => {
+  const { nPerPage, pageIdx, filters, sort } = config;
+  const filteredData = applyFilter(data, toFilterArray<Animal>(filters));
+  const orderedData = order(
+    filteredData,
+    sort.attribute ? sort.attribute : undefined,
+    sort.descAsc
+  );
+  return new Promise(r => {
+    setTimeout(() => {
+      r({
+        meta: {
+          n: orderedData.length
+        },
+        data: withPagination(orderedData, pageIdx, nPerPage)
+      });
+    }, 1000);
+  });
+};
 
 const AsyncExample = (): JSX.Element => (
-  <List
+  <List<Animal>
     def={def}
-    config={{ search: true }}
+    config={{ search: true, nPerPage: 3 }}
     asyncData={asyncData}
-    nPerPage={3}
   />
 );
 
