@@ -4,7 +4,7 @@ import {
   getPageTiles,
   paginationBoundaries,
   withPagination
-} from './pagination-utils';
+} from '../pagination-utils';
 
 test('gepagination', () => {
   const r = getPagination(23, 20);

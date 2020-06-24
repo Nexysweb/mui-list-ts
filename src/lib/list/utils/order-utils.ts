@@ -1,4 +1,4 @@
-import { SortCompareOut } from '../types/definition';
+import { SortCompareOut } from '../../types/definition';
 
 export const getAttribute = <A>(attribute: keyof A, a: A): SortCompareOut => {
   const ac = String(a[attribute]);

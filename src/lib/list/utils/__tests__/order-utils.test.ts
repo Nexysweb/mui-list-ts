@@ -1,5 +1,5 @@
-import { SortCompareOut } from '../types/definition';
-import { getAttribute, order } from './order-utils';
+import { SortCompareOut } from '../../../types/definition';
+import { getAttribute, order } from '../order-utils';
 
 interface A {
   name: {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { PaginationUnit, PaginationWrapper } from './ui';
-import { getPagination, getPageTiles } from './pagination-utils';
+import { getPagination, getPageTiles } from './utils/pagination-utils';
 
 interface Props {
   PaginationUnit: typeof PaginationUnit;

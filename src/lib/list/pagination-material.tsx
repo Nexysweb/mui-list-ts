@@ -9,7 +9,7 @@
 import React from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import PaginationMaterial from '@material-ui/lab/Pagination';
-import { getPagination } from './pagination-utils';
+import { getPagination } from './utils/pagination-utils';
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -37,6 +37,8 @@ const Pagination = (props: InnerProps): JSX.Element | null => {
   }
 
   const { nPage } = getPagination(n, nPerPage);
+
+  console.log(idx);
 
   return (
     <div className={classes.root}>

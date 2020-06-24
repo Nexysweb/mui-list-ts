@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useReducer, Reducer } from 'react';
 
 import Utils from '@nexys/utils';
 
@@ -17,15 +17,21 @@ import {
   FilterUnit
 } from './ui';
 import { InnerProps as PaginationProps } from './pagination';
-import { Config, Definition, DefinitionItem } from '../types';
-import { order } from './order-utils';
+import {
+  Config,
+  Definition,
+  DefinitionItem,
+  AsyncDataConfig,
+  AsyncDataReturn
+} from '../types';
+import { order } from './utils/order-utils';
 import {
   applyFilter,
   toFilterArray,
   getSort,
   updateFilters
-} from './filter-utils';
-import { withPagination } from './pagination-utils';
+} from './utils/filter-utils';
+import { withPagination } from './utils/pagination-utils';
 
 interface State<A> {
   sortAttribute?: keyof A;
@@ -33,13 +39,17 @@ interface State<A> {
   filters: { [k in keyof A | 'globalSearch']?: any }; //TFilterUnit<A>[];
   pageIdx: number;
   data: A[];
+  numberOfTotalRows: number;
+  loading: boolean;
 }
 
-const stateDefault = <A,>(): State<A> => ({
+const getInitialState = <A,>(data?: A[]): State<A> => ({
   sortDescAsc: true,
   filters: {},
   pageIdx: 1,
-  data: []
+  data: data ? data : [],
+  numberOfTotalRows: data && data.length ? data.length : 0,
+  loading: false
 });
 
 export interface Props {
@@ -63,7 +73,70 @@ export interface InnerProps<A> {
   data?: A[];
   nPerPage?: number;
   config?: Config;
-  asyncData?: () => Promise<any>;
+  asyncData?: (config: AsyncDataConfig) => Promise<AsyncDataReturn<A>>;
+}
+
+const Loader = (): JSX.Element => <p>Loading...</p>;
+
+enum ActionType {
+  FETCH_DATA_REQUEST = 'FETCH_DATA_REQUEST',
+  FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS',
+  FILTER_CHANGE = 'FILTER_CHANGE',
+  ORDER_CHANGE = 'ORDER_CHANGE',
+  PAGE_CHANGE = 'PAGE_CHANGE'
+}
+
+interface Action {
+  type: ActionType;
+  payload?: any;
+}
+
+function listSuperReducer<A>(state: State<A>, action: Action): State<A> {
+  if (action.type === ActionType.FETCH_DATA_REQUEST) {
+    return {
+      ...state,
+      loading: true
+    };
+  }
+
+  if (action.type === ActionType.FETCH_DATA_SUCCESS) {
+    const { data, numberOfTotalRows } = action.payload;
+    return {
+      ...state,
+      loading: false,
+      data,
+      numberOfTotalRows
+    };
+  }
+
+  if (action.type === ActionType.FILTER_CHANGE) {
+    const { filters, pageIdx } = action.payload;
+    return {
+      ...state,
+      filters,
+      pageIdx
+    };
+  }
+
+  if (action.type === ActionType.ORDER_CHANGE) {
+    const { sortDescAsc, sortAttribute, pageIdx } = action.payload;
+    return {
+      ...state,
+      sortDescAsc,
+      sortAttribute,
+      pageIdx
+    };
+  }
+
+  if (action.type === ActionType.PAGE_CHANGE) {
+    const { pageIdx } = action.payload;
+    return {
+      ...state,
+      pageIdx
+    };
+  }
+
+  return state;
 }
 
 const ListSuper = <A,>({
@@ -82,20 +155,40 @@ const ListSuper = <A,>({
   Pagination
 }: Props) =>
   function InnerListSuper(props: InnerProps<A>): JSX.Element {
-    const [state, setState] = useState<State<A>>(stateDefault<A>());
-    // todo async
-    //const [ fpData, setPData ] = useState([]);
-    //const [ loading, setLoading ] = useState(true);
-    //const [ n, setN ] = useState(0);
-
-    const { def, config = {}, asyncData } = props; // todo asyn , asyncData = false
-    const { filters, pageIdx, sortAttribute, sortDescAsc, data } = state;
+    const [state, dispatch] = useReducer<Reducer<State<A>, Action>>(
+      listSuperReducer,
+      getInitialState<A>()
+    );
+    const { def, config = {}, asyncData } = props;
+    const {
+      filters,
+      pageIdx,
+      sortAttribute,
+      sortDescAsc,
+      data,
+      numberOfTotalRows,
+      loading
+    } = state;
     const nPerPage = config.nPerPage || props.nPerPage || 25;
     if (props.nPerPage) {
       console.warn(
         'The use of nPerPage in props is deprecated. Add nPerPage to the config object prop.'
       );
     }
+
+    const fetchData = (pageIdxA: number): void => {
+      if (asyncData) {
+        dispatch({ type: ActionType.FETCH_DATA_REQUEST });
+        asyncData({ nPerPage, pageIdx: pageIdxA, filters: {}, sort: {} }).then(
+          res => {
+            dispatch({
+              type: ActionType.FETCH_DATA_SUCCESS,
+              payload: { data: res.data, numberOfTotalRows: res.meta.n }
+            });
+          }
+        );
+      }
+    };
 
     const handleFilterChange = (v: {
       name: keyof A | 'globalSearch';
@@ -107,7 +200,10 @@ const ListSuper = <A,>({
       // when a filter is applied, the page index is reset
       const pageIdx = 1;
 
-      setState({ ...state, filters: newFilters, pageIdx });
+      dispatch({
+        type: ActionType.FILTER_CHANGE,
+        payload: { filters: newFilters, pageIdx }
+      });
     };
 
     /**
@@ -122,18 +218,20 @@ const ListSuper = <A,>({
         descAsc = !sortDescAsc;
       }
 
-      setState({
-        ...state,
-        pageIdx: 1,
-        sortDescAsc: descAsc,
-        sortAttribute: name
+      dispatch({
+        type: ActionType.ORDER_CHANGE,
+        payload: { sortDescAsc: descAsc, sortAttribute: name, pageIdx: 1 }
       });
     };
 
     const changePage = (pageIdx: number): void => {
       // todo block beyond max page
       if (pageIdx > 0) {
-        setState({ ...state, pageIdx });
+        if (asyncData) {
+          fetchData(pageIdx);
+        }
+
+        dispatch({ type: ActionType.PAGE_CHANGE, payload: { pageIdx } });
       }
     };
 
@@ -189,45 +287,27 @@ const ListSuper = <A,>({
       </>
     );
 
-    /*
-  // todo async
-  if (asyncData && loading) {
-    asyncData(state).then(p => {
-      setPData(p);
-      setN(p.length);
-      setLoading(false);
-    });
-
-    return <Loader/>;
-  }
-
-  if(loading) {
-    const fData = applyFilter(data, filters);
-    setLoading(false);
-    setN(fData.length);
-    setPData(orderWithPagination(order(fData, sortAttribute, sortDescAsc), pageIdx, nPerPage));
-  }*/
-    if (data.length === 0) {
-      if (asyncData)
-        asyncData().then(res => {
-          setState({ ...state, data: res });
-        });
-      else {
-        if (props.data && props.data.length) {
-          setState({ ...state, data: props.data });
-        }
-      }
+    if (data.length === 0 && asyncData && !loading) {
+      fetchData(pageIdx);
     }
-    const fData: A[] = applyFilter(data, toFilterArray<A>(filters));
-    const n: number = fData.length;
+    let fData: A[] = [];
+    let fpData: A[] = [];
+    let n = 0;
 
-    const fpData: A[] = sortAttribute
-      ? withPagination(
-          order<A>(fData, getSort<A>(def, sortAttribute), sortDescAsc),
-          pageIdx,
-          nPerPage
-        )
-      : withPagination(fData, pageIdx, nPerPage);
+    if (!asyncData) {
+      fData = applyFilter(data, toFilterArray<A>(filters));
+      n = fData.length;
+
+      fpData = sortAttribute
+        ? withPagination(
+            order<A>(fData, getSort<A>(def, sortAttribute), sortDescAsc),
+            pageIdx,
+            nPerPage
+          )
+        : withPagination(fData, pageIdx, nPerPage);
+    } else {
+      n = numberOfTotalRows;
+    }
 
     const showPagination: boolean =
       typeof config.pagination !== 'undefined' ? config.pagination : true;
@@ -244,7 +324,17 @@ const ListSuper = <A,>({
             <Row>{renderHeaders()}</Row>
           </ListHeader>
 
-          <ListBody>{renderBody(fpData)}</ListBody>
+          <ListBody>
+            {loading ? (
+              <tr>
+                <ColCell colSpan={def.length}>
+                  <Loader />
+                </ColCell>
+              </tr>
+            ) : (
+              renderBody(asyncData ? data : fpData)
+            )}
+          </ListBody>
         </ListContainer>
 
         <RecordInfo n={n} idx={pageIdx} nPerPage={nPerPage} />
@@ -258,7 +348,7 @@ const ListSuper = <A,>({
           />
         )}
 
-        <NoRow n={n} />
+        {!loading && <NoRow n={n} />}
       </ListWrapper>
     );
   };

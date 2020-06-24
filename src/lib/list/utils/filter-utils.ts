@@ -1,4 +1,4 @@
-import { DefinitionItem, SortCompareOut } from '../types';
+import { DefinitionItem, SortCompareOut } from '../../types';
 
 export const compareString = (main: string, searchString: string): boolean =>
   main.toLowerCase().indexOf(searchString.toLowerCase()) > -1;

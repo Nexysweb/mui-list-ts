@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { Definition } from '../lib/types/definition';
+import { Definition, AsyncDataConfig, AsyncDataReturn } from '../lib/types';
 import List from '../lib/list';
+import { withPagination } from '../lib/list/utils/pagination-utils';
 
 interface Continent {
   id: number;
@@ -97,32 +98,56 @@ const data: Animals = [
   }
 ];
 
-const def: Definition<Animal, Continent> = [
+const def: Definition<Animal> = [
   { name: 'name', filter: true, sort: true },
   {
-    name: 'location.name',
-    filter: {
-      type: 'category',
-      func: (a, b): boolean => b.includes(a.location.id),
-      options: [af, eu, as, am]
-    }
+    name: 'location',
+    render: (x): string => x.location.name
+    // filter: {
+    //   type: 'category',
+    //   func: (a, b): boolean => b.includes(a.location.id),
+    //   options: [af, eu, as, am]
+    // }
   },
-  { name: 'country.name', label: 'Country', filter: true },
+  {
+    name: 'country',
+    label: 'Country',
+    render: (x): string => x.country.name /* filter: true */
+  },
   { name: 'amount', label: 'A long label', filter: true },
   { name: 'int', label: 'd', filter: true },
   { name: 'date', label: 'a date', filter: true },
   {
-    name: 'random',
+    name: 'name',
     label: 'custom',
     render: (x): string => 'custom' + x.location.name
   }
 ];
 
-const asyncData = (): Promise<Definition<Animal, Continent>> =>
-  new Promise<Definition<Animal, Continent>>(resolve => resolve(data));
+const asyncData = (
+  config: AsyncDataConfig
+): Promise<AsyncDataReturn<Animal>> => {
+  const { nPerPage, pageIdx } = config;
+  // return Promise.resolve({
+  // meta: {
+  //   n: data.length
+  // },
+  // data: withPagination(data, pageIdx, nPerPage)
+  // });
+  return new Promise(r => {
+    setTimeout(() => {
+      r({
+        meta: {
+          n: data.length
+        },
+        data: withPagination(data, pageIdx, nPerPage)
+      });
+    }, 1000);
+  });
+};
 
 const AsyncExample = (): JSX.Element => (
-  <List
+  <List<Animal>
     def={def}
     config={{ search: true }}
     asyncData={asyncData}

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Alert from '../../components/alert';
-import { paginationBoundaries } from '../pagination-utils';
+import { paginationBoundaries } from '../utils/pagination-utils';
 import GlobalSearch from './global-search';
 import PopoverFilter from './popover-filter';
 import FilterUnit from './filter-unit';
@@ -79,11 +79,12 @@ export const PaginationUnit = (
 
 interface ColCellProps {
   children: React.ReactNode | JSX.Element;
+  colSpan?: number;
 }
 
 export const ColCell = (props: ColCellProps): JSX.Element => {
-  const { children } = props;
-  return <TableCell>{children}</TableCell>;
+  const { children, colSpan } = props;
+  return <TableCell colSpan={colSpan}>{children}</TableCell>;
 };
 
 interface HeaderUnitProps {

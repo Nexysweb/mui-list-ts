@@ -1,4 +1,4 @@
-import { DefinitionItem, SortCompareOut } from '../types';
+import { DefinitionItem, SortCompareOut } from '../../../types';
 
 import {
   applyFilter,
@@ -10,7 +10,7 @@ import {
   FilterSearchValue,
   getSort,
   updateFilters
-} from './filter-utils';
+} from '../filter-utils';
 
 test('compareString', () => {
   const main = 'fullString';
