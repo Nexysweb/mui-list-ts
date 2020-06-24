@@ -9,7 +9,13 @@
   "keywords": [
     "typescript",
     "mui-list",
-    "datatable"
+    "datatable",
+    "react",
+    "material-ui",
+    "ui-independent",
+    "table", "list",
+    "mui-data",
+    "mui-datatables"
   ],
   "repository": {
     "type": "git",
