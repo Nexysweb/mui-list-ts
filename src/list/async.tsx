@@ -154,9 +154,8 @@ const asyncData = (
 const AsyncExample = (): JSX.Element => (
   <List<Animal>
     def={def}
-    config={{ search: true }}
+    config={{ search: true, nPerPage: 3 }}
     asyncData={asyncData}
-    nPerPage={3}
   />
 );
 

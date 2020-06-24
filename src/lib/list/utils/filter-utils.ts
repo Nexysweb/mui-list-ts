@@ -19,8 +19,7 @@ export const toFilterArray = <A>(
 
 export const compare = (
   main: any,
-  search: string | number | boolean, //| Search,
-  d?: any
+  search: string | number | boolean //| Search,
 ): boolean => {
   const mainType = typeof main;
   const searchType = typeof search;
@@ -36,16 +35,6 @@ export const compare = (
         return false;
     }
   }
-
-  /*if (searchType === 'object') {
-    const searchObj = search as Search;
-
-    if (searchObj.value.length === 0) {
-      return true;
-    }
-
-    return searchObj.func(d, searchObj.value);
-  }*/
 
   return false;
 };
@@ -110,7 +99,7 @@ export const applyFilter = <A>(
             return true;
           }
 
-          return compare(d[key], f.value, d);
+          return compare(d[key], f.value);
         }
 
         return true;
