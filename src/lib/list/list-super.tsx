@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, Reducer } from 'react';
+import React, { useCallback, useEffect, useReducer, Reducer } from 'react';
 
 import Utils from '@nexys/utils';
 
@@ -102,40 +102,43 @@ const ListSuper = <A,>({
       );
     }
 
-    const fetchData = (config?: {
-      pageIdx?: number;
-      filters?: FiltersType<A>;
-      sortAttribute?: keyof A;
-      sortDescAsc?: boolean;
-    }): void => {
-      if (asyncData) {
-        dispatch({ type: ActionType.FETCH_DATA_REQUEST });
-        asyncData({
-          nPerPage,
-          pageIdx: config && config.pageIdx ? config.pageIdx : pageIdx,
-          filters: config && config.filters ? config.filters : filters,
-          sort: {
-            attribute:
-              config && config.sortAttribute
-                ? config.sortAttribute
-                : sortAttribute,
-            descAsc:
-              config && typeof config.sortDescAsc !== 'undefined'
-                ? config.sortDescAsc
-                : sortDescAsc
-          }
-        }).then(res => {
-          dispatch({
-            type: ActionType.FETCH_DATA_SUCCESS,
-            payload: { data: res.data, numberOfTotalRows: res.meta.n }
+    const fetchData = useCallback(
+      (config?: {
+        pageIdx?: number;
+        filters?: FiltersType<A>;
+        sortAttribute?: keyof A;
+        sortDescAsc?: boolean;
+      }): void => {
+        if (asyncData) {
+          dispatch({ type: ActionType.FETCH_DATA_REQUEST });
+          asyncData({
+            nPerPage,
+            pageIdx: config && config.pageIdx ? config.pageIdx : pageIdx,
+            filters: config && config.filters ? config.filters : filters,
+            sort: {
+              attribute:
+                config && config.sortAttribute
+                  ? config.sortAttribute
+                  : sortAttribute,
+              descAsc:
+                config && typeof config.sortDescAsc !== 'undefined'
+                  ? config.sortDescAsc
+                  : sortDescAsc
+            }
+          }).then(res => {
+            dispatch({
+              type: ActionType.FETCH_DATA_SUCCESS,
+              payload: { data: res.data, numberOfTotalRows: res.meta.n }
+            });
           });
-        });
-      }
-    };
+        }
+      },
+      [asyncData, filters, nPerPage, pageIdx, sortAttribute, sortDescAsc]
+    );
 
     useEffect(() => {
       fetchData();
-    }, [asyncData]);
+    }, [asyncData, fetchData]);
 
     const handleFilterChange = (v: {
       name: keyof A | 'globalSearch';
@@ -157,9 +160,7 @@ const ListSuper = <A,>({
         payload: config
       });
 
-      if (asyncData) {
-        fetchData(config);
-      }
+      fetchData(config);
     };
 
     /**
@@ -180,10 +181,6 @@ const ListSuper = <A,>({
         type: ActionType.ORDER_CHANGE,
         payload: config
       });
-
-      if (asyncData) {
-        fetchData(config);
-      }
     };
 
     const changePage = (pageIdx: number): void => {
@@ -192,10 +189,6 @@ const ListSuper = <A,>({
         const config = { pageIdx };
 
         dispatch({ type: ActionType.PAGE_CHANGE, payload: config });
-
-        if (asyncData) {
-          fetchData(config);
-        }
       }
     };
 
