@@ -1,7 +1,9 @@
+export type FiltersType<A> = { [k in keyof A | 'globalSearch']?: any };
+
 export interface State<A> {
   sortAttribute?: keyof A;
   sortDescAsc: boolean;
-  filters: { [k in keyof A | 'globalSearch']?: any }; //TFilterUnit<A>[];
+  filters: FiltersType<A>;
   pageIdx: number;
   data: A[];
   numberOfTotalRows: number;

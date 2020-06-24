@@ -38,7 +38,8 @@ import {
   getInitialState,
   Action,
   ActionType,
-  State
+  State,
+  FiltersType
 } from './list-super-partials';
 
 export interface Props {
@@ -102,14 +103,28 @@ const ListSuper = <A,>({
       );
     }
 
-    const fetchData = (newPageIdx?: number): void => {
+    const fetchData = (config?: {
+      pageIdx?: number;
+      filters?: FiltersType<A>;
+      sortAttribute?: keyof A;
+      sortDescAsc?: boolean;
+    }): void => {
       if (asyncData) {
         dispatch({ type: ActionType.FETCH_DATA_REQUEST });
         asyncData({
           nPerPage,
-          pageIdx: newPageIdx ? newPageIdx : pageIdx,
-          filters,
-          sort: { attribute: sortAttribute, descAsc: sortDescAsc }
+          pageIdx: config && config.pageIdx ? config.pageIdx : pageIdx,
+          filters: config && config.filters ? config.filters : filters,
+          sort: {
+            attribute:
+              config && config.sortAttribute
+                ? config.sortAttribute
+                : sortAttribute,
+            descAsc:
+              config && typeof config.sortDescAsc !== 'undefined'
+                ? config.sortDescAsc
+                : sortDescAsc
+          }
         }).then(res => {
           dispatch({
             type: ActionType.FETCH_DATA_SUCCESS,
@@ -129,13 +144,18 @@ const ListSuper = <A,>({
       // when a filter is applied, the page index is reset
       const pageIdx = 1;
 
+      const config = {
+        filters: newFilters,
+        pageIdx
+      };
+
       dispatch({
         type: ActionType.FILTER_CHANGE,
-        payload: { filters: newFilters, pageIdx }
+        payload: config
       });
 
       if (asyncData) {
-        fetchData();
+        fetchData(config);
       }
     };
 
@@ -151,20 +171,28 @@ const ListSuper = <A,>({
         descAsc = !sortDescAsc;
       }
 
+      const config = { sortDescAsc: descAsc, sortAttribute: name, pageIdx: 1 };
+
       dispatch({
         type: ActionType.ORDER_CHANGE,
-        payload: { sortDescAsc: descAsc, sortAttribute: name, pageIdx: 1 }
+        payload: config
       });
+
+      if (asyncData) {
+        fetchData(config);
+      }
     };
 
     const changePage = (pageIdx: number): void => {
       // todo block beyond max page
       if (pageIdx > 0) {
-        if (asyncData) {
-          fetchData(pageIdx);
-        }
+        const config = { pageIdx };
 
-        dispatch({ type: ActionType.PAGE_CHANGE, payload: { pageIdx } });
+        dispatch({ type: ActionType.PAGE_CHANGE, payload: config });
+
+        if (asyncData) {
+          fetchData(config);
+        }
       }
     };
 
@@ -229,7 +257,7 @@ const ListSuper = <A,>({
     );
 
     if (data.length === 0 && asyncData && !loading) {
-      fetchData(pageIdx);
+      fetchData();
     }
     let fData: A[] = [];
     let fpData: A[] = [];

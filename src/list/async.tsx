@@ -4,6 +4,7 @@ import { Definition, AsyncDataConfig, AsyncDataReturn } from '../lib/types';
 import List from '../lib/list';
 import { withPagination } from '../lib/list/utils/pagination-utils';
 import { applyFilter, toFilterArray } from '../lib/list/utils/filter-utils';
+import { order } from '../lib/list/utils/order-utils';
 
 interface Continent {
   id: number;
@@ -128,15 +129,20 @@ const def: Definition<Animal> = [
 const asyncData = (
   config: AsyncDataConfig<Animal>
 ): Promise<AsyncDataReturn<Animal>> => {
-  const { nPerPage, pageIdx, filters } = config;
+  const { nPerPage, pageIdx, filters, sort } = config;
   const filteredData = applyFilter(data, toFilterArray<Animal>(filters));
+  const orderedData = order(
+    filteredData,
+    sort.attribute ? sort.attribute : undefined,
+    sort.descAsc
+  );
   return new Promise(r => {
     setTimeout(() => {
       r({
         meta: {
-          n: filteredData.length
+          n: orderedData.length
         },
-        data: withPagination(filteredData, pageIdx, nPerPage)
+        data: withPagination(orderedData, pageIdx, nPerPage)
       });
     }, 1000);
   });
