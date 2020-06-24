@@ -1,5 +1,3 @@
-import { DefinitionItem, SortCompareOut } from '../../../types';
-
 import {
   applyFilter,
   compare,
@@ -8,7 +6,6 @@ import {
   addRemoveToArray,
   toFilterArray,
   FilterSearchValue,
-  getSort,
   updateFilters
 } from '../filter-utils';
 
@@ -90,50 +87,6 @@ interface CompliciatedDummyShape {
   };
   short: string;
 }
-
-describe('getSort', () => {
-  describe('sort function is NOT defined', () => {
-    it('should return right attribute', () => {
-      const def: DefinitionItem<DummyShape>[] = [
-        {
-          name: 'name',
-          sort: true
-        },
-        {
-          name: 'value'
-        }
-      ];
-      const sortAttribute = getSort(def, 'name');
-      expect(sortAttribute).toBe('name');
-    });
-  });
-
-  describe('sort function is defined properly', () => {
-    it('should return right the sort function', () => {
-      const def: DefinitionItem<DummyShape>[] = [
-        {
-          name: 'name',
-          sort: {
-            func: (): SortCompareOut => {
-              return 1;
-            }
-          }
-        },
-        {
-          name: 'value'
-        }
-      ];
-      const sortFunction = getSort(def, 'name');
-
-      // the if is only for typescript
-      if (typeof sortFunction === 'function') {
-        expect(sortFunction({ name: 'test', value: 'val' })).toBe(1);
-      } else {
-        throw new Error('Something went wrong');
-      }
-    });
-  });
-});
 
 describe('updateFilters', () => {
   describe('value is null', () => {

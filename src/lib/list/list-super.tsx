@@ -25,11 +25,10 @@ import {
   AsyncDataConfig,
   AsyncDataReturn
 } from '../types';
-import { order } from './utils/order-utils';
+import { order, getSort } from './utils/order-utils';
 import {
   applyFilter,
   toFilterArray,
-  getSort,
   updateFilters
 } from './utils/filter-utils';
 import { withPagination } from './utils/pagination-utils';

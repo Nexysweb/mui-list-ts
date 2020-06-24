@@ -1,5 +1,3 @@
-import { DefinitionItem, SortCompareOut } from '../../types';
-
 export const compareString = (main: string, searchString: string): boolean =>
   main.toLowerCase().indexOf(searchString.toLowerCase()) > -1;
 
@@ -136,22 +134,6 @@ export const addRemoveToArray = <T = any>(v: T, a: T[] = []): T[] => {
   a.push(v);
 
   return a;
-};
-
-export const getSort = <A>(
-  def: DefinitionItem<A>[],
-  sortAttribute: keyof A
-): (keyof A | ((input: A) => SortCompareOut)) | keyof A => {
-  const i = def.find(x => x.name === sortAttribute);
-  if (!i || !i.sort) {
-    throw Error('sort attribute could not be matched');
-  }
-
-  if (typeof i.sort === 'object' && 'func' in i.sort) {
-    return i.sort.func;
-  }
-
-  return sortAttribute;
 };
 
 export const updateFilters = <A>(

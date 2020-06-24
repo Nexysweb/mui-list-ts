@@ -1,4 +1,4 @@
-import { SortCompareOut } from '../../types/definition';
+import { SortCompareOut, DefinitionItem } from '../../types';
 
 export const getAttribute = <A>(attribute: keyof A, a: A): SortCompareOut => {
   const ac = String(a[attribute]);
@@ -60,4 +60,20 @@ export const order = <A>(
   }
 
   return ordered;
+};
+
+export const getSort = <A>(
+  def: DefinitionItem<A>[],
+  sortAttribute: keyof A
+): (keyof A | ((input: A) => SortCompareOut)) | keyof A => {
+  const i = def.find(x => x.name === sortAttribute);
+  if (!i || !i.sort) {
+    throw Error('sort attribute could not be matched');
+  }
+
+  if (typeof i.sort === 'object' && 'func' in i.sort) {
+    return i.sort.func;
+  }
+
+  return sortAttribute;
 };
