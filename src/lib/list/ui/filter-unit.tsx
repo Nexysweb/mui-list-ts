@@ -36,7 +36,7 @@ const FilterUnit = <A,>(props: FilterUnitProps<A>): JSX.Element | null => {
 
   if (typeof filter === 'boolean' && filter === true) {
     return (
-      <PopoverFilter>
+      <PopoverFilter isActive={filters[name]}>
         <SearchUnit
           name={name}
           value={filters[name]}
@@ -48,7 +48,7 @@ const FilterUnit = <A,>(props: FilterUnitProps<A>): JSX.Element | null => {
 
   if (typeof filter === 'object' && filter.type === 'string') {
     return (
-      <PopoverFilter>
+      <PopoverFilter isActive={filters[name]}>
         <SearchUnit
           name={name}
           value={filters[name] ? filters[name].value.value : ''}
@@ -69,7 +69,7 @@ const FilterUnit = <A,>(props: FilterUnitProps<A>): JSX.Element | null => {
       const v = filters[name] ? filters[name].value : [];
 
       return (
-        <PopoverFilter>
+        <PopoverFilter isActive={filters[name]}>
           <FormControl component="fieldset">
             <FormGroup>
               {filter.options.map((option, i) => (
@@ -103,7 +103,7 @@ const FilterUnit = <A,>(props: FilterUnitProps<A>): JSX.Element | null => {
     if (filter.type === 'select') {
       const value = filters[name] ? filters[name].value.value : '';
       return (
-        <PopoverFilter>
+        <PopoverFilter isActive={filters[name]}>
           <FormControl component="fieldset">
             <RadioGroup aria-label={name.toString()} value={value}>
               {filter.options.map((option, i) => (

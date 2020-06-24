@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface PopoverFilterProps {
   children: React.ReactNode | JSX.Element;
+  isActive?: boolean;
 }
 
 const PopoverFilter = (props: PopoverFilterProps): JSX.Element => {
@@ -32,11 +33,14 @@ const PopoverFilter = (props: PopoverFilterProps): JSX.Element => {
 
   const open = Boolean(anchorEl);
 
-  const { children } = props;
+  const { children, isActive } = props;
 
   return (
     <>
-      <IconButton onClick={handleClick}>
+      <IconButton
+        onClick={handleClick}
+        style={{ color: isActive ? '#000' : '#aaa' }}
+      >
         <FilterListIcon />
       </IconButton>
       <Popover
