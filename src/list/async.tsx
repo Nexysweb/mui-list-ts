@@ -104,12 +104,15 @@ const def: Definition<Animal> = [
   { name: 'name', filter: true, sort: true },
   {
     name: 'location',
-    render: (x): string => x.location.name
-    // filter: {
-    //   type: 'category',
-    //   func: (a, b): boolean => b.includes(a.location.id),
-    //   options: [af, eu, as, am]
-    // }
+    render: (x): string => x.location.name,
+    filter: {
+      type: 'category',
+      func: (a, b): boolean => b.includes(a.location.id),
+      options: [
+        { key: 1, value: 'Africa' },
+        { key: 2, value: 'Europe' }
+      ]
+    }
   },
   {
     name: 'country',

@@ -1,4 +1,4 @@
-import React, { useReducer, Reducer } from 'react';
+import React, { useEffect, useReducer, Reducer } from 'react';
 
 import Utils from '@nexys/utils';
 
@@ -133,6 +133,10 @@ const ListSuper = <A,>({
       }
     };
 
+    useEffect(() => {
+      fetchData();
+    }, [asyncData]);
+
     const handleFilterChange = (v: {
       name: keyof A | 'globalSearch';
       value: any;
@@ -255,9 +259,6 @@ const ListSuper = <A,>({
       </tr>
     );
 
-    if (data.length === 0 && asyncData && !loading) {
-      fetchData();
-    }
     let fData: A[] = [];
     let fpData: A[] = [];
     let n = 0;
