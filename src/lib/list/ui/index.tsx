@@ -19,8 +19,7 @@ import {
 import {
   KeyboardArrowUp as ChevronUp,
   KeyboardArrowDown as ChevronDown,
-  ArrowUpward,
-  ArrowDownward
+  UnfoldMore as SortDefault
 } from '@material-ui/icons';
 
 interface NoRowProps {
@@ -118,19 +117,29 @@ export const OrderControllerUpAndDown = (
 };
 
 interface OrderControllerProps {
-  descAsc: boolean;
+  descAsc: boolean | null;
   onClick: (a: null) => void;
 }
 
 export const OrderController = (props: OrderControllerProps): JSX.Element => {
   const { onClick, descAsc } = props;
 
-  const Icon = descAsc ? ArrowUpward : ArrowDownward;
+  let Icon = SortDefault;
+  if (descAsc !== null) {
+    Icon = descAsc ? ChevronUp : ChevronDown;
+  }
 
   return (
-    <small style={{ cursor: 'pointer' }} onClick={(): void => onClick(null)}>
+    <div
+      style={{
+        cursor: 'pointer',
+        display: 'inline-block',
+        color: descAsc === null ? '#aaa' : '#000'
+      }}
+      onClick={(): void => onClick(null)}
+    >
       <Icon />
-    </small>
+    </div>
   );
 };
 

@@ -205,7 +205,7 @@ const ListSuper = <A,>({
 
         const order = isSort(h) ? (
           <OrderController
-            descAsc={sortDescAsc}
+            descAsc={sortAttribute === h.name ? sortDescAsc : null}
             onClick={(): void => setOrder(h.name)}
           />
         ) : null;
