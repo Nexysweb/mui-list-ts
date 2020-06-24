@@ -39,7 +39,7 @@ const PopoverFilter = (props: PopoverFilterProps): JSX.Element => {
     <>
       <IconButton
         onClick={handleClick}
-        style={{ color: isActive ? '#000' : '#aaa' }}
+        style={{ color: isActive ? '#000' : '#ccc' }}
       >
         <FilterListIcon />
       </IconButton>

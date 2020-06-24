@@ -134,7 +134,7 @@ export const OrderController = (props: OrderControllerProps): JSX.Element => {
       style={{
         cursor: 'pointer',
         display: 'inline-block',
-        color: descAsc === null ? '#aaa' : '#000'
+        color: descAsc === null ? '#ccc' : '#000'
       }}
       onClick={(): void => onClick(null)}
     >
