@@ -1,6 +1,6 @@
 {
   "name": "@nexys/mui-list",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.8.3",
@@ -13,7 +13,8 @@
     "react",
     "material-ui",
     "ui-independent",
-    "table", "list",
+    "table",
+    "list",
     "mui-data",
     "mui-datatables"
   ],
