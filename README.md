@@ -12,6 +12,16 @@ Multi-purpose list for MUI
 
 See here: https://nexysweb.github.io/mui-list-ts/
 
+## Doc 
+
+_todo_
+
+however, all interfaces/types are described here: https://github.com/Nexysweb/mui-list-ts/tree/master/src/lib/types
+
+## Examples
+
+The source code for the examples can be found in: https://github.com/Nexysweb/mui-list-ts/tree/master/src/list
+
 ## References
 
 * [Material UI](https://github.com/mui-org/material-ui)
