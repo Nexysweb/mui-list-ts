@@ -160,7 +160,7 @@ export const ListContainer = (props: ListContainerProps): JSX.Element => {
   const { children } = props;
   return (
     <TableContainer>
-      <Table>{children}</Table>
+      <Table size="small">{children}</Table>
     </TableContainer>
   );
 };
