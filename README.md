@@ -15,7 +15,7 @@ See here: https://nexysweb.github.io/mui-list-ts/
 
 ## Doc 
 
-_todo_
+_todo_ 
 
 however, all interfaces/types are described here: https://github.com/Nexysweb/mui-list-ts/tree/master/src/lib/types
 
