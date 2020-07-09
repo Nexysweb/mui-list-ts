@@ -6,6 +6,7 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/nexysweb/mui-list-ts.svg)](http://isitmaintained.com/project/nexysweb/mui-list-ts "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/nexysweb/mui-list-ts.svg)](http://isitmaintained.com/project/nexysweb/mui-list-ts "Percentage of issues still open")
 ![Code style](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)
+![Publish](https://github.com/Nexysweb/mui-list-ts/workflows/Publish/badge.svg)
 
 
 Multi-purpose list for MUI
