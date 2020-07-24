@@ -141,7 +141,7 @@ const ListSuper = <A,>({
     }, [asyncData, fetchData]);
 
     const handleFilterChange = (v: {
-      name: keyof A | 'globalSearch';
+      name: keyof A | 'globalSearch' | 'id' | 'uuid';
       value: any;
       type?: string;
     }): void => {
@@ -170,7 +170,10 @@ const ListSuper = <A,>({
      * @return {[type]}         [description]
      * todo: allow custom ordering
      */
-    const setOrder = (name: keyof A, descAsc: boolean | null = null): void => {
+    const setOrder = (
+      name: keyof A | 'id' | 'uuid',
+      descAsc: boolean | null = null
+    ): void => {
       if (descAsc === null) {
         descAsc = !sortDescAsc;
       }
