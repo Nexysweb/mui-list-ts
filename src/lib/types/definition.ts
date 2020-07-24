@@ -5,7 +5,7 @@ import { Filter } from './filter';
 export type SortCompareOut = string | number | boolean;
 
 export interface DefinitionItem<T> {
-  name: keyof T;
+  name: keyof T | 'id' | 'uuid';
   key?: string;
   label?: string | React.ReactNode | JSX.Element;
   title?: string;

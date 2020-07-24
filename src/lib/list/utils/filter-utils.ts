@@ -128,7 +128,7 @@ export const addRemoveToArray = <T = any>(v: T, a: T[] = []): T[] => {
 export const updateFilters = <A>(
   filters: any,
   v: {
-    name: keyof A | 'globalSearch';
+    name: keyof A | 'globalSearch' | 'id' | 'uuid';
     value: any;
     type?: string;
   }
