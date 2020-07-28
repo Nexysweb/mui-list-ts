@@ -97,6 +97,18 @@ custom rendering, e.g. if `A` contains `amount` and the amount needs to be forma
 
 displays a column filter. The filter can be customized, see examples
 
+| **Accepted Types:** |
+|---------------------|
+|  `Boolean` + custom | 
+
+#### `sort`
+
+displays a column sort.
+
+| **Accepted Types:** |
+|---------------------|
+|  `Boolean` + custom | 
+
 ### `config`
 
 #### `search`
