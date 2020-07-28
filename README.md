@@ -22,47 +22,19 @@ See here: https://nexysweb.github.io/mui-list-ts/
 ```
 import {List, Types} from '@nexys/mui-list';
 
-interface Continent {
-  id: number;
-  name: string;
-}
-
-interface Country {
-  name: string;
-}
-
 interface Animal {
   id: number;
-  check?: boolean;
   name: string;
-  location: Continent;
-  country: Country;
-  amount: number;
-  int: number;
-  date: string;
+  location: {id: number; name: string};
 }
 
 // list of data (here only one entry to make example more concise)
 const data: Animal[] = [
-  {
-    id: 2,
-    check: true,
-    name: 'Sheep',
-    location: eu,
-    country: { name: 'United Kingdom' },
-    amount: 23.3,
-    int: 23,
-    date: '2019-09-05'
-  },
+  { id: 2, name: 'Sheep', location: eu },
 ];
 
 // prepare search options
-const af: Continent = { id: 1, name: 'Africa' };
-const eu: Continent = { id: 2, name: 'Europe' };
-const as: Continent = { id: 3, name: 'Asia' };
-const am: Continent = { id: 4, name: 'America' };
-
-const options = [af, eu, as, am].map(v => ({ key: v.id, value: v.name }));
+const options = ['Africa', 'Europe'].map((value, i) => ({ key: i+1, value }));
 
 // table definition
 const def: Types.Definition<Animal> = [
@@ -75,26 +47,6 @@ const def: Types.Definition<Animal> = [
       options
     },
     render: (x): string => x.location.name
-  },
-  {
-    name: 'country',
-    label: 'Country',
-    filter: {
-      type: 'string',
-      func: (a, b): boolean =>
-        a.country.name
-          .toLocaleLowerCase()
-          .includes(((b as unknown) as string).toLocaleLowerCase())
-    },
-    render: (x): string => x.country.name
-  },
-  { name: 'amount', label: 'A long label', filter: true },
-  { name: 'int', label: 'd', filter: true },
-  { name: 'date', label: 'a date', filter: true },
-  {
-    name: 'location',
-    label: 'custom',
-    render: (x): string => 'custom ' + x.location.name
   }
 ];
 
