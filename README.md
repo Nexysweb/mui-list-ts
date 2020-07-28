@@ -30,7 +30,7 @@ interface Animal {
 
 // list of data (here only one entry to make example more concise)
 const data: Animal[] = [
-  { id: 2, name: 'Sheep', location: eu },
+  { id: 2, name: 'Sheep', location: {id: 2, name: 'Europe'} },
 ];
 
 // prepare search options
@@ -60,11 +60,69 @@ export default (): JSX.Element => (
 ```
 
 
-## Doc 
+## API 
 
-_todo_ 
+all interfaces/types are described here: https://github.com/Nexysweb/mui-list-ts/tree/master/src/lib/types
 
-however, all interfaces/types are described here: https://github.com/Nexysweb/mui-list-ts/tree/master/src/lib/types
+
+### `def`
+
+`def` defines the structure of the table and is an array of `DefinitionItem<A>`
+
+#### `name`
+
+column name/identifier (has to be included in `A`). In the simplest configuration, renders the value of `A[name]`
+
+| **Accepted Types:** | **Default Value** |
+|---------------------|-------------------|
+|  `typeof A` | - |
+
+#### `label`
+
+column label. In the simplest configuration. If not given, `name` is displayed.
+
+| **Accepted Types:** | **Default Value** |
+|---------------------|-------------------|
+|  `string` | `name` |
+
+#### `render`
+
+custom rendering, e.g. if `A` contains `amount` and the amount needs to be formatted: `render: x => myCustomFormatFuntion(x.amount)`
+
+| **Accepted Types:** |
+|---------------------|
+|  `(x:A) => ReactElement | string` | 
+
+#### `filters`
+
+displays a column filter. The filter can be customized, see examples
+
+### `config`
+
+#### `search`
+
+displays general search box
+
+| **Accepted Types:** | **Default Value** |
+|---------------------|-------------------|
+|  `Boolean` | `false` |
+
+#### `nPerPage`
+
+list of items per page
+
+| **Accepted Types:** | **Default Value** |
+|---------------------|-------------------|
+|  `Int` | `20` |
+
+
+### `data`
+
+This is the content of the table.
+
+| **Accepted Types:** |
+|---------------------|
+|  `A[]` |  
 
 ## Examples
 
