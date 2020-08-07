@@ -1,4 +1,4 @@
-# Msterial UI  (ypescript)
+# Msterial UI  (MUI) typescript
 
 [![npm version](https://badge.fury.io/js/%40nexys%2Fmui-list.svg)](https://www.npmjs.com/package/@nexys/mui-list)
 [![npm version](https://img.shields.io/npm/v/@nexys/mui-list.svg)](https://www.npmjs.com/package/@nexys/mui-list)
