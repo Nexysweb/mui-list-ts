@@ -276,6 +276,8 @@ const ListSuper = <A,>({
 
     const showPagination: boolean =
       typeof config.pagination !== 'undefined' ? config.pagination : true;
+        
+    const showRecordInfo:boolean = config.recordInfo || true;
 
     return (
       <ListWrapper>
@@ -293,8 +295,7 @@ const ListSuper = <A,>({
             {loading ? renderLoader() : renderBody(asyncData ? data : fpData)}
           </ListBody>
         </ListContainer>
-
-        <RecordInfo n={n} idx={pageIdx} nPerPage={nPerPage} />
+        {showRecordInfo && <RecordInfo n={n} idx={pageIdx} nPerPage={nPerPage} />}
 
         {showPagination && n > nPerPage && (
           <Pagination
