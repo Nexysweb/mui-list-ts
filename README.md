@@ -7,6 +7,7 @@
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/nexysweb/mui-list-ts.svg)](http://isitmaintained.com/project/nexysweb/mui-list-ts "Percentage of issues still open")
 ![Code style](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)
 ![Publish](https://github.com/Nexysweb/mui-list-ts/workflows/Publish/badge.svg)
+[![Bundlephobia](https://badgen.net/bundlephobia/min/@nexys/mui-list)](https://bundlephobia.com/result?p=@nexys/mui-list@2.3.0)
 
 
 Multi-purpose data-table/business list for MUI
