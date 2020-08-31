@@ -92,7 +92,7 @@ custom rendering, e.g. if `A` contains `amount` and the amount needs to be forma
 
 | **Accepted Types:** |
 |---------------------|
-|  `(x:A) => ReactElement | string` | 
+|  `(x:A) => ReactElement` | 
 
 #### `filters`
 
