@@ -23,10 +23,10 @@ interface CheckboxInputValue<A> {
 interface FilterUnitProps<A> {
   filter?: boolean | Filter<A>;
   filters: any;
-  name: keyof A;
+  name: keyof A | 'id' | 'uuid';
   onChange: (
     inputValue:
-      | { name: keyof A; value: any; type?: string }
+      | { name: keyof A | 'id' | 'uuid'; value: any; type?: string }
       | CheckboxInputValue<A>
   ) => void;
 }

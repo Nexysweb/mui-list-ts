@@ -7,7 +7,7 @@ export interface InputValue {
 }
 
 interface Props<A> {
-  name: keyof A;
+  name: keyof A | 'id' | 'uuid';
   onChange: (inputValue: InputValue) => void;
   value: string;
   placeholder?: string;

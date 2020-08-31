@@ -141,7 +141,7 @@ const ListSuper = <A,>({
     }, [asyncData, fetchData]);
 
     const handleFilterChange = (v: {
-      name: keyof A | 'globalSearch';
+      name: keyof A | 'globalSearch' | 'id' | 'uuid';
       value: any;
       type?: string;
     }): void => {
@@ -170,7 +170,10 @@ const ListSuper = <A,>({
      * @return {[type]}         [description]
      * todo: allow custom ordering
      */
-    const setOrder = (name: keyof A, descAsc: boolean | null = null): void => {
+    const setOrder = (
+      name: keyof A | 'id' | 'uuid',
+      descAsc: boolean | null = null
+    ): void => {
       if (descAsc === null) {
         descAsc = !sortDescAsc;
       }
@@ -274,6 +277,8 @@ const ListSuper = <A,>({
     const showPagination: boolean =
       typeof config.pagination !== 'undefined' ? config.pagination : true;
 
+    const showRecordInfo: boolean = config.recordInfo || true;
+
     return (
       <ListWrapper>
         <GlobalSearch
@@ -290,8 +295,9 @@ const ListSuper = <A,>({
             {loading ? renderLoader() : renderBody(asyncData ? data : fpData)}
           </ListBody>
         </ListContainer>
-
-        <RecordInfo n={n} idx={pageIdx} nPerPage={nPerPage} />
+        {showRecordInfo && (
+          <RecordInfo n={n} idx={pageIdx} nPerPage={nPerPage} />
+        )}
 
         {showPagination && n > nPerPage && (
           <Pagination
