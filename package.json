@@ -25,7 +25,7 @@
     "lint": "eslint './src/**/*.{js,jsx,ts,tsx}'",
     "start": "react-scripts start",
     "buildpackage": "rm -rf ./dist;tsc -p tsconfig.build.json",
-    "build": "PUBLIC_URL=/mui-list-ts react-scripts build;rm -rf docs;mv build docs;cp docs/index.html docs/404.html",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
