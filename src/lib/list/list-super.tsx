@@ -61,7 +61,7 @@ export interface InnerProps<A> {
   def: Definition<A>;
   data?: A[];
   nPerPage?: number;
-  config?: Config;
+  config?: Config<A>;
   asyncData?: (config: AsyncDataConfig<A>) => Promise<AsyncDataReturn<A>>;
 }
 
@@ -81,11 +81,11 @@ const ListSuper = <A,>({
   Pagination
 }: Props) =>
   function InnerListSuper(props: InnerProps<A>): JSX.Element {
+    const { def, config = {}, asyncData } = props;
     const [state, dispatch] = useReducer<Reducer<State<A>, Action>>(
       listSuperReducer,
-      getInitialState<A>(props.data)
+      getInitialState<A>(props.data, config.sortAttribute, config.sortDescAsc)
     );
-    const { def, config = {}, asyncData } = props;
     const {
       filters,
       pageIdx,
@@ -282,7 +282,7 @@ const ListSuper = <A,>({
     return (
       <ListWrapper>
         <GlobalSearch
-          config={config}
+          search={config.search}
           onChange={handleFilterChange}
           filters={filters}
         />

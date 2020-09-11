@@ -4,6 +4,7 @@ import Pagination from './pagination';
 import NoPagination from './no-pagination';
 import Filters from './filters';
 import Sorting from './sorting';
+import SortingProps from './sorting-props';
 import Alert from './alert';
 import Small from './small';
 import Async from './async';
@@ -18,6 +19,11 @@ export const list = [
   { label: 'No Pagination', path: '/no-pagination', Component: NoPagination },
   { label: 'Filtering', path: '/filters', Component: Filters },
   { label: 'Sorting', path: '/sorting', Component: Sorting },
+  {
+    label: 'Sorting from props',
+    path: '/sorting-from-props',
+    Component: SortingProps
+  },
   { label: 'Checks', path: '/checks', Component: Checkbox },
   { label: 'Small', path: '/small', Component: Small },
   { label: 'Async', path: '/async', Component: Async },
