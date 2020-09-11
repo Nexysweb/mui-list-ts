@@ -1,5 +1,6 @@
 import { DefinitionItem } from '../../types';
 import { PropFiltersType } from '../../types/config';
+import { Filter } from '../../types/filter';
 import { FiltersType } from '../list-super-partials/type';
 
 export const compareString = (main: string, searchString: string): boolean =>
@@ -172,17 +173,20 @@ export const updateFilters = <A>(
   return filters;
 };
 
-export const getFilterFunction = <A>(
+export const getFilterObj = <A>(
   def: DefinitionItem<A>[],
   filterAttribute: keyof A
-): ((dataRow: A, value: any) => boolean) | keyof A => {
+): Filter<A> | keyof A => {
   const i = def.find(x => x.name === filterAttribute);
   if (!i || !i.filter) {
     throw Error('filter attribute could not be matched');
   }
 
   if (typeof i.filter === 'object' && 'func' in i.filter) {
-    return i.filter.func;
+    return {
+      type: i.filter.type,
+      func: i.filter.func
+    };
   }
 
   return filterAttribute;
@@ -194,21 +198,24 @@ export const transformFilterPropToStateProp = <A>(
 ): FiltersType<A> => {
   return Object.entries(filters)
     .map(([key, value]) => {
-      const func = getFilterFunction<A>(def, key as keyof A);
+      const filterObj = getFilterObj<A>(def, key as keyof A);
       return {
         key,
         value,
-        func
+        filterObj
       };
     })
     .reduce((acc: any, cur) => {
       const { key } = cur;
 
       let filter: any;
-      if (typeof cur.func === 'function') {
+      if (typeof (cur.filterObj as Filter<A>).func === 'function') {
         filter = {
-          value: cur.value,
-          func: cur.func
+          value:
+            (cur.filterObj as Filter<A>).type === 'select'
+              ? { value: cur.value }
+              : cur.value,
+          func: (cur.filterObj as Filter<A>).func
         };
       } else {
         filter = cur.value;
