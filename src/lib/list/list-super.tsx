@@ -29,7 +29,8 @@ import { order, getSort } from './utils/order-utils';
 import {
   applyFilter,
   toFilterArray,
-  updateFilters
+  updateFilters,
+  transformFilterPropToStateFilter
 } from './utils/filter-utils';
 import { withPagination } from './utils/pagination-utils';
 import {
@@ -61,7 +62,7 @@ export interface InnerProps<A> {
   def: Definition<A>;
   data?: A[];
   nPerPage?: number;
-  config?: Config;
+  config?: Config<A>;
   asyncData?: (config: AsyncDataConfig<A>) => Promise<AsyncDataReturn<A>>;
 }
 
@@ -81,11 +82,22 @@ const ListSuper = <A,>({
   Pagination
 }: Props) =>
   function InnerListSuper(props: InnerProps<A>): JSX.Element {
+    const { def, config = {}, asyncData } = props;
+
+    const filtersFromProps = config.filters
+      ? transformFilterPropToStateFilter(def, config.filters)
+      : undefined;
+
     const [state, dispatch] = useReducer<Reducer<State<A>, Action>>(
       listSuperReducer,
-      getInitialState<A>(props.data)
+      getInitialState<A>(
+        def,
+        props.data,
+        config.sortAttribute,
+        config.sortDescAsc,
+        filtersFromProps
+      )
     );
-    const { def, config = {}, asyncData } = props;
     const {
       filters,
       pageIdx,
@@ -163,6 +175,23 @@ const ListSuper = <A,>({
       fetchData(config);
     };
 
+    const handleFilterReset = (name: keyof A | 'id' | 'uuid'): void => {
+      const newFilters = Object.assign({}, filters);
+      delete newFilters[name as keyof A];
+
+      // when a filter is applied, the page index is reset
+      const pageIdx = 1;
+
+      const config = {
+        filters: newFilters,
+        pageIdx
+      };
+
+      dispatch({ type: ActionType.FILTER_CHANGE, payload: config });
+
+      fetchData(config);
+    };
+
     /**
      * defines order to apply
      * @param  {[type]} name    attribute/column
@@ -220,6 +249,8 @@ const ListSuper = <A,>({
             name={h.name}
             filter={h.filter}
             onChange={handleFilterChange}
+            onReset={handleFilterReset}
+            debounceWait={config.debounceWait}
           />
         );
 
@@ -282,11 +313,15 @@ const ListSuper = <A,>({
     return (
       <ListWrapper>
         <GlobalSearch
-          config={config}
+          search={config.search}
           onChange={handleFilterChange}
           filters={filters}
+          debounceWait={config.debounceWait}
         />
-        <ListContainer>
+        <ListContainer
+          maxHeight={config.maxHeight}
+          stickyHeader={config.stickyHeader}
+        >
           <ListHeader>
             <Row>{renderHeaders()}</Row>
           </ListHeader>

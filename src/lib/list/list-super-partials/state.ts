@@ -1,12 +1,20 @@
-import { State } from './type';
+import { DefinitionItem } from '../../types/definition';
+import { FiltersType, State } from './type';
 
-const getInitialState = <A>(data?: A[]): State<A> => ({
-  sortDescAsc: true,
-  filters: {},
-  pageIdx: 1,
+const getInitialState = <A>(
+  def: DefinitionItem<A>[],
+  data?: A[],
+  sortAttribute?: keyof A,
+  sortDescAsc?: boolean,
+  filters?: FiltersType<A>
+): State<A> => ({
   data: data ? data : [],
+  filters: filters || {},
+  loading: false,
   numberOfTotalRows: data && data.length ? data.length : 0,
-  loading: false
+  sortAttribute,
+  sortDescAsc: sortDescAsc !== undefined ? sortDescAsc : true,
+  pageIdx: 1
 });
 
 export default getInitialState;

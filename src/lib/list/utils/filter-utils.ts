@@ -1,3 +1,8 @@
+import { DefinitionItem } from '../../types';
+import { PropFiltersType } from '../../types/config';
+import { Filter } from '../../types/filter';
+import { FiltersType } from '../list-super-partials/type';
+
 export const compareString = (main: string, searchString: string): boolean =>
   main.toLowerCase().indexOf(searchString.toLowerCase()) > -1;
 
@@ -132,7 +137,7 @@ export const updateFilters = <A>(
     value: any;
     type?: string;
   }
-): { [k in keyof A | 'globalSearch']?: any } => {
+): FiltersType<A> => {
   if (v.value === null || v.value === '') {
     delete filters[v.name];
   } else {
@@ -166,4 +171,66 @@ export const updateFilters = <A>(
 
   // setState({ ...state, filters, pageIdx });
   return filters;
+};
+
+export const getFilterObj = <A>(
+  def: DefinitionItem<A>[],
+  filterAttribute: keyof A
+): Filter<A> | keyof A => {
+  const i = def.find(x => x.name === filterAttribute);
+  if (!i || !i.filter) {
+    throw Error('filter attribute could not be matched');
+  }
+
+  if (typeof i.filter === 'object' && 'func' in i.filter) {
+    return {
+      type: i.filter.type,
+      func: i.filter.func
+    };
+  }
+
+  return filterAttribute;
+};
+
+export const transformFilterPropToStateFilter = <A>(
+  def: DefinitionItem<A>[],
+  filters: PropFiltersType<A>
+): FiltersType<A> => {
+  return Object.entries(filters)
+    .map(([key, value]) => {
+      const filterObj = getFilterObj<A>(def, key as keyof A);
+      return {
+        key,
+        value,
+        filterObj
+      };
+    })
+    .reduce((acc: any, cur) => {
+      const { key } = cur;
+
+      let filter: any;
+      if (typeof (cur.filterObj as Filter<A>).func === 'function') {
+        filter = {
+          value:
+            (cur.filterObj as Filter<A>).type === 'select'
+              ? { value: cur.value }
+              : cur.value,
+          func: (cur.filterObj as Filter<A>).func
+        };
+      } else {
+        filter = cur.value;
+      }
+
+      acc[key] = filter;
+      return acc;
+    }, {});
+};
+
+export const debounce = (wait = 500) => {
+  let timeout: NodeJS.Timeout;
+
+  return (func: () => void) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(func, wait);
+  };
 };

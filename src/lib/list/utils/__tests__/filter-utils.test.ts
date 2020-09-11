@@ -1,3 +1,5 @@
+import { DefinitionItem, Filter } from '../../../types';
+import { FiltersType } from '../../list-super-partials';
 import {
   applyFilter,
   compare,
@@ -6,7 +8,9 @@ import {
   addRemoveToArray,
   toFilterArray,
   FilterSearchValue,
-  updateFilters
+  updateFilters,
+  getFilterObj,
+  transformFilterPropToStateFilter
 } from '../filter-utils';
 
 test('compareString', () => {
@@ -226,6 +230,97 @@ describe('updateFilters', () => {
           `);
         });
       });
+    });
+  });
+});
+
+describe('getFilterObj', () => {
+  const def: DefinitionItem<DummyShape>[] = [
+    {
+      name: 'name',
+      filter: {
+        type: 'category',
+        func: (dataRow, value) => true
+      }
+    },
+    {
+      name: 'value',
+      filter: true
+    }
+  ];
+
+  describe('filter is OBJECT', () => {
+    it('should return the right obj', () => {
+      const re = getFilterObj(def, 'name') as Filter<DummyShape>;
+
+      expect(re.type).toBe('category');
+      expect(re.func).toBeDefined();
+    });
+  });
+
+  describe('filter is NOT OBJECT', () => {
+    it('should return filterAttribute', () => {
+      const re = getFilterObj(def, 'value');
+
+      expect(re).toBe('value');
+    });
+  });
+});
+
+describe('transformFilterPropToStateFilter', () => {
+  const def: DefinitionItem<Animal>[] = [
+    {
+      name: 'name',
+      filter: {
+        type: 'category',
+        func: (dataRow, value) => true
+      }
+    },
+    {
+      name: 'location',
+      filter: true
+    },
+    {
+      name: 'country',
+      filter: {
+        type: 'select',
+        func: (dataRow, value) => true
+      }
+    }
+  ];
+
+  describe('filter.func is a function', () => {
+    const filters: FiltersType<Animal> = {
+      name: ['elephant', 'tiger'],
+      country: 'Switzerland'
+    };
+
+    describe('filter.type is SELECT', () => {
+      const re = transformFilterPropToStateFilter(def, filters);
+
+      expect(re.country.value).toEqual({ value: 'Switzerland' });
+      expect(re.country.func).toBeDefined();
+      expect(typeof re.country.func).toBe('function');
+    });
+
+    describe('filter.type is NOT SELECT', () => {
+      const re = transformFilterPropToStateFilter(def, filters);
+
+      expect(re.name.value).toEqual(['elephant', 'tiger']);
+      expect(re.name.func).toBeDefined();
+      expect(typeof re.name.func).toBe('function');
+    });
+  });
+
+  describe('filter.func is NOT a function', () => {
+    const filters: FiltersType<Animal> = {
+      location: 'Asia'
+    };
+
+    it('should transform prop correctly', () => {
+      const re = transformFilterPropToStateFilter(def, filters);
+
+      expect(re.location).toEqual('Asia');
     });
   });
 });
