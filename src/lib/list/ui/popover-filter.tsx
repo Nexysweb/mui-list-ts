@@ -58,7 +58,11 @@ const PopoverFilter = <A,>(props: PopoverFilterProps<A>): JSX.Element => {
       </IconButton>
 
       {isActive && (
-        <IconButton onClick={handleReset} className={classes.iconButton}>
+        <IconButton
+          onClick={handleReset}
+          className={classes.iconButton}
+          data-testid="reset-button"
+        >
           <CloseIcon className={classes.resetIcon} />
         </IconButton>
       )}
