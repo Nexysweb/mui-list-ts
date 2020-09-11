@@ -1,3 +1,7 @@
+import { DefinitionItem } from '../../types';
+import { PropFiltersType } from '../../types/config';
+import { FiltersType } from '../list-super-partials/type';
+
 export const compareString = (main: string, searchString: string): boolean =>
   main.toLowerCase().indexOf(searchString.toLowerCase()) > -1;
 
@@ -132,7 +136,7 @@ export const updateFilters = <A>(
     value: any;
     type?: string;
   }
-): { [k in keyof A | 'globalSearch']?: any } => {
+): FiltersType<A> => {
   if (v.value === null || v.value === '') {
     delete filters[v.name];
   } else {
@@ -166,4 +170,51 @@ export const updateFilters = <A>(
 
   // setState({ ...state, filters, pageIdx });
   return filters;
+};
+
+export const getFilterFunction = <A>(
+  def: DefinitionItem<A>[],
+  filterAttribute: keyof A
+): ((dataRow: A, value: any) => boolean) | keyof A => {
+  const i = def.find(x => x.name === filterAttribute);
+  if (!i || !i.filter) {
+    throw Error('filter attribute could not be matched');
+  }
+
+  if (typeof i.filter === 'object' && 'func' in i.filter) {
+    return i.filter.func;
+  }
+
+  return filterAttribute;
+};
+
+export const transformFilterPropToStateProp = <A>(
+  def: DefinitionItem<A>[],
+  filters: PropFiltersType<A>
+): FiltersType<A> => {
+  return Object.entries(filters)
+    .map(([key, value]) => {
+      const func = getFilterFunction<A>(def, key as keyof A);
+      return {
+        key,
+        value,
+        func
+      };
+    })
+    .reduce((acc: any, cur) => {
+      const { key } = cur;
+
+      let filter: any;
+      if (typeof cur.func === 'function') {
+        filter = {
+          value: cur.value,
+          func: cur.func
+        };
+      } else {
+        filter = cur.value;
+      }
+
+      acc[key] = filter;
+      return acc;
+    }, {});
 };

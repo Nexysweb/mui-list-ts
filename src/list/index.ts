@@ -3,6 +3,7 @@ import NPerPage from './nperpage';
 import Pagination from './pagination';
 import NoPagination from './no-pagination';
 import Filters from './filters';
+import FiltersFromProps from './filters-props';
 import Sorting from './sorting';
 import SortingProps from './sorting-props';
 import Alert from './alert';
@@ -18,6 +19,11 @@ export const list = [
   { label: 'Pagination', path: '/pagination', Component: Pagination },
   { label: 'No Pagination', path: '/no-pagination', Component: NoPagination },
   { label: 'Filtering', path: '/filters', Component: Filters },
+  {
+    label: 'Filtering from props',
+    path: '/filters-from-props',
+    Component: FiltersFromProps
+  },
   { label: 'Sorting', path: '/sorting', Component: Sorting },
   {
     label: 'Sorting from props',

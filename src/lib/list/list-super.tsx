@@ -29,7 +29,8 @@ import { order, getSort } from './utils/order-utils';
 import {
   applyFilter,
   toFilterArray,
-  updateFilters
+  updateFilters,
+  transformFilterPropToStateProp
 } from './utils/filter-utils';
 import { withPagination } from './utils/pagination-utils';
 import {
@@ -82,9 +83,20 @@ const ListSuper = <A,>({
 }: Props) =>
   function InnerListSuper(props: InnerProps<A>): JSX.Element {
     const { def, config = {}, asyncData } = props;
+
+    const filtersFromProps = config.filters
+      ? transformFilterPropToStateProp(def, config.filters)
+      : undefined;
+
     const [state, dispatch] = useReducer<Reducer<State<A>, Action>>(
       listSuperReducer,
-      getInitialState<A>(props.data, config.sortAttribute, config.sortDescAsc)
+      getInitialState<A>(
+        def,
+        props.data,
+        config.sortAttribute,
+        config.sortDescAsc,
+        filtersFromProps
+      )
     );
     const {
       filters,

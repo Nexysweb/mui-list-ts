@@ -1,4 +1,7 @@
+export type PropFiltersType<A> = { [k in keyof A]?: any };
+
 export interface Config<A> {
+  filters?: PropFiltersType<A>;
   maxHeight?: number;
   nPerPage?: number;
   pagination?: boolean;
