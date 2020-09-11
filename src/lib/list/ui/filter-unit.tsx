@@ -30,10 +30,11 @@ interface FilterUnitProps<A> {
       | CheckboxInputValue<A>
   ) => void;
   onReset: (name: keyof A | 'id' | 'uuid') => void;
+  debounceWait?: number;
 }
 
 const FilterUnit = <A,>(props: FilterUnitProps<A>): JSX.Element | null => {
-  const { filter, filters, name, onChange, onReset } = props;
+  const { filter, filters, name, onChange, onReset, debounceWait } = props;
 
   if (typeof filter === 'boolean' && filter === true) {
     return (
@@ -42,6 +43,7 @@ const FilterUnit = <A,>(props: FilterUnitProps<A>): JSX.Element | null => {
           name={name}
           value={filters[name]}
           onChange={(v): void => onChange({ name, value: v.value })}
+          wait={debounceWait}
         />
       </PopoverFilter>
     );
@@ -60,6 +62,7 @@ const FilterUnit = <A,>(props: FilterUnitProps<A>): JSX.Element | null => {
             });
           }}
           placeholder="Type to filter..."
+          wait={debounceWait}
         />
       </PopoverFilter>
     );

@@ -250,6 +250,7 @@ const ListSuper = <A,>({
             filter={h.filter}
             onChange={handleFilterChange}
             onReset={handleFilterReset}
+            debounceWait={config.debounceWait}
           />
         );
 
@@ -315,6 +316,7 @@ const ListSuper = <A,>({
           search={config.search}
           onChange={handleFilterChange}
           filters={filters}
+          debounceWait={config.debounceWait}
         />
         <ListContainer
           maxHeight={config.maxHeight}
