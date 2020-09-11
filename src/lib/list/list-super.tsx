@@ -30,7 +30,7 @@ import {
   applyFilter,
   toFilterArray,
   updateFilters,
-  transformFilterPropToStateProp
+  transformFilterPropToStateFilter
 } from './utils/filter-utils';
 import { withPagination } from './utils/pagination-utils';
 import {
@@ -85,7 +85,7 @@ const ListSuper = <A,>({
     const { def, config = {}, asyncData } = props;
 
     const filtersFromProps = config.filters
-      ? transformFilterPropToStateProp(def, config.filters)
+      ? transformFilterPropToStateFilter(def, config.filters)
       : undefined;
 
     const [state, dispatch] = useReducer<Reducer<State<A>, Action>>(

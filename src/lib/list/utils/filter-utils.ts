@@ -192,7 +192,7 @@ export const getFilterObj = <A>(
   return filterAttribute;
 };
 
-export const transformFilterPropToStateProp = <A>(
+export const transformFilterPropToStateFilter = <A>(
   def: DefinitionItem<A>[],
   filters: PropFiltersType<A>
 ): FiltersType<A> => {
