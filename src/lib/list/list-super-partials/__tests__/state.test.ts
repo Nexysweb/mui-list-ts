@@ -1,3 +1,4 @@
+import { DefinitionItem } from '../../../types';
 import getInitialState from '../state';
 
 interface DummyData {
@@ -5,9 +6,18 @@ interface DummyData {
   name: string;
 }
 
+const def: DefinitionItem<DummyData>[] = [
+  {
+    name: 'id'
+  },
+  {
+    name: 'name'
+  }
+];
+
 describe('List Super getInitialState', () => {
   it('should initialize with right default values', () => {
-    const state = getInitialState();
+    const state = getInitialState(def);
 
     expect(state.filters).toEqual({});
     expect(state.loading).toBe(false);
@@ -16,7 +26,7 @@ describe('List Super getInitialState', () => {
 
   describe('data is UNDEFINED', () => {
     it('should initialize state with empty array', () => {
-      const state = getInitialState();
+      const state = getInitialState(def);
 
       expect(state.data).toEqual([]);
       expect(state.numberOfTotalRows).toBe(0);
@@ -35,7 +45,7 @@ describe('List Super getInitialState', () => {
           name: 'Jane'
         }
       ];
-      const state = getInitialState<DummyData>(dummyData);
+      const state = getInitialState<DummyData>(def, dummyData);
 
       expect(state.data.length).toBe(2);
       expect(state.data[0].id).toBe(1);
@@ -48,7 +58,7 @@ describe('List Super getInitialState', () => {
 
   describe('sortAttribute is UNDEFINED', () => {
     it('should initialize state with undefined prop', () => {
-      const state = getInitialState();
+      const state = getInitialState(def);
 
       expect(state.sortAttribute).toEqual(undefined);
     });
@@ -56,7 +66,7 @@ describe('List Super getInitialState', () => {
 
   describe('sortAttribute is DEFINED', () => {
     it('should initialize state with right value', () => {
-      const state = getInitialState<DummyData>(undefined, 'id');
+      const state = getInitialState<DummyData>(def, undefined, 'id');
 
       expect(state.sortAttribute).toBe('id');
     });
@@ -64,7 +74,7 @@ describe('List Super getInitialState', () => {
 
   describe('sortDescAsc is UNDEFINED', () => {
     it('should initialize state with right value', () => {
-      const state = getInitialState();
+      const state = getInitialState(def);
 
       expect(state.sortDescAsc).toEqual(true);
     });
@@ -72,7 +82,7 @@ describe('List Super getInitialState', () => {
 
   describe('sortDescAsc is DEFINED', () => {
     it('should initialize state with right value', () => {
-      const state = getInitialState(undefined, undefined, false);
+      const state = getInitialState(def, undefined, undefined, false);
 
       expect(state.sortDescAsc).toEqual(false);
     });
