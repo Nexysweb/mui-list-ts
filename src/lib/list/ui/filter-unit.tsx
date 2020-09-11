@@ -29,14 +29,15 @@ interface FilterUnitProps<A> {
       | { name: keyof A | 'id' | 'uuid'; value: any; type?: string }
       | CheckboxInputValue<A>
   ) => void;
+  onReset: (name: keyof A | 'id' | 'uuid') => void;
 }
 
 const FilterUnit = <A,>(props: FilterUnitProps<A>): JSX.Element | null => {
-  const { filter, filters, name, onChange } = props;
+  const { filter, filters, name, onChange, onReset } = props;
 
   if (typeof filter === 'boolean' && filter === true) {
     return (
-      <PopoverFilter isActive={filters[name]}>
+      <PopoverFilter isActive={filters[name]} onReset={() => onReset(name)}>
         <SearchUnit
           name={name}
           value={filters[name]}
@@ -48,7 +49,7 @@ const FilterUnit = <A,>(props: FilterUnitProps<A>): JSX.Element | null => {
 
   if (typeof filter === 'object' && filter.type === 'string') {
     return (
-      <PopoverFilter isActive={filters[name]}>
+      <PopoverFilter isActive={filters[name]} onReset={() => onReset(name)}>
         <SearchUnit
           name={name}
           value={filters[name] ? filters[name].value.value : ''}
@@ -69,7 +70,7 @@ const FilterUnit = <A,>(props: FilterUnitProps<A>): JSX.Element | null => {
       const v = filters[name] ? filters[name].value : [];
 
       return (
-        <PopoverFilter isActive={filters[name]}>
+        <PopoverFilter isActive={filters[name]} onReset={() => onReset(name)}>
           <FormControl component="fieldset">
             <FormGroup>
               {filter.options.map((option, i) => (
@@ -103,7 +104,7 @@ const FilterUnit = <A,>(props: FilterUnitProps<A>): JSX.Element | null => {
     if (filter.type === 'select') {
       const value = filters[name] ? filters[name].value.value : '';
       return (
-        <PopoverFilter isActive={filters[name]}>
+        <PopoverFilter isActive={filters[name]} onReset={() => onReset(name)}>
           <FormControl component="fieldset">
             <RadioGroup aria-label={name.toString()} value={value}>
               {filter.options.map((option, i) => (

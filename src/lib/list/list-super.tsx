@@ -175,6 +175,23 @@ const ListSuper = <A,>({
       fetchData(config);
     };
 
+    const handleFilterReset = (name: keyof A | 'id' | 'uuid'): void => {
+      const newFilters = Object.assign({}, filters);
+      delete newFilters[name as keyof A];
+
+      // when a filter is applied, the page index is reset
+      const pageIdx = 1;
+
+      const config = {
+        filters: newFilters,
+        pageIdx
+      };
+
+      dispatch({ type: ActionType.FILTER_CHANGE, payload: config });
+
+      fetchData(config);
+    };
+
     /**
      * defines order to apply
      * @param  {[type]} name    attribute/column
@@ -232,6 +249,7 @@ const ListSuper = <A,>({
             name={h.name}
             filter={h.filter}
             onChange={handleFilterChange}
+            onReset={handleFilterReset}
           />
         );
 

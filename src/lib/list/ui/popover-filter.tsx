@@ -1,22 +1,30 @@
 import React from 'react';
 import { IconButton, Popover } from '@material-ui/core';
-import { FilterList as FilterListIcon } from '@material-ui/icons';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     content: {
       padding: theme.spacing(1, 2)
+    },
+    iconButton: {
+      padding: '5px'
+    },
+    resetIcon: {
+      fontSize: 12
     }
   })
 );
 
-interface PopoverFilterProps {
+interface PopoverFilterProps<A> {
   children: React.ReactNode | JSX.Element;
+  onReset: () => void;
   isActive?: boolean;
 }
 
-const PopoverFilter = (props: PopoverFilterProps): JSX.Element => {
+const PopoverFilter = <A,>(props: PopoverFilterProps<A>): JSX.Element => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
@@ -33,16 +41,27 @@ const PopoverFilter = (props: PopoverFilterProps): JSX.Element => {
 
   const open = Boolean(anchorEl);
 
-  const { children, isActive } = props;
+  const { children, isActive, onReset } = props;
+
+  const handleReset = () => {
+    onReset();
+  };
 
   return (
     <>
       <IconButton
         onClick={handleClick}
         style={{ color: isActive ? '#000' : '#ccc' }}
+        className={classes.iconButton}
       >
         <FilterListIcon />
       </IconButton>
+
+      {isActive && (
+        <IconButton onClick={handleReset} className={classes.iconButton}>
+          <CloseIcon className={classes.resetIcon} />
+        </IconButton>
+      )}
       <Popover
         open={open}
         anchorEl={anchorEl}
