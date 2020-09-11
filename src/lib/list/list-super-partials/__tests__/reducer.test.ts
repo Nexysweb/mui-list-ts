@@ -1,9 +1,24 @@
 import getInitialState from '../state';
 import { ActionType } from '../type';
 import reducer from '../reducer';
+import { DefinitionItem } from '../../../types';
+
+interface DummyData {
+  id: number;
+  name: string;
+}
+
+const def: DefinitionItem<DummyData>[] = [
+  {
+    name: 'id'
+  },
+  {
+    name: 'name'
+  }
+];
 
 describe('List Super Reducer', () => {
-  const initialState = getInitialState();
+  const initialState = getInitialState(def);
 
   it('should handle FETCH_DATA_REQUEST', () => {
     const newState = reducer(initialState, {
