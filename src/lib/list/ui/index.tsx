@@ -154,13 +154,17 @@ export const ListWrapper = (props: ListWrapperProps): JSX.Element => {
 
 interface ListContainerProps {
   children: React.ReactNode | JSX.Element;
+  maxHeight?: number;
+  stickyHeader?: boolean;
 }
 
 export const ListContainer = (props: ListContainerProps): JSX.Element => {
-  const { children } = props;
+  const { children, maxHeight, stickyHeader = false } = props;
   return (
-    <TableContainer>
-      <Table size="small">{children}</Table>
+    <TableContainer style={maxHeight ? { maxHeight } : undefined}>
+      <Table size="small" stickyHeader={stickyHeader}>
+        {children}
+      </Table>
     </TableContainer>
   );
 };

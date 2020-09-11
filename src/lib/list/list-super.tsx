@@ -286,7 +286,10 @@ const ListSuper = <A,>({
           onChange={handleFilterChange}
           filters={filters}
         />
-        <ListContainer>
+        <ListContainer
+          maxHeight={config.maxHeight}
+          stickyHeader={config.stickyHeader}
+        >
           <ListHeader>
             <Row>{renderHeaders()}</Row>
           </ListHeader>
