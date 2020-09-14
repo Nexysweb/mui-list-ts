@@ -1,5 +1,4 @@
-import { DefinitionItem, Filter } from '../../../types';
-import { FiltersType } from '../../list-super-partials';
+import { DefinitionItem, Filter, FiltersType } from '../../../types';
 import {
   applyFilter,
   compare,
@@ -7,7 +6,6 @@ import {
   searchInObject,
   addRemoveToArray,
   toFilterArray,
-  FilterSearchValue,
   updateFilters,
   getFilterObj,
   transformFilterPropToStateFilter
@@ -52,23 +50,38 @@ const data: Animal[] = [
   { name: 'Antelope', location: 'Africa', country: { name: 'Namibia' } }
 ];
 
+describe('toFilterArray', () => {
+  it('should transform filters object to an array in the right structure', () => {
+    const filters: FiltersType<Animal> = {
+      name: 'el',
+      location: 'Asia'
+    };
+
+    const filterArray = toFilterArray(filters);
+
+    expect(filterArray).toHaveLength(2);
+    expect(filterArray[0]).toEqual({ name: 'name', value: 'el' });
+    expect(filterArray[1]).toEqual({ name: 'location', value: 'Asia' });
+  });
+});
+
 test('filter 1', () => {
-  const filters: { [k in keyof Animal]?: FilterSearchValue } = { name: 'el' };
+  const filters: FiltersType<Animal> = { name: 'el' };
   const fData = [
     { name: 'Elephant', location: 'Africa', country: { name: 'Tanzania' } },
     { name: 'Antelope', location: 'Africa', country: { name: 'Namibia' } }
   ];
 
-  expect(applyFilter(data, toFilterArray(filters))).toEqual(fData);
+  expect(applyFilter(data, filters)).toEqual(fData);
 });
 
 test('filter 2', () => {
-  const filters = { name: 'sh', location: 'eu' };
+  const filters: FiltersType<Animal> = { name: 'sh', location: 'eu' };
   const fData = [
     { name: 'Sheep', location: 'Europe', country: { name: 'United Kingdom' } }
   ];
 
-  expect(applyFilter(data, toFilterArray(filters))).toEqual(fData);
+  expect(applyFilter(data, filters)).toEqual(fData);
 });
 
 test('addRemoveToArray', () => {

@@ -1,4 +1,4 @@
-import { FiltersType } from '../list/list-super-partials';
+import { FiltersType } from './filter';
 
 export interface AsyncDataConfig<A> {
   nPerPage: number;

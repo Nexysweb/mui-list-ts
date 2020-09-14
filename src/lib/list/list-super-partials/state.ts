@@ -1,5 +1,5 @@
-import { DefinitionItem } from '../../types/definition';
-import { FiltersType, State } from './type';
+import { DefinitionItem, FiltersType } from '../../types';
+import { State } from './type';
 
 const getInitialState = <A>(
   def: DefinitionItem<A>[],

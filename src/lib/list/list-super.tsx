@@ -28,7 +28,6 @@ import {
 import { order, getSort } from './utils/order-utils';
 import {
   applyFilter,
-  toFilterArray,
   updateFilters,
   transformFilterPropToStateFilter
 } from './utils/filter-utils';
@@ -38,9 +37,9 @@ import {
   getInitialState,
   Action,
   ActionType,
-  State,
-  FiltersType
+  State
 } from './list-super-partials';
+import { FiltersType } from '../types';
 
 export interface Props {
   HeaderUnit: typeof HeaderUnit;
@@ -64,6 +63,8 @@ export interface InnerProps<A> {
   nPerPage?: number;
   config?: Config<A>;
   asyncData?: (config: AsyncDataConfig<A>) => Promise<AsyncDataReturn<A>>;
+  CustomListContainer?: (children: React.ReactNode) => JSX.Element;
+  CustomListItem?: (rowData: A) => JSX.Element;
 }
 
 const ListSuper = <A,>({
@@ -82,7 +83,13 @@ const ListSuper = <A,>({
   Pagination
 }: Props) =>
   function InnerListSuper(props: InnerProps<A>): JSX.Element {
-    const { def, config = {}, asyncData } = props;
+    const {
+      def,
+      config = {},
+      asyncData,
+      CustomListContainer,
+      CustomListItem
+    } = props;
 
     const filtersFromProps = config.filters
       ? transformFilterPropToStateFilter(def, config.filters)
@@ -265,25 +272,48 @@ const ListSuper = <A,>({
     const renderBody = (data: A[]): JSX.Element => (
       <>
         {data.map((row, i: number) => (
-          <tr key={i}>
-            {def.map((h, j) => (
-              <ColCell key={j}>
-                {h.render
-                  ? h.render(row)
-                  : Utils.ds.get(h.name.toString(), row)}
-              </ColCell>
-            ))}
-          </tr>
+          <React.Fragment key={i}>
+            {CustomListItem ? (
+              <>
+                {CustomListContainer ? (
+                  CustomListItem(row)
+                ) : (
+                  <Row>
+                    <ColCell
+                      colSpan={def.length}
+                      style={{
+                        paddingLeft: 0,
+                        paddingRight: 0,
+                        borderBottom: 0
+                      }}
+                    >
+                      {CustomListItem(row)}
+                    </ColCell>
+                  </Row>
+                )}
+              </>
+            ) : (
+              <Row>
+                {def.map((h, j) => (
+                  <ColCell key={j}>
+                    {h.render
+                      ? h.render(row)
+                      : Utils.ds.get(h.name.toString(), row)}
+                  </ColCell>
+                ))}
+              </Row>
+            )}
+          </React.Fragment>
         ))}
       </>
     );
 
     const renderLoader = (): JSX.Element => (
-      <tr>
+      <Row>
         <ColCell colSpan={def.length}>
           <Loader />
         </ColCell>
-      </tr>
+      </Row>
     );
 
     let fData: A[] = [];
@@ -291,7 +321,7 @@ const ListSuper = <A,>({
     let n = 0;
 
     if (!asyncData) {
-      fData = applyFilter(data, toFilterArray<A>(filters));
+      fData = applyFilter(data, filters);
       n = fData.length;
 
       fpData = sortAttribute
@@ -308,7 +338,8 @@ const ListSuper = <A,>({
     const showPagination: boolean =
       typeof config.pagination !== 'undefined' ? config.pagination : true;
 
-    const showRecordInfo: boolean = config.recordInfo || true;
+    const showRecordInfo: boolean =
+      typeof config.recordInfo !== 'undefined' ? config.recordInfo : true;
 
     return (
       <ListWrapper>
@@ -318,18 +349,32 @@ const ListSuper = <A,>({
           filters={filters}
           debounceWait={config.debounceWait}
         />
-        <ListContainer
-          maxHeight={config.maxHeight}
-          stickyHeader={config.stickyHeader}
-        >
-          <ListHeader>
-            <Row>{renderHeaders()}</Row>
-          </ListHeader>
 
-          <ListBody>
-            {loading ? renderLoader() : renderBody(asyncData ? data : fpData)}
-          </ListBody>
-        </ListContainer>
+        {CustomListContainer ? (
+          <>
+            <ListContainer>
+              <ListHeader>
+                <Row>{renderHeaders()}</Row>
+              </ListHeader>
+            </ListContainer>
+
+            {CustomListContainer(renderBody(asyncData ? data : fpData))}
+          </>
+        ) : (
+          <ListContainer
+            maxHeight={config.maxHeight}
+            stickyHeader={config.stickyHeader}
+          >
+            <ListHeader>
+              <Row>{renderHeaders()}</Row>
+            </ListHeader>
+
+            <ListBody>
+              {loading ? renderLoader() : renderBody(asyncData ? data : fpData)}
+            </ListBody>
+          </ListContainer>
+        )}
+
         {showRecordInfo && (
           <RecordInfo n={n} idx={pageIdx} nPerPage={nPerPage} />
         )}

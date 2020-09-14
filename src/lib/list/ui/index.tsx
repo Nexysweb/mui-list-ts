@@ -80,11 +80,16 @@ export const PaginationUnit = (
 interface ColCellProps {
   children: React.ReactNode | JSX.Element;
   colSpan?: number;
+  style?: React.CSSProperties;
 }
 
 export const ColCell = (props: ColCellProps): JSX.Element => {
-  const { children, colSpan } = props;
-  return <TableCell colSpan={colSpan}>{children}</TableCell>;
+  const { children, colSpan, style } = props;
+  return (
+    <TableCell colSpan={colSpan} style={style}>
+      {children}
+    </TableCell>
+  );
 };
 
 interface HeaderUnitProps {

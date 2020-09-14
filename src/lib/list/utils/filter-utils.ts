@@ -1,7 +1,6 @@
 import { DefinitionItem } from '../../types';
 import { PropFiltersType } from '../../types/config';
-import { Filter } from '../../types/filter';
-import { FiltersType } from '../list-super-partials/type';
+import { Filter, FiltersType } from '../../types';
 
 export const compareString = (main: string, searchString: string): boolean =>
   main.toLowerCase().indexOf(searchString.toLowerCase()) > -1;
@@ -61,25 +60,23 @@ export const searchInObjectLinear = (
     })
     .reduce((a, b) => a || b);
 
-export type FilterFunc<A> = (d: A, searchValue: any[]) => boolean;
+export type FilterFunc<A> = (
+  d: A,
+  searchValue: any[],
+  filtersObj?: FiltersType<A>
+) => boolean;
 export type FilterUnit<A> = {
   name: keyof A | 'globalSearch';
   value: string | number | boolean | { value: any; func: FilterFunc<A> };
 };
 
 // todo here unfortunately `k` cant be typed as keyof A, typescript bug/limitation?
-export const applyFilter = <A>(
-  data: A[],
-  filterArray: FilterUnit<A>[]
-): A[] => {
-  //filters: {[k : string]:any}): A[] => {
-  //const filterArray:{name: string, value: any}[] = Object.entries(filters).map(([name, value]:[string,any]) => ({name, value}))
+export const applyFilter = <A>(data: A[], filters: FiltersType<A>): A[] => {
+  const filterArray = toFilterArray<A>(filters);
 
   if (filterArray.length === 0) {
     return data;
   }
-
-  //console.log(filterArray)
 
   return data.filter((d: A) => {
     return filterArray
@@ -94,11 +91,9 @@ export const applyFilter = <A>(
           if (typeof f.value === 'object') {
             if (typeof f.value.func === 'function' && f.value.value) {
               if (Array.isArray(f.value.value) && f.value.value.length > 0) {
-                return f.value.func(d, f.value.value);
+                return f.value.func(d, f.value.value, filters);
               } else {
-                //console.log('h')
-                //console.log(f.value.value)
-                return f.value.func(d, f.value.value.value);
+                return f.value.func(d, f.value.value.value, filters);
               }
             }
             return true;
