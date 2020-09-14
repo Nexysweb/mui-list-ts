@@ -1,4 +1,4 @@
-export type FiltersType<A> = { [k in keyof A | 'globalSearch']?: any };
+import { FiltersType } from '../../types';
 
 export interface State<A> {
   sortAttribute?: keyof A;

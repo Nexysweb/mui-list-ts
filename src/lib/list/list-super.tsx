@@ -28,7 +28,6 @@ import {
 import { order, getSort } from './utils/order-utils';
 import {
   applyFilter,
-  toFilterArray,
   updateFilters,
   transformFilterPropToStateFilter
 } from './utils/filter-utils';
@@ -38,9 +37,9 @@ import {
   getInitialState,
   Action,
   ActionType,
-  State,
-  FiltersType
+  State
 } from './list-super-partials';
+import { FiltersType } from '../types';
 
 export interface Props {
   HeaderUnit: typeof HeaderUnit;
@@ -291,7 +290,7 @@ const ListSuper = <A,>({
     let n = 0;
 
     if (!asyncData) {
-      fData = applyFilter(data, toFilterArray<A>(filters));
+      fData = applyFilter(data, filters);
       n = fData.length;
 
       fpData = sortAttribute

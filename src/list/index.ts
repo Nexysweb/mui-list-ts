@@ -4,6 +4,7 @@ import Pagination from './pagination';
 import NoPagination from './no-pagination';
 import Filters from './filters';
 import FiltersFromProps from './filters-props';
+import FilterInterdependencies from './filter-interdependencies';
 import Sorting from './sorting';
 import SortingProps from './sorting-props';
 import Alert from './alert';
@@ -23,6 +24,11 @@ export const list = [
     label: 'Filtering from props',
     path: '/filters-from-props',
     Component: FiltersFromProps
+  },
+  {
+    label: 'Filter interdependencies',
+    path: '/filter-interdepencies',
+    Component: FilterInterdependencies
   },
   { label: 'Sorting', path: '/sorting', Component: Sorting },
   {

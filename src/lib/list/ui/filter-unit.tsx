@@ -8,7 +8,7 @@ import {
   Checkbox
 } from '@material-ui/core';
 
-import { Filter } from '../../types/filter';
+import { Filter, OptionUnit } from '../../types/filter';
 import { SearchUnit } from './form';
 import PopoverFilter from './popover-filter';
 
@@ -68,7 +68,13 @@ const FilterUnit = <A,>(props: FilterUnitProps<A>): JSX.Element | null => {
     );
   }
 
-  if (typeof filter === 'object' && Array.isArray(filter.options)) {
+  // if (typeof filter === 'object' && Array.isArray(filter.options)) {
+  if (typeof filter === 'object') {
+    const options: OptionUnit[] | undefined =
+      filter.options && typeof filter.options === 'function'
+        ? filter.options(filters)
+        : filter.options;
+
     if (filter.type === 'category') {
       const v = filters[name] ? filters[name].value : [];
 
@@ -76,28 +82,29 @@ const FilterUnit = <A,>(props: FilterUnitProps<A>): JSX.Element | null => {
         <PopoverFilter isActive={filters[name]} onReset={() => onReset(name)}>
           <FormControl component="fieldset">
             <FormGroup>
-              {filter.options.map((option, i) => (
-                <FormControlLabel
-                  key={i}
-                  value={option.key}
-                  control={
-                    <Checkbox
-                      checked={v.includes(option.key)}
-                      onChange={(): void =>
-                        onChange({
-                          name,
-                          value: {
-                            value: option.key,
-                            func: filter.func
-                          },
-                          type: filter.type
-                        })
-                      }
-                    />
-                  }
-                  label={option.value}
-                />
-              ))}
+              {options &&
+                options.map((option, i) => (
+                  <FormControlLabel
+                    key={i}
+                    value={option.key}
+                    control={
+                      <Checkbox
+                        checked={v.includes(option.key)}
+                        onChange={(): void =>
+                          onChange({
+                            name,
+                            value: {
+                              value: option.key,
+                              func: filter.func
+                            },
+                            type: filter.type
+                          })
+                        }
+                      />
+                    }
+                    label={option.value}
+                  />
+                ))}
             </FormGroup>
           </FormControl>
         </PopoverFilter>
@@ -106,32 +113,34 @@ const FilterUnit = <A,>(props: FilterUnitProps<A>): JSX.Element | null => {
 
     if (filter.type === 'select') {
       const value = filters[name] ? filters[name].value.value : '';
+
       return (
         <PopoverFilter isActive={filters[name]} onReset={() => onReset(name)}>
           <FormControl component="fieldset">
             <RadioGroup aria-label={name.toString()} value={value}>
-              {filter.options.map((option, i) => (
-                <FormControlLabel
-                  key={i}
-                  value={option.key}
-                  style={{ marginRight: 0 }}
-                  control={
-                    <Radio
-                      onChange={(): void =>
-                        onChange({
-                          name,
-                          value: {
-                            value: option.key,
-                            func: filter.func
-                          },
-                          type: filter.type
-                        })
-                      }
-                    />
-                  }
-                  label={option.value}
-                />
-              ))}
+              {options &&
+                options.map((option, i) => (
+                  <FormControlLabel
+                    key={i}
+                    value={option.key}
+                    style={{ marginRight: 0 }}
+                    control={
+                      <Radio
+                        onChange={(): void =>
+                          onChange({
+                            name,
+                            value: {
+                              value: option.key,
+                              func: filter.func
+                            },
+                            type: filter.type
+                          })
+                        }
+                      />
+                    }
+                    label={option.value}
+                  />
+                ))}
             </RadioGroup>
           </FormControl>
         </PopoverFilter>
