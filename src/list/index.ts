@@ -12,6 +12,7 @@ import Small from './small';
 import Async from './async';
 import Checkbox from './checkbox';
 import StickyHeader from './sticky-header';
+import RecordInfo from './record-info';
 
 export const list = [
   { label: 'Main', path: '/table', Component: Main },
@@ -38,6 +39,11 @@ export const list = [
   },
   { label: 'Checks', path: '/checks', Component: Checkbox },
   { label: 'Small', path: '/small', Component: Small },
+  {
+    label: 'Hiding record info',
+    path: '/hiding-record-info',
+    Component: RecordInfo
+  },
   { label: 'Async', path: '/async', Component: Async },
   { label: 'Alert', path: '/alert', Component: Alert }
 ];
