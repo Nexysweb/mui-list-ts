@@ -13,6 +13,8 @@ import Async from './async';
 import Checkbox from './checkbox';
 import StickyHeader from './sticky-header';
 import RecordInfo from './record-info';
+import CustomRows from './custom-rows';
+import CustomRowsCustomContainer from './custom-rows-custom-container';
 
 export const list = [
   { label: 'Main', path: '/table', Component: Main },
@@ -45,5 +47,11 @@ export const list = [
     Component: RecordInfo
   },
   { label: 'Async', path: '/async', Component: Async },
+  { label: 'Custom Rows', path: '/custom-rows', Component: CustomRows },
+  {
+    label: 'Custom Rows&Container',
+    path: '/custom-rows-custom-container',
+    Component: CustomRowsCustomContainer
+  },
   { label: 'Alert', path: '/alert', Component: Alert }
 ];
