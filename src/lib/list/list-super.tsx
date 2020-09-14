@@ -307,7 +307,8 @@ const ListSuper = <A,>({
     const showPagination: boolean =
       typeof config.pagination !== 'undefined' ? config.pagination : true;
 
-    const showRecordInfo: boolean = config.recordInfo || true;
+    const showRecordInfo: boolean =
+      typeof config.recordInfo !== 'undefined' ? config.recordInfo : true;
 
     return (
       <ListWrapper>
