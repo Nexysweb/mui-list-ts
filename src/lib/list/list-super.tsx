@@ -238,9 +238,13 @@ const ListSuper = <A,>({
       );
     };
 
-    const renderHeaders = (): JSX.Element[] => {
+    const renderHeaders = (): (JSX.Element | null)[] => {
       return def.map((h, i) => {
-        const label = h.label === null ? null : h.label || h.name;
+        if (!h.label) {
+          return null;
+        }
+
+        const label = h.label || h.name;
 
         const order = isSort(h) ? (
           <OrderController

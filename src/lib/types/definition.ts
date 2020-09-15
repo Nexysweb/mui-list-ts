@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Filter } from './filter';
 
-export type SortCompareOut = string | number | boolean;
+export type SortAttribute = string | number | boolean;
 
 export interface DefinitionItem<T> {
   name: keyof T | 'id' | 'uuid';
@@ -13,7 +13,7 @@ export interface DefinitionItem<T> {
   sort?:
     | boolean
     | { enabled: true; ascOrDesc: boolean }
-    | { func: keyof T | ((input: T) => SortCompareOut) };
+    | { getAttribute: keyof T | ((input: T) => SortAttribute) }; // function to get a property from nested object for the sort comparison
   render?: (x: T) => string | React.ReactNode | JSX.Element;
 }
 

@@ -1,4 +1,4 @@
-import { SortCompareOut, DefinitionItem } from '../../../types';
+import { SortAttribute, DefinitionItem } from '../../../types';
 import { getAttribute, order, getSort } from '../order-utils';
 
 interface A {
@@ -30,7 +30,7 @@ test('order custom', () => {
     { name: { first: 'Alban' } },
     { name: { first: 'Bernard' } }
   ];
-  const f = (input: A): SortCompareOut => input.name.first;
+  const f = (input: A) => input.name.first;
 
   const r = order(data, f, true);
 
@@ -47,6 +47,23 @@ test('order custom', () => {
 interface DummyShape {
   name: string;
   value: string;
+}
+
+interface ComplicatedDummyShape {
+  id: number;
+  name: string;
+  country: {
+    id: number;
+    name: string;
+    market: {
+      id: number;
+      name: string;
+      geo: {
+        id: number;
+        name: string;
+      };
+    };
+  };
 }
 
 describe('getSort', () => {
@@ -68,24 +85,33 @@ describe('getSort', () => {
 
   describe('sort function is defined properly', () => {
     it('should return right the sort function', () => {
-      const def: DefinitionItem<DummyShape>[] = [
+      const def: DefinitionItem<ComplicatedDummyShape>[] = [
         {
           name: 'name',
           sort: {
-            func: (): SortCompareOut => {
-              return 1;
+            getAttribute: (data): SortAttribute => {
+              return data.country.market.geo.name;
             }
           }
         },
         {
-          name: 'value'
+          name: 'id'
         }
       ];
       const sortFunction = getSort(def, 'name');
 
       // the if is only for typescript
       if (typeof sortFunction === 'function') {
-        expect(sortFunction({ name: 'test', value: 'val' })).toBe(1);
+        const data: ComplicatedDummyShape = {
+          id: 1,
+          name: 'test',
+          country: {
+            id: 1,
+            name: 'Hungary',
+            market: { id: 1, name: 'CEE', geo: { id: 1, name: 'Europe' } }
+          }
+        };
+        expect(sortFunction(data)).toBe('Europe');
       } else {
         throw new Error('Something went wrong');
       }
