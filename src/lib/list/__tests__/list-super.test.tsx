@@ -7,6 +7,7 @@ import ListSuper from '../index';
 interface DummyData {
   id: number;
   name: string;
+  age: number;
 }
 
 describe('List Super', () => {
@@ -21,13 +22,64 @@ describe('List Super', () => {
   const data: DummyData[] = [
     {
       id: 1,
-      name: 'John'
+      name: 'John',
+      age: 30
     },
     {
       id: 2,
-      name: 'Jane'
+      name: 'Jane',
+      age: 27
     }
   ];
+
+  describe('label is defined', () => {
+    const def: DefinitionItem<DummyData>[] = [
+      {
+        name: 'id',
+        label: 'ID'
+      },
+      {
+        name: 'name',
+        label: 'Name'
+      },
+      {
+        name: 'age',
+        label: 'Age'
+      }
+    ];
+
+    it('should render header unit', () => {
+      render(<ListSuper def={def} data={data} />);
+
+      expect(screen.queryByText(/id/i)).toBeInTheDocument();
+      expect(screen.queryByText(/name/i)).toBeInTheDocument();
+      expect(screen.queryByText(/age/i)).toBeInTheDocument();
+    });
+  });
+
+  describe('label is UNDEFINED, NULL or empty', () => {
+    const def: DefinitionItem<DummyData>[] = [
+      {
+        name: 'id',
+        label: ''
+      },
+      {
+        name: 'name'
+      },
+      {
+        name: 'age',
+        label: null
+      }
+    ];
+
+    it('should not render header unit for that column', () => {
+      render(<ListSuper def={def} data={data} />);
+
+      expect(screen.queryByText(/id/i)).not.toBeInTheDocument();
+      expect(screen.queryByText(/name/i)).not.toBeInTheDocument();
+      expect(screen.queryByText(/age/i)).not.toBeInTheDocument();
+    });
+  });
 
   describe('config.recordInfo is UNDEFINED', () => {
     it('should display the recordInfo', () => {
