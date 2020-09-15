@@ -1,6 +1,6 @@
-import { SortCompareOut, DefinitionItem } from '../../types';
+import { SortAttribute, DefinitionItem } from '../../types';
 
-export const getAttribute = <A>(attribute: keyof A, a: A): SortCompareOut => {
+export const getAttribute = <A>(attribute: keyof A, a: A): SortAttribute => {
   const ac = String(a[attribute]);
 
   if (typeof ac === 'number' && typeof ac === 'boolean') {
@@ -13,8 +13,8 @@ export const getAttribute = <A>(attribute: keyof A, a: A): SortCompareOut => {
 const getCompareAttributes = <A>(
   a: A,
   b: A,
-  attributeOrFunc: keyof A | ((input: A) => SortCompareOut)
-): { ac: SortCompareOut; bc: SortCompareOut } => {
+  attributeOrFunc: keyof A | ((input: A) => SortAttribute)
+): { ac: SortAttribute; bc: SortAttribute } => {
   if (typeof attributeOrFunc === 'function') {
     const ac = attributeOrFunc(a);
     const bc = attributeOrFunc(b);
@@ -31,8 +31,8 @@ const getCompareAttributes = <A>(
 const compareFunc = <A>(
   a: A,
   b: A,
-  attributeOrFunc: keyof A | ((input: A) => SortCompareOut)
-): number => {
+  attributeOrFunc: keyof A | ((input: A) => SortAttribute)
+): -1 | 0 | 1 => {
   const { ac, bc } = getCompareAttributes<A>(a, b, attributeOrFunc);
 
   if (ac < bc) {
@@ -46,7 +46,7 @@ const compareFunc = <A>(
 
 export const order = <A>(
   data: A[],
-  sortAttribute: keyof A | ((input: A) => SortCompareOut),
+  sortAttribute: keyof A | ((input: A) => SortAttribute),
   sortDescAsc: boolean
 ): A[] => {
   if (!sortAttribute) {
@@ -65,14 +65,14 @@ export const order = <A>(
 export const getSort = <A>(
   def: DefinitionItem<A>[],
   sortAttribute: keyof A
-): (keyof A | ((input: A) => SortCompareOut)) | keyof A => {
+): (keyof A | ((input: A) => SortAttribute)) | keyof A => {
   const i = def.find(x => x.name === sortAttribute);
   if (!i || !i.sort) {
     throw Error('sort attribute could not be matched');
   }
 
-  if (typeof i.sort === 'object' && 'func' in i.sort) {
-    return i.sort.func;
+  if (typeof i.sort === 'object' && 'getAttribute' in i.sort) {
+    return i.sort.getAttribute;
   }
 
   return sortAttribute;
