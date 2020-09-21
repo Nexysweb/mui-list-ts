@@ -240,12 +240,6 @@ const ListSuper = <A,>({
 
     const renderHeaders = (): (JSX.Element | null)[] => {
       return def.map((h, i) => {
-        if (!h.label) {
-          return null;
-        }
-
-        const label = h.label || h.name;
-
         const order = isSort(h) ? (
           <OrderController
             descAsc={sortAttribute === h.name ? sortDescAsc : null}
@@ -267,7 +261,7 @@ const ListSuper = <A,>({
 
         return (
           <HeaderUnit key={i}>
-            {label} {order} {filter}
+            {h.label || ''} {order} {filter}
           </HeaderUnit>
         );
       });
