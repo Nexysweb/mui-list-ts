@@ -18,7 +18,7 @@ interface Props<A> {
 
 export const SearchUnit = <A,>(props: Props<A>): JSX.Element => {
   const [value, setValue] = React.useState(props.value || '');
-  const { name, onChange, placeholder, wait = 400 } = props;
+  const { name, onChange, placeholder, wait } = props;
   const memoizedDebounce = useMemo(() => debounce(wait), [wait]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
