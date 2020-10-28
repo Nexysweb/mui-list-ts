@@ -3,7 +3,7 @@
   "version": "2.4.2",
   "license": "MIT",
   "dependencies": {
-    "@nexys/utils": "^3.7.13"
+    "@nexys/utils": "^3.9.10"
   },
   "keywords": [
     "typescript",
@@ -22,7 +22,6 @@
     "url": "git://https://github.com/Nexysweb/mui-list-ts.git"
   },
   "scripts": {
-    "lint": "eslint './src/**/*.{js,jsx,ts,tsx}'",
     "start": "react-scripts start",
     "buildpackage": "rm -rf ./dist;tsc -p tsconfig.build.json",
     "build": "react-scripts build",
@@ -33,9 +32,6 @@
   "files": [
     "dist/*"
   ],
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
