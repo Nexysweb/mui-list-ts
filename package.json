@@ -23,9 +23,11 @@
   },
   "scripts": {
     "lint": "eslint './src/**/*.{js,jsx,ts,tsx}'",
-    "start": "react-scripts start",
+    "startold": "react-scripts start",
+    "start": "snowpack dev",
+    "build": "snowpack build",
     "buildpackage": "rm -rf ./dist;tsc -p tsconfig.build.json",
-    "build": "react-scripts build",
+    "buildold": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -66,8 +68,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1",
     "react-tiny-popover": "^4.0.0",
+    "snowpack": "^3.0.13",
     "styled-components": "^5.0.0",
     "typescript": "~3.7.2",
     "world-countries": "^3.0.0"

@@ -7,8 +7,12 @@ import Public from './public';
 import Layout from './layout';
 import { list } from './list';
 
+const basename: string = import.meta.env.SNOWPACK_PUBLIC_URL || '';
+
+console.log(`basename: ${basename}`);
+
 const history = History.createBrowserHistory({
-  basename: process.env.PUBLIC_URL || ''
+  basename
 });
 
 const Routes = (): JSX.Element => (
