@@ -1,0 +1,20 @@
+{
+  "imports": {
+    "@material-ui/core": "./@material-ui/core.js",
+    "@material-ui/core/TextField": "./@material-ui/core/TextField.js",
+    "@material-ui/core/Tooltip": "./@material-ui/core/Tooltip.js",
+    "@material-ui/core/styles": "./@material-ui/core/styles.js",
+    "@material-ui/icons": "./@material-ui/icons.js",
+    "@material-ui/icons/Close": "./@material-ui/icons/Close.js",
+    "@material-ui/icons/FilterList": "./@material-ui/icons/FilterList.js",
+    "@material-ui/lab": "./@material-ui/lab.js",
+    "@material-ui/lab/Pagination": "./@material-ui/lab/Pagination.js",
+    "@nexys/utils": "./@nexys/utils.js",
+    "clsx": "./clsx.js",
+    "history": "./history.js",
+    "react": "./react.js",
+    "react-dom": "./react-dom.js",
+    "react-router-dom": "./react-router-dom.js",
+    "world-countries": "./world-countries.js"
+  }
+}
