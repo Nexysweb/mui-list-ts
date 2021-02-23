@@ -226,6 +226,6 @@ export const debounce = (wait = 200) => {
 
   return (func: () => void) => {
     clearTimeout(timeout);
-    timeout = setTimeout(func, wait);
+    timeout = global.setTimeout(func, wait);
   };
 };
