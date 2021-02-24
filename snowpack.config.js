@@ -7,7 +7,7 @@ module.exports = {
     public: { url: '/', static: true },
     src: '/'
   },
-  exclude: ['**/*.test.ts', '**/*.test.tsx'],
+  exclude: ['**/*.test.ts', '**/*.test.tsx', 'src/lib/test/test-utils.tsx'],
   plugins: [
     /* ... */
   ],

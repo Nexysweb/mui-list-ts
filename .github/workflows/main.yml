@@ -4,6 +4,7 @@ on: [push]
 
 jobs:
   test:
+    if: contains(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -19,8 +20,7 @@ jobs:
         with:
           name: artifacts
           path: ./dist
-          
-          
+
   publishNpm:
     name: 'Publish to npm'
     runs-on: ubuntu-latest
