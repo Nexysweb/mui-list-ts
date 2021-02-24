@@ -1,6 +1,7 @@
 import { p as propTypes, a as _inheritsLoose, _ as _objectWithoutPropertiesLoose } from './common/_index-7e2ecedb.js';
 import { r as react } from './common/index-fc424163.js';
 import { b as createMemoryHistory, i as invariant, d as createLocation, e as createPath, c as createBrowserHistory, a as createHashHistory } from './common/history-7d2b727e.js';
+import { g as global } from './common/polyfill-node:global-21e5c503.js';
 import { _ as _extends } from './common/_index-4fa100fd.js';
 import { c as createCommonjsModule } from './common/_commonjsHelpers-8c19dec8.js';
 import './common/hoist-non-react-statics.cjs-43de917e.js';

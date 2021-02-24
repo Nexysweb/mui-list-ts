@@ -10,6 +10,7 @@ import { u as useId } from '../../common/unstable_useId-cc55985c.js';
 import { u as useIsFocusVisible } from '../../common/useIsFocusVisible-e490cc77.js';
 import { u as useControlled } from '../../common/useControlled-1d107f15.js';
 import { u as useTheme$1 } from '../../common/useTheme-1ab64cac.js';
+import { g as global } from '../../common/polyfill-node:global-21e5c503.js';
 import { c as createChainedFunction } from '../../common/createChainedFunction-005a4b16.js';
 import { P as Portal, G as Grow } from '../../common/Grow-cff53f9f.js';
 import '../../common/_commonjsHelpers-8c19dec8.js';
