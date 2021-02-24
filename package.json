@@ -22,8 +22,8 @@
     "url": "git://https://github.com/Nexysweb/mui-list-ts.git"
   },
   "scripts": {
-    "start": "SNOWPACK_PUBLIC_URL= snowpack dev",
-    "build": "snowpack build",
+    "start": "SNOWPACK_PUBLIC_URL= snowpack dev  --polyfill-node",
+    "build": "snowpack build  --polyfill-node",
     "buildpackage": "rm -rf ./dist;tsc -p tsconfig.build.json",
     "test": "jest",
     "eject": "react-scripts eject"
