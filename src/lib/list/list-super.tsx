@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useReducer, Reducer } from 'react';
 
-import Utils from '@nexys/utils';
-
 import {
   GlobalSearch,
   HeaderUnit,
@@ -296,7 +294,7 @@ const ListSuper = <A,>({
                   <ColCell key={j}>
                     {h.render
                       ? h.render(row)
-                      : Utils.ds.get(h.name.toString(), row)}
+                      :  row[h.name as keyof A]} {/* // Utils.ds.get(h.name.toString(), row) } */}
                   </ColCell>
                 ))}
               </Row>
