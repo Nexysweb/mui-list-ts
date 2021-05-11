@@ -9,13 +9,13 @@ const Copyright = () => {
     variant: "body2",
     color: "textSecondary",
     align: "center"
-  }, "Copyright © Nexys ", new Date().getFullYear());
+  }, "Copyright © Nexys ", new Date().getFullYear(), /* @__PURE__ */ React.createElement("p", null, /* @__PURE__ */ React.createElement("small", null, /* @__PURE__ */ React.createElement("a", {
+    href: shaUrl
+  }, sha))));
 };
 const Footer = () => {
   return /* @__PURE__ */ React.createElement(Box, {
     pt: 4
-  }, /* @__PURE__ */ React.createElement(Copyright, null), /* @__PURE__ */ React.createElement("p", null, /* @__PURE__ */ React.createElement("small", null, /* @__PURE__ */ React.createElement("a", {
-    href: shaUrl
-  }, sha))));
+  }, /* @__PURE__ */ React.createElement(Copyright, null));
 };
 export default Footer;
