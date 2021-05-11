@@ -63,8 +63,9 @@
     "react-tiny-popover": "^4.0.0",
     "snowpack": "^3.0.13",
     "styled-components": "^5.2.1",
-    "ts-jest": "^26.5.1",
+    "ts-jest": "^26.5.4",
     "typescript": "~3.9.7",
-    "world-countries": "^3.0.0"
+    "world-countries": "^3.0.0",
+    "jest-environment-jsdom": "^26.6.2"
   }
 }
