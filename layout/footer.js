@@ -5,7 +5,7 @@ const Copyright = () => {
     variant: "body2",
     color: "textSecondary",
     align: "center"
-  }, "Copyright \xA9 Nexys ", new Date().getFullYear());
+  }, "Copyright © Nexys ", new Date().getFullYear());
 };
 const Footer = () => {
   return /* @__PURE__ */ React.createElement(Box, {

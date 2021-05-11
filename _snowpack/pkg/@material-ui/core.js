@@ -1,507 +1,34 @@
-import { _ as _extends } from '../common/_index-4fa100fd.js';
-import { h as handleBreakpoints, _ as _defineProperty, m as merge, a as _toConsumableArray, b as _objectWithoutProperties, c as makeStyles, d as defaultTheme, e as _slicedToArray, f as duration, s as spacing, g as fade, l as lighten, i as darken } from '../common/defaultTheme-8c5d9b28.js';
-import { r as react } from '../common/index-fc424163.js';
+import { _ as _extends } from '../common/extends-7477639a.js';
+import { d as defaultTheme, a as duration, f as fade, l as lighten, b as darken } from '../common/defaultTheme-19559074.js';
+import { s as styled$1 } from '../common/styled-493b2a24.js';
+import { c as css, a as compose, b as borders, d as display, f as flexbox, g as grid, p as positions, e as palette, h as boxShadow, s as sizing, t as typography } from '../common/typography-7748feff.js';
+import { s as spacing, _ as _slicedToArray, a as _defineProperty } from '../common/spacing-9369306c.js';
+import { _ as _objectWithoutProperties } from '../common/withStyles-79c501f3.js';
+import { r as react } from '../common/index-4f10c776.js';
+import '../common/index-6c76b257.js';
 import { _ as __pika_web_default_export_for_treeshaking__ } from '../common/clsx.m-e1755476.js';
-import '../common/_index-7e2ecedb.js';
-import { h as hoistNonReactStatics_cjs } from '../common/hoist-non-react-statics.cjs-43de917e.js';
-import { w as withStyles, c as capitalize } from '../common/capitalize-79d2d23e.js';
-import { u as useForkRef } from '../common/useForkRef-346f9653.js';
-import { u as useControlled } from '../common/useControlled-1d107f15.js';
-import { u as useId } from '../common/unstable_useId-cc55985c.js';
-import { P as Paper } from '../common/Paper-86a34112.js';
-export { P as Paper } from '../common/Paper-86a34112.js';
-import { I as IconButton } from '../common/IconButton-2018358a.js';
-export { I as IconButton } from '../common/IconButton-2018358a.js';
-import { u as useFormControl, M as Modal, L as ListContext } from '../common/Popover-c6281951.js';
-export { F as FormControl, a as List, P as Popover } from '../common/Popover-c6281951.js';
-import { d as debounce, i as isMuiElement } from '../common/ownerWindow-73ff67d6.js';
-import { r as reactDom } from '../common/index-0f6db834.js';
-import { B as ButtonBase } from '../common/ButtonBase-03a25765.js';
-import { u as useTheme } from '../common/useTheme-1ab64cac.js';
-import { T as Transition, r as reflow, g as getTransitionProps } from '../common/Grow-cff53f9f.js';
-import { c as createSvgIcon } from '../common/createSvgIcon-11b81004.js';
-import { c as createChainedFunction } from '../common/createChainedFunction-005a4b16.js';
-import '../common/_commonjsHelpers-8c19dec8.js';
-import '../common/useEventCallback-2e5a3b8e.js';
-import '../common/useIsFocusVisible-e490cc77.js';
-import '../common/TransitionGroupContext-8c4776dd.js';
+import { w as withStyles, c as capitalize } from '../common/SvgIcon-74a91a81.js';
+import { u as useForkRef } from '../common/TransitionGroupContext-cc6d71cd.js';
+import { u as useControlled, d as debounce, i as isMuiElement } from '../common/useControlled-c628fc5e.js';
+import { u as useId } from '../common/unstable_useId-2c831124.js';
+import { P as Paper } from '../common/Paper-c7050fab.js';
+export { P as Paper } from '../common/Paper-c7050fab.js';
+import { I as IconButton } from '../common/IconButton-4b0aeeb2.js';
+export { I as IconButton } from '../common/IconButton-4b0aeeb2.js';
+import { u as useFormControl, M as Modal, L as ListContext } from '../common/Popover-86a551ae.js';
+export { F as FormControl, a as List, P as Popover } from '../common/Popover-86a551ae.js';
+import { r as reactDom } from '../common/index-419aa426.js';
+import { B as ButtonBase } from '../common/ButtonBase-29e418d6.js';
+import { u as useTheme, T as Transition, r as reflow, g as getTransitionProps, c as createChainedFunction } from '../common/Grow-805e2977.js';
+import { c as createSvgIcon } from '../common/useEventCallback-b4e9224e.js';
+import '../common/hoist-non-react-statics.cjs-8d567bb6.js';
+import '../common/index-b1a4b8f9.js';
+import '../common/_commonjsHelpers-53bde9c7.js';
+import '../common/objectWithoutPropertiesLoose-d5128f55.js';
+import '../common/useTheme-4361569e.js';
 
-function getPath(obj, path) {
-  if (!path || typeof path !== 'string') {
-    return null;
-  }
-
-  return path.split('.').reduce(function (acc, item) {
-    return acc && acc[item] ? acc[item] : null;
-  }, obj);
-}
-
-function style(options) {
-  var prop = options.prop,
-      _options$cssProperty = options.cssProperty,
-      cssProperty = _options$cssProperty === void 0 ? options.prop : _options$cssProperty,
-      themeKey = options.themeKey,
-      transform = options.transform;
-
-  var fn = function fn(props) {
-    if (props[prop] == null) {
-      return null;
-    }
-
-    var propValue = props[prop];
-    var theme = props.theme;
-    var themeMapping = getPath(theme, themeKey) || {};
-
-    var styleFromPropValue = function styleFromPropValue(propValueFinal) {
-      var value;
-
-      if (typeof themeMapping === 'function') {
-        value = themeMapping(propValueFinal);
-      } else if (Array.isArray(themeMapping)) {
-        value = themeMapping[propValueFinal] || propValueFinal;
-      } else {
-        value = getPath(themeMapping, propValueFinal) || propValueFinal;
-
-        if (transform) {
-          value = transform(value);
-        }
-      }
-
-      if (cssProperty === false) {
-        return value;
-      }
-
-      return _defineProperty({}, cssProperty, value);
-    };
-
-    return handleBreakpoints(props, propValue, styleFromPropValue);
-  };
-
-  fn.propTypes = {};
-  fn.filterProps = [prop];
-  return fn;
-}
-
-function compose() {
-  for (var _len = arguments.length, styles = new Array(_len), _key = 0; _key < _len; _key++) {
-    styles[_key] = arguments[_key];
-  }
-
-  var fn = function fn(props) {
-    return styles.reduce(function (acc, style) {
-      var output = style(props);
-
-      if (output) {
-        return merge(acc, output);
-      }
-
-      return acc;
-    }, {});
-  }; // Alternative approach that doesn't yield any performance gain.
-  // const handlers = styles.reduce((acc, style) => {
-  //   style.filterProps.forEach(prop => {
-  //     acc[prop] = style;
-  //   });
-  //   return acc;
-  // }, {});
-  // const fn = props => {
-  //   return Object.keys(props).reduce((acc, prop) => {
-  //     if (handlers[prop]) {
-  //       return merge(acc, handlers[prop](props));
-  //     }
-  //     return acc;
-  //   }, {});
-  // };
-
-
-  fn.propTypes = {};
-  fn.filterProps = styles.reduce(function (acc, style) {
-    return acc.concat(style.filterProps);
-  }, []);
-  return fn;
-}
-
-function getBorder(value) {
-  if (typeof value !== 'number') {
-    return value;
-  }
-
-  return "".concat(value, "px solid");
-}
-
-var border = style({
-  prop: 'border',
-  themeKey: 'borders',
-  transform: getBorder
-});
-var borderTop = style({
-  prop: 'borderTop',
-  themeKey: 'borders',
-  transform: getBorder
-});
-var borderRight = style({
-  prop: 'borderRight',
-  themeKey: 'borders',
-  transform: getBorder
-});
-var borderBottom = style({
-  prop: 'borderBottom',
-  themeKey: 'borders',
-  transform: getBorder
-});
-var borderLeft = style({
-  prop: 'borderLeft',
-  themeKey: 'borders',
-  transform: getBorder
-});
-var borderColor = style({
-  prop: 'borderColor',
-  themeKey: 'palette'
-});
-var borderRadius = style({
-  prop: 'borderRadius',
-  themeKey: 'shape'
-});
-var borders = compose(border, borderTop, borderRight, borderBottom, borderLeft, borderColor, borderRadius);
-
-function omit(input, fields) {
-  var output = {};
-  Object.keys(input).forEach(function (prop) {
-    if (fields.indexOf(prop) === -1) {
-      output[prop] = input[prop];
-    }
-  });
-  return output;
-}
-
-function css(styleFunction) {
-  var newStyleFunction = function newStyleFunction(props) {
-    var output = styleFunction(props);
-
-    if (props.css) {
-      return _extends({}, merge(output, styleFunction(_extends({
-        theme: props.theme
-      }, props.css))), omit(props.css, [styleFunction.filterProps]));
-    }
-
-    return output;
-  };
-
-  newStyleFunction.propTypes = {};
-  newStyleFunction.filterProps = ['css'].concat(_toConsumableArray(styleFunction.filterProps));
-  return newStyleFunction;
-}
-
-var displayPrint = style({
-  prop: 'displayPrint',
-  cssProperty: false,
-  transform: function transform(value) {
-    return {
-      '@media print': {
-        display: value
-      }
-    };
-  }
-});
-var displayRaw = style({
-  prop: 'display'
-});
-var overflow = style({
-  prop: 'overflow'
-});
-var textOverflow = style({
-  prop: 'textOverflow'
-});
-var visibility = style({
-  prop: 'visibility'
-});
-var whiteSpace = style({
-  prop: 'whiteSpace'
-});
-var display = compose(displayPrint, displayRaw, overflow, textOverflow, visibility, whiteSpace);
-
-var flexBasis = style({
-  prop: 'flexBasis'
-});
-var flexDirection = style({
-  prop: 'flexDirection'
-});
-var flexWrap = style({
-  prop: 'flexWrap'
-});
-var justifyContent = style({
-  prop: 'justifyContent'
-});
-var alignItems = style({
-  prop: 'alignItems'
-});
-var alignContent = style({
-  prop: 'alignContent'
-});
-var order = style({
-  prop: 'order'
-});
-var flex = style({
-  prop: 'flex'
-});
-var flexGrow = style({
-  prop: 'flexGrow'
-});
-var flexShrink = style({
-  prop: 'flexShrink'
-});
-var alignSelf = style({
-  prop: 'alignSelf'
-});
-var justifyItems = style({
-  prop: 'justifyItems'
-});
-var justifySelf = style({
-  prop: 'justifySelf'
-});
-var flexbox = compose(flexBasis, flexDirection, flexWrap, justifyContent, alignItems, alignContent, order, flex, flexGrow, flexShrink, alignSelf, justifyItems, justifySelf);
-
-var gridGap = style({
-  prop: 'gridGap'
-});
-var gridColumnGap = style({
-  prop: 'gridColumnGap'
-});
-var gridRowGap = style({
-  prop: 'gridRowGap'
-});
-var gridColumn = style({
-  prop: 'gridColumn'
-});
-var gridRow = style({
-  prop: 'gridRow'
-});
-var gridAutoFlow = style({
-  prop: 'gridAutoFlow'
-});
-var gridAutoColumns = style({
-  prop: 'gridAutoColumns'
-});
-var gridAutoRows = style({
-  prop: 'gridAutoRows'
-});
-var gridTemplateColumns = style({
-  prop: 'gridTemplateColumns'
-});
-var gridTemplateRows = style({
-  prop: 'gridTemplateRows'
-});
-var gridTemplateAreas = style({
-  prop: 'gridTemplateAreas'
-});
-var gridArea = style({
-  prop: 'gridArea'
-});
-var grid = compose(gridGap, gridColumnGap, gridRowGap, gridColumn, gridRow, gridAutoFlow, gridAutoColumns, gridAutoRows, gridTemplateColumns, gridTemplateRows, gridTemplateAreas, gridArea);
-
-var color = style({
-  prop: 'color',
-  themeKey: 'palette'
-});
-var bgcolor = style({
-  prop: 'bgcolor',
-  cssProperty: 'backgroundColor',
-  themeKey: 'palette'
-});
-var palette = compose(color, bgcolor);
-
-var position = style({
-  prop: 'position'
-});
-var zIndex = style({
-  prop: 'zIndex',
-  themeKey: 'zIndex'
-});
-var top = style({
-  prop: 'top'
-});
-var right = style({
-  prop: 'right'
-});
-var bottom = style({
-  prop: 'bottom'
-});
-var left = style({
-  prop: 'left'
-});
-var positions = compose(position, zIndex, top, right, bottom, left);
-
-var boxShadow = style({
-  prop: 'boxShadow',
-  themeKey: 'shadows'
-});
-
-function transform(value) {
-  return value <= 1 ? "".concat(value * 100, "%") : value;
-}
-
-var width = style({
-  prop: 'width',
-  transform: transform
-});
-var maxWidth = style({
-  prop: 'maxWidth',
-  transform: transform
-});
-var minWidth = style({
-  prop: 'minWidth',
-  transform: transform
-});
-var height = style({
-  prop: 'height',
-  transform: transform
-});
-var maxHeight = style({
-  prop: 'maxHeight',
-  transform: transform
-});
-var minHeight = style({
-  prop: 'minHeight',
-  transform: transform
-});
-style({
-  prop: 'size',
-  cssProperty: 'width',
-  transform: transform
-});
-style({
-  prop: 'size',
-  cssProperty: 'height',
-  transform: transform
-});
-var boxSizing = style({
-  prop: 'boxSizing'
-});
-var sizing = compose(width, maxWidth, minWidth, height, maxHeight, minHeight, boxSizing);
-
-var fontFamily = style({
-  prop: 'fontFamily',
-  themeKey: 'typography'
-});
-var fontSize = style({
-  prop: 'fontSize',
-  themeKey: 'typography'
-});
-var fontStyle = style({
-  prop: 'fontStyle',
-  themeKey: 'typography'
-});
-var fontWeight = style({
-  prop: 'fontWeight',
-  themeKey: 'typography'
-});
-var letterSpacing = style({
-  prop: 'letterSpacing'
-});
-var lineHeight = style({
-  prop: 'lineHeight'
-});
-var textAlign = style({
-  prop: 'textAlign'
-});
-var typography = compose(fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign);
-
-function omit$1(input, fields) {
-  var output = {};
-  Object.keys(input).forEach(function (prop) {
-    if (fields.indexOf(prop) === -1) {
-      output[prop] = input[prop];
-    }
-  });
-  return output;
-} // styled-components's API removes the mapping between components and styles.
-// Using components as a low-level styling construct can be simpler.
-
-
-function styled(Component) {
-  var componentCreator = function componentCreator(style) {
-    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-    var name = options.name,
-        stylesOptions = _objectWithoutProperties(options, ["name"]);
-
-    var classNamePrefix = name;
-
-    var stylesOrCreator = typeof style === 'function' ? function (theme) {
-      return {
-        root: function root(props) {
-          return style(_extends({
-            theme: theme
-          }, props));
-        }
-      };
-    } : {
-      root: style
-    };
-    var useStyles = makeStyles(stylesOrCreator, _extends({
-      Component: Component,
-      name: name || Component.displayName,
-      classNamePrefix: classNamePrefix
-    }, stylesOptions));
-    var filterProps;
-
-    if (style.filterProps) {
-      filterProps = style.filterProps;
-      delete style.filterProps;
-    }
-    /* eslint-disable react/forbid-foreign-prop-types */
-
-
-    if (style.propTypes) {
-      style.propTypes;
-      delete style.propTypes;
-    }
-    /* eslint-enable react/forbid-foreign-prop-types */
-
-
-    var StyledComponent = /*#__PURE__*/react.forwardRef(function StyledComponent(props, ref) {
-      var children = props.children,
-          classNameProp = props.className,
-          clone = props.clone,
-          ComponentProp = props.component,
-          other = _objectWithoutProperties(props, ["children", "className", "clone", "component"]);
-
-      var classes = useStyles(props);
-      var className = __pika_web_default_export_for_treeshaking__(classes.root, classNameProp);
-      var spread = other;
-
-      if (filterProps) {
-        spread = omit$1(spread, filterProps);
-      }
-
-      if (clone) {
-        return /*#__PURE__*/react.cloneElement(children, _extends({
-          className: __pika_web_default_export_for_treeshaking__(children.props.className, className)
-        }, spread));
-      }
-
-      if (typeof children === 'function') {
-        return children(_extends({
-          className: className
-        }, spread));
-      }
-
-      var FinalComponent = ComponentProp || Component;
-      return /*#__PURE__*/react.createElement(FinalComponent, _extends({
-        ref: ref,
-        className: className
-      }, spread), children);
-    });
-
-    hoistNonReactStatics_cjs(StyledComponent, Component);
-    return StyledComponent;
-  };
-
-  return componentCreator;
-}
-
-var styled$1 = function styled$1(Component) {
-  var componentCreator = styled(Component);
+var styled = function styled(Component) {
+  var componentCreator = styled$1(Component);
   return function (style, options) {
     return componentCreator(style, _extends({
       defaultTheme: defaultTheme
@@ -554,7 +81,9 @@ var styles = function styles(theme) {
 
     /* Styles applied to the root element if `position="static"`. */
     positionStatic: {
-      position: 'static'
+      position: 'static',
+      transform: 'translateZ(0)' // Make sure we can see the elevation.
+
     },
 
     /* Styles applied to the root element if `position="relative"`. */
@@ -592,7 +121,7 @@ var styles = function styles(theme) {
     }
   };
 };
-var AppBar = /*#__PURE__*/react.forwardRef(function AppBar(props, ref) {
+var AppBar = react.forwardRef(function AppBar(props, ref) {
   var classes = props.classes,
       className = props.className,
       _props$color = props.color,
@@ -648,9 +177,6 @@ var styles$1 = function styles(theme) {
 
     /* Styles applied to the root element if `variant="circle"`. */
     circle: {},
-
-    /* Styles applied to the root element if `variant="circular"`. */
-    circular: {},
 
     /* Styles applied to the root element if `variant="rounded"`. */
     rounded: {
@@ -725,7 +251,7 @@ function useLoaded(_ref) {
   return loaded;
 }
 
-var Avatar = /*#__PURE__*/react.forwardRef(function Avatar(props, ref) {
+var Avatar = react.forwardRef(function Avatar(props, ref) {
   var alt = props.alt,
       childrenProp = props.children,
       classes = props.classes,
@@ -793,50 +319,20 @@ var defaultTimeout = {
  * It uses [react-transition-group](https://github.com/reactjs/react-transition-group) internally.
  */
 
-var Fade = /*#__PURE__*/react.forwardRef(function Fade(props, ref) {
+var Fade = react.forwardRef(function Fade(props, ref) {
   var children = props.children,
-      _props$disableStrictM = props.disableStrictModeCompat,
-      disableStrictModeCompat = _props$disableStrictM === void 0 ? false : _props$disableStrictM,
       inProp = props.in,
       onEnter = props.onEnter,
-      onEntered = props.onEntered,
-      onEntering = props.onEntering,
       onExit = props.onExit,
-      onExited = props.onExited,
-      onExiting = props.onExiting,
       style = props.style,
-      _props$TransitionComp = props.TransitionComponent,
-      TransitionComponent = _props$TransitionComp === void 0 ? Transition : _props$TransitionComp,
       _props$timeout = props.timeout,
       timeout = _props$timeout === void 0 ? defaultTimeout : _props$timeout,
-      other = _objectWithoutProperties(props, ["children", "disableStrictModeCompat", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "TransitionComponent", "timeout"]);
+      other = _objectWithoutProperties(props, ["children", "in", "onEnter", "onExit", "style", "timeout"]);
 
   var theme = useTheme();
-  var enableStrictModeCompat = theme.unstable_strictMode && !disableStrictModeCompat;
-  var nodeRef = react.useRef(null);
-  var foreignRef = useForkRef(children.ref, ref);
-  var handleRef = useForkRef(enableStrictModeCompat ? nodeRef : undefined, foreignRef);
+  var handleRef = useForkRef(children.ref, ref);
 
-  var normalizedTransitionCallback = function normalizedTransitionCallback(callback) {
-    return function (nodeOrAppearing, maybeAppearing) {
-      if (callback) {
-        var _ref = enableStrictModeCompat ? [nodeRef.current, nodeOrAppearing] : [nodeOrAppearing, maybeAppearing],
-            _ref2 = _slicedToArray(_ref, 2),
-            node = _ref2[0],
-            isAppearing = _ref2[1]; // onEnterXxx and onExitXxx callbacks have a different arguments.length value.
-
-
-        if (isAppearing === undefined) {
-          callback(node);
-        } else {
-          callback(node, isAppearing);
-        }
-      }
-    };
-  };
-
-  var handleEntering = normalizedTransitionCallback(onEntering);
-  var handleEnter = normalizedTransitionCallback(function (node, isAppearing) {
+  var handleEnter = function handleEnter(node, isAppearing) {
     reflow(node); // So the animation always start from the start.
 
     var transitionProps = getTransitionProps({
@@ -851,10 +347,9 @@ var Fade = /*#__PURE__*/react.forwardRef(function Fade(props, ref) {
     if (onEnter) {
       onEnter(node, isAppearing);
     }
-  });
-  var handleEntered = normalizedTransitionCallback(onEntered);
-  var handleExiting = normalizedTransitionCallback(onExiting);
-  var handleExit = normalizedTransitionCallback(function (node) {
+  };
+
+  var handleExit = function handleExit(node) {
     var transitionProps = getTransitionProps({
       style: style,
       timeout: timeout
@@ -867,25 +362,20 @@ var Fade = /*#__PURE__*/react.forwardRef(function Fade(props, ref) {
     if (onExit) {
       onExit(node);
     }
-  });
-  var handleExited = normalizedTransitionCallback(onExited);
-  return /*#__PURE__*/react.createElement(TransitionComponent, _extends({
+  };
+
+  return /*#__PURE__*/react.createElement(Transition, _extends({
     appear: true,
     in: inProp,
-    nodeRef: enableStrictModeCompat ? nodeRef : undefined,
     onEnter: handleEnter,
-    onEntered: handleEntered,
-    onEntering: handleEntering,
     onExit: handleExit,
-    onExited: handleExited,
-    onExiting: handleExiting,
     timeout: timeout
   }, other), function (state, childProps) {
-    return /*#__PURE__*/react.cloneElement(children, _extends({
+    return react.cloneElement(children, _extends({
       style: _extends({
         opacity: 0,
         visibility: state === 'exited' && !inProp ? 'hidden' : undefined
-      }, styles$2[state], style, children.props.style),
+      }, styles$2[state], {}, style, {}, children.props.style),
       ref: handleRef
     }, childProps));
   });
@@ -913,7 +403,7 @@ var styles$3 = {
     backgroundColor: 'transparent'
   }
 };
-var Backdrop = /*#__PURE__*/react.forwardRef(function Backdrop(props, ref) {
+var Backdrop = react.forwardRef(function Backdrop(props, ref) {
   var children = props.children,
       classes = props.classes,
       className = props.className,
@@ -921,11 +411,9 @@ var Backdrop = /*#__PURE__*/react.forwardRef(function Backdrop(props, ref) {
       invisible = _props$invisible === void 0 ? false : _props$invisible,
       open = props.open,
       transitionDuration = props.transitionDuration,
-      _props$TransitionComp = props.TransitionComponent,
-      TransitionComponent = _props$TransitionComp === void 0 ? Fade : _props$TransitionComp,
-      other = _objectWithoutProperties(props, ["children", "classes", "className", "invisible", "open", "transitionDuration", "TransitionComponent"]);
+      other = _objectWithoutProperties(props, ["children", "classes", "className", "invisible", "open", "transitionDuration"]);
 
-  return /*#__PURE__*/react.createElement(TransitionComponent, _extends({
+  return /*#__PURE__*/react.createElement(Fade, _extends({
     in: open,
     timeout: transitionDuration
   }, other), /*#__PURE__*/react.createElement("div", {
@@ -943,7 +431,7 @@ var styleFunction = css(compose(borders, display, flexbox, grid, positions, pale
  * @ignore - do not document.
  */
 
-var Box = styled$1('div')(styleFunction, {
+var Box = styled('div')(styleFunction, {
   name: 'MuiBox'
 });
 
@@ -1091,7 +579,7 @@ var defaultVariantMapping = {
   body1: 'p',
   body2: 'p'
 };
-var Typography = /*#__PURE__*/react.forwardRef(function Typography(props, ref) {
+var Typography = react.forwardRef(function Typography(props, ref) {
   var _props$align = props.align,
       align = _props$align === void 0 ? 'inherit' : _props$align,
       classes = props.classes,
@@ -1129,7 +617,7 @@ var styles$5 = {
     overflow: 'hidden'
   }
 };
-var Card = /*#__PURE__*/react.forwardRef(function Card(props, ref) {
+var Card = react.forwardRef(function Card(props, ref) {
   var classes = props.classes,
       className = props.className,
       _props$raised = props.raised,
@@ -1161,7 +649,7 @@ var styles$6 = {
     }
   }
 };
-var CardActions = /*#__PURE__*/react.forwardRef(function CardActions(props, ref) {
+var CardActions = react.forwardRef(function CardActions(props, ref) {
   var _props$disableSpacing = props.disableSpacing,
       disableSpacing = _props$disableSpacing === void 0 ? false : _props$disableSpacing,
       classes = props.classes,
@@ -1186,7 +674,7 @@ var styles$7 = {
     }
   }
 };
-var CardContent = /*#__PURE__*/react.forwardRef(function CardContent(props, ref) {
+var CardContent = react.forwardRef(function CardContent(props, ref) {
   var classes = props.classes,
       className = props.className,
       _props$component = props.component,
@@ -1235,7 +723,7 @@ var styles$8 = {
   /* Styles applied to the subheader Typography element. */
   subheader: {}
 };
-var CardHeader = /*#__PURE__*/react.forwardRef(function CardHeader(props, ref) {
+var CardHeader = react.forwardRef(function CardHeader(props, ref) {
   var action = props.action,
       avatar = props.avatar,
       classes = props.classes,
@@ -1311,7 +799,7 @@ var styles$9 = {
  * @ignore - internal component.
  */
 
-var SwitchBase = /*#__PURE__*/react.forwardRef(function SwitchBase(props, ref) {
+var SwitchBase = react.forwardRef(function SwitchBase(props, ref) {
   var autoFocus = props.autoFocus,
       checkedProp = props.checked,
       checkedIcon = props.checkedIcon,
@@ -1371,7 +859,6 @@ var SwitchBase = /*#__PURE__*/react.forwardRef(function SwitchBase(props, ref) {
     setCheckedState(newChecked);
 
     if (onChange) {
-      // TODO v5: remove the second argument.
       onChange(event, newChecked);
     }
   };
@@ -1493,25 +980,23 @@ var styles$a = function styles(theme) {
 var defaultCheckedIcon = /*#__PURE__*/react.createElement(CheckBoxIcon, null);
 var defaultIcon = /*#__PURE__*/react.createElement(CheckBoxOutlineBlankIcon, null);
 var defaultIndeterminateIcon = /*#__PURE__*/react.createElement(IndeterminateCheckBoxIcon, null);
-var Checkbox = /*#__PURE__*/react.forwardRef(function Checkbox(props, ref) {
+var Checkbox = react.forwardRef(function Checkbox(props, ref) {
   var _props$checkedIcon = props.checkedIcon,
       checkedIcon = _props$checkedIcon === void 0 ? defaultCheckedIcon : _props$checkedIcon,
       classes = props.classes,
       _props$color = props.color,
       color = _props$color === void 0 ? 'secondary' : _props$color,
       _props$icon = props.icon,
-      iconProp = _props$icon === void 0 ? defaultIcon : _props$icon,
+      icon = _props$icon === void 0 ? defaultIcon : _props$icon,
       _props$indeterminate = props.indeterminate,
       indeterminate = _props$indeterminate === void 0 ? false : _props$indeterminate,
       _props$indeterminateI = props.indeterminateIcon,
-      indeterminateIconProp = _props$indeterminateI === void 0 ? defaultIndeterminateIcon : _props$indeterminateI,
+      indeterminateIcon = _props$indeterminateI === void 0 ? defaultIndeterminateIcon : _props$indeterminateI,
       inputProps = props.inputProps,
       _props$size = props.size,
       size = _props$size === void 0 ? 'medium' : _props$size,
       other = _objectWithoutProperties(props, ["checkedIcon", "classes", "color", "icon", "indeterminate", "indeterminateIcon", "inputProps", "size"]);
 
-  var icon = indeterminate ? indeterminateIconProp : iconProp;
-  var indeterminateIcon = indeterminate ? indeterminateIconProp : checkedIcon;
   return /*#__PURE__*/react.createElement(SwitchBase$1, _extends({
     type: "checkbox",
     classes: {
@@ -1523,11 +1008,11 @@ var Checkbox = /*#__PURE__*/react.forwardRef(function Checkbox(props, ref) {
     inputProps: _extends({
       'data-indeterminate': indeterminate
     }, inputProps),
-    icon: /*#__PURE__*/react.cloneElement(icon, {
-      fontSize: icon.props.fontSize === undefined && size === "small" ? size : icon.props.fontSize
+    icon: react.cloneElement(indeterminate ? indeterminateIcon : icon, {
+      fontSize: size === 'small' ? 'small' : 'default'
     }),
-    checkedIcon: /*#__PURE__*/react.cloneElement(indeterminateIcon, {
-      fontSize: indeterminateIcon.props.fontSize === undefined && size === "small" ? size : indeterminateIcon.props.fontSize
+    checkedIcon: react.cloneElement(indeterminate ? indeterminateIcon : checkedIcon, {
+      fontSize: size === 'small' ? 'small' : 'default'
     }),
     ref: ref
   }, other));
@@ -1597,7 +1082,7 @@ var styles$b = function styles(theme) {
     })
   };
 };
-var Container = /*#__PURE__*/react.forwardRef(function Container(props, ref) {
+var Container = react.forwardRef(function Container(props, ref) {
   var classes = props.classes,
       className = props.className,
       _props$component = props.component,
@@ -1668,8 +1153,8 @@ var styles$c = function styles(theme) {
 function CssBaseline(props) {
   /* eslint-disable no-unused-vars */
   var _props$children = props.children,
-      children = _props$children === void 0 ? null : _props$children;
-      props.classes;
+      children = _props$children === void 0 ? null : _props$children,
+      classes = props.classes;
   /* eslint-enable no-unused-vars */
 
   return /*#__PURE__*/react.createElement(react.Fragment, null, children);
@@ -1728,7 +1213,7 @@ var styles$d = function styles(theme) {
     }
   };
 };
-var Divider = /*#__PURE__*/react.forwardRef(function Divider(props, ref) {
+var Divider = react.forwardRef(function Divider(props, ref) {
   var _props$absolute = props.absolute,
       absolute = _props$absolute === void 0 ? false : _props$absolute,
       classes = props.classes,
@@ -1781,7 +1266,7 @@ function getTranslateValue(direction, node) {
   }
 
   if (direction === 'left') {
-    return "translateX(".concat(window.innerWidth, "px) translateX(").concat(offsetX - rect.left, "px)");
+    return "translateX(".concat(window.innerWidth, "px) translateX(-").concat(rect.left - offsetX, "px)");
   }
 
   if (direction === 'right') {
@@ -1789,7 +1274,7 @@ function getTranslateValue(direction, node) {
   }
 
   if (direction === 'up') {
-    return "translateY(".concat(window.innerHeight, "px) translateY(").concat(offsetY - rect.top, "px)");
+    return "translateY(".concat(window.innerHeight, "px) translateY(-").concat(rect.top - offsetY, "px)");
   } // direction === 'down'
 
 
@@ -1813,23 +1298,19 @@ var defaultTimeout$1 = {
  * It uses [react-transition-group](https://github.com/reactjs/react-transition-group) internally.
  */
 
-var Slide = /*#__PURE__*/react.forwardRef(function Slide(props, ref) {
+var Slide = react.forwardRef(function Slide(props, ref) {
   var children = props.children,
       _props$direction = props.direction,
       direction = _props$direction === void 0 ? 'down' : _props$direction,
       inProp = props.in,
       onEnter = props.onEnter,
-      onEntered = props.onEntered,
       onEntering = props.onEntering,
       onExit = props.onExit,
       onExited = props.onExited,
-      onExiting = props.onExiting,
       style = props.style,
       _props$timeout = props.timeout,
       timeout = _props$timeout === void 0 ? defaultTimeout$1 : _props$timeout,
-      _props$TransitionComp = props.TransitionComponent,
-      TransitionComponent = _props$TransitionComp === void 0 ? Transition : _props$TransitionComp,
-      other = _objectWithoutProperties(props, ["children", "direction", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"]);
+      other = _objectWithoutProperties(props, ["children", "direction", "in", "onEnter", "onEntering", "onExit", "onExited", "style", "timeout"]);
 
   var theme = useTheme();
   var childrenRef = react.useRef(null);
@@ -1844,28 +1325,18 @@ var Slide = /*#__PURE__*/react.forwardRef(function Slide(props, ref) {
   var handleRefIntermediary = useForkRef(children.ref, handleOwnRef);
   var handleRef = useForkRef(handleRefIntermediary, ref);
 
-  var normalizedTransitionCallback = function normalizedTransitionCallback(callback) {
-    return function (isAppearing) {
-      if (callback) {
-        // onEnterXxx and onExitXxx callbacks have a different arguments.length value.
-        if (isAppearing === undefined) {
-          callback(childrenRef.current);
-        } else {
-          callback(childrenRef.current, isAppearing);
-        }
-      }
-    };
-  };
-
-  var handleEnter = normalizedTransitionCallback(function (node, isAppearing) {
+  var handleEnter = function handleEnter(_, isAppearing) {
+    var node = childrenRef.current;
     setTranslateValue(direction, node);
     reflow(node);
 
     if (onEnter) {
       onEnter(node, isAppearing);
     }
-  });
-  var handleEntering = normalizedTransitionCallback(function (node, isAppearing) {
+  };
+
+  var handleEntering = function handleEntering(_, isAppearing) {
+    var node = childrenRef.current;
     var transitionProps = getTransitionProps({
       timeout: timeout,
       style: style
@@ -1884,10 +1355,10 @@ var Slide = /*#__PURE__*/react.forwardRef(function Slide(props, ref) {
     if (onEntering) {
       onEntering(node, isAppearing);
     }
-  });
-  var handleEntered = normalizedTransitionCallback(onEntered);
-  var handleExiting = normalizedTransitionCallback(onExiting);
-  var handleExit = normalizedTransitionCallback(function (node) {
+  };
+
+  var handleExit = function handleExit() {
+    var node = childrenRef.current;
     var transitionProps = getTransitionProps({
       timeout: timeout,
       style: style
@@ -1905,16 +1376,19 @@ var Slide = /*#__PURE__*/react.forwardRef(function Slide(props, ref) {
     if (onExit) {
       onExit(node);
     }
-  });
-  var handleExited = normalizedTransitionCallback(function (node) {
-    // No need for transitions when the component is hidden
+  };
+
+  var handleExited = function handleExited() {
+    var node = childrenRef.current; // No need for transitions when the component is hidden
+
     node.style.webkitTransition = '';
     node.style.transition = '';
 
     if (onExited) {
       onExited(node);
     }
-  });
+  };
+
   var updatePosition = react.useCallback(function () {
     if (childrenRef.current) {
       setTranslateValue(direction, childrenRef.current);
@@ -1944,23 +1418,20 @@ var Slide = /*#__PURE__*/react.forwardRef(function Slide(props, ref) {
       updatePosition();
     }
   }, [inProp, updatePosition]);
-  return /*#__PURE__*/react.createElement(TransitionComponent, _extends({
-    nodeRef: childrenRef,
+  return /*#__PURE__*/react.createElement(Transition, _extends({
     onEnter: handleEnter,
-    onEntered: handleEntered,
     onEntering: handleEntering,
     onExit: handleExit,
     onExited: handleExited,
-    onExiting: handleExiting,
     appear: true,
     in: inProp,
     timeout: timeout
   }, other), function (state, childProps) {
-    return /*#__PURE__*/react.cloneElement(children, _extends({
+    return react.cloneElement(children, _extends({
       ref: handleRef,
       style: _extends({
         visibility: state === 'exited' && !inProp ? 'hidden' : undefined
-      }, style, children.props.style)
+      }, style, {}, children.props.style)
     }, childProps));
   });
 });
@@ -2071,7 +1542,7 @@ var defaultTransitionDuration = {
  * when `variant="temporary"` is set.
  */
 
-var Drawer = /*#__PURE__*/react.forwardRef(function Drawer(props, ref) {
+var Drawer = react.forwardRef(function Drawer(props, ref) {
   var _props$anchor = props.anchor,
       anchorProp = _props$anchor === void 0 ? 'left' : _props$anchor,
       BackdropProps = props.BackdropProps,
@@ -2091,13 +1562,11 @@ var Drawer = /*#__PURE__*/react.forwardRef(function Drawer(props, ref) {
       _props$PaperProps = props.PaperProps,
       PaperProps = _props$PaperProps === void 0 ? {} : _props$PaperProps,
       SlideProps = props.SlideProps,
-      _props$TransitionComp = props.TransitionComponent,
-      TransitionComponent = _props$TransitionComp === void 0 ? Slide : _props$TransitionComp,
       _props$transitionDura = props.transitionDuration,
       transitionDuration = _props$transitionDura === void 0 ? defaultTransitionDuration : _props$transitionDura,
       _props$variant = props.variant,
       variant = _props$variant === void 0 ? 'temporary' : _props$variant,
-      other = _objectWithoutProperties(props, ["anchor", "BackdropProps", "children", "classes", "className", "elevation", "ModalProps", "onClose", "open", "PaperProps", "SlideProps", "TransitionComponent", "transitionDuration", "variant"]);
+      other = _objectWithoutProperties(props, ["anchor", "BackdropProps", "children", "classes", "className", "elevation", "ModalProps", "onClose", "open", "PaperProps", "SlideProps", "transitionDuration", "variant"]);
 
   var theme = useTheme(); // Let's assume that the Drawer will always be rendered on user space.
   // We use this state is order to skip the appear transition during the
@@ -2122,7 +1591,7 @@ var Drawer = /*#__PURE__*/react.forwardRef(function Drawer(props, ref) {
     }, other), drawer);
   }
 
-  var slidingDrawer = /*#__PURE__*/react.createElement(TransitionComponent, _extends({
+  var slidingDrawer = /*#__PURE__*/react.createElement(Slide, _extends({
     in: open,
     direction: oppositeDirection[anchor],
     timeout: transitionDuration,
@@ -2138,7 +1607,7 @@ var Drawer = /*#__PURE__*/react.forwardRef(function Drawer(props, ref) {
 
 
   return /*#__PURE__*/react.createElement(Modal, _extends({
-    BackdropProps: _extends({}, BackdropProps, BackdropPropsProp, {
+    BackdropProps: _extends({}, BackdropProps, {}, BackdropPropsProp, {
       transitionDuration: transitionDuration
     }),
     BackdropComponent: Backdrop$1,
@@ -2207,20 +1676,20 @@ var styles$f = function styles(theme) {
  * Use this component if you want to display an extra label.
  */
 
-var FormControlLabel = /*#__PURE__*/react.forwardRef(function FormControlLabel(props, ref) {
-  props.checked;
-      var classes = props.classes,
+var FormControlLabel = react.forwardRef(function FormControlLabel(props, ref) {
+  var checked = props.checked,
+      classes = props.classes,
       className = props.className,
       control = props.control,
-      disabledProp = props.disabled;
-      props.inputRef;
-      var label = props.label,
+      disabledProp = props.disabled,
+      inputRef = props.inputRef,
+      label = props.label,
       _props$labelPlacement = props.labelPlacement,
-      labelPlacement = _props$labelPlacement === void 0 ? 'end' : _props$labelPlacement;
-      props.name;
-      props.onChange;
-      props.value;
-      var other = _objectWithoutProperties(props, ["checked", "classes", "className", "control", "disabled", "inputRef", "label", "labelPlacement", "name", "onChange", "value"]);
+      labelPlacement = _props$labelPlacement === void 0 ? 'end' : _props$labelPlacement,
+      name = props.name,
+      onChange = props.onChange,
+      value = props.value,
+      other = _objectWithoutProperties(props, ["checked", "classes", "className", "control", "disabled", "inputRef", "label", "labelPlacement", "name", "onChange", "value"]);
 
   var muiFormControl = useFormControl();
   var disabled = disabledProp;
@@ -2244,7 +1713,7 @@ var FormControlLabel = /*#__PURE__*/react.forwardRef(function FormControlLabel(p
   return /*#__PURE__*/react.createElement("label", _extends({
     className: __pika_web_default_export_for_treeshaking__(classes.root, className, labelPlacement !== 'end' && classes["labelPlacement".concat(capitalize(labelPlacement))], disabled && classes.disabled),
     ref: ref
-  }, other), /*#__PURE__*/react.cloneElement(control, controlProps), /*#__PURE__*/react.createElement(Typography$1, {
+  }, other), react.cloneElement(control, controlProps), /*#__PURE__*/react.createElement(Typography$1, {
     component: "span",
     className: __pika_web_default_export_for_treeshaking__(classes.label, disabled && classes.disabled)
   }, label));
@@ -2272,7 +1741,7 @@ var styles$g = {
  * For the `Radio`, you should be using the `RadioGroup` component instead of this one.
  */
 
-var FormGroup = /*#__PURE__*/react.forwardRef(function FormGroup(props, ref) {
+var FormGroup = react.forwardRef(function FormGroup(props, ref) {
   var classes = props.classes,
       className = props.className,
       _props$row = props.row,
@@ -2367,7 +1836,7 @@ function generateGutter(theme, breakpoint) {
 
 var styles$h = function styles(theme) {
   return _extends({
-    /* Styles applied to the root element. */
+    /* Styles applied to the root element */
     root: {},
 
     /* Styles applied to the root element if `container={true}`. */
@@ -2484,13 +1953,13 @@ var styles$h = function styles(theme) {
     'justify-xs-space-evenly': {
       justifyContent: 'space-evenly'
     }
-  }, generateGutter(theme, 'xs'), theme.breakpoints.keys.reduce(function (accumulator, key) {
+  }, generateGutter(theme, 'xs'), {}, theme.breakpoints.keys.reduce(function (accumulator, key) {
     // Use side effect over immutability for better performance.
     generateGrid(accumulator, theme, key);
     return accumulator;
   }, {}));
 };
-var Grid = /*#__PURE__*/react.forwardRef(function Grid(props, ref) {
+var Grid = react.forwardRef(function Grid(props, ref) {
   var _props$alignContent = props.alignContent,
       alignContent = _props$alignContent === void 0 ? 'stretch' : _props$alignContent,
       _props$alignItems = props.alignItems,
@@ -2625,7 +2094,7 @@ var useEnhancedEffect = typeof window === 'undefined' ? react.useEffect : react.
  * Uses an additional container component if `ListItemSecondaryAction` is the last child.
  */
 
-var ListItem = /*#__PURE__*/react.forwardRef(function ListItem(props, ref) {
+var ListItem = react.forwardRef(function ListItem(props, ref) {
   var _props$alignItems = props.alignItems,
       alignItems = _props$alignItems === void 0 ? 'center' : _props$alignItems,
       _props$autoFocus = props.autoFocus,
@@ -2749,7 +2218,7 @@ var styles$j = {
   /* Styles applied to the secondary `Typography` component. */
   secondary: {}
 };
-var ListItemText = /*#__PURE__*/react.forwardRef(function ListItemText(props, ref) {
+var ListItemText = react.forwardRef(function ListItemText(props, ref) {
   var children = props.children,
       classes = props.classes,
       className = props.className,
@@ -2921,7 +2390,7 @@ var defaultCheckedIcon$1 = /*#__PURE__*/react.createElement(RadioButtonIcon$1, {
   checked: true
 });
 var defaultIcon$1 = /*#__PURE__*/react.createElement(RadioButtonIcon$1, null);
-var Radio = /*#__PURE__*/react.forwardRef(function Radio(props, ref) {
+var Radio = react.forwardRef(function Radio(props, ref) {
   var checkedProp = props.checked,
       classes = props.classes,
       _props$color = props.color,
@@ -2950,10 +2419,10 @@ var Radio = /*#__PURE__*/react.forwardRef(function Radio(props, ref) {
   return /*#__PURE__*/react.createElement(SwitchBase$1, _extends({
     color: color,
     type: "radio",
-    icon: /*#__PURE__*/react.cloneElement(defaultIcon$1, {
+    icon: react.cloneElement(defaultIcon$1, {
       fontSize: size === 'small' ? 'small' : 'default'
     }),
-    checkedIcon: /*#__PURE__*/react.cloneElement(defaultCheckedIcon$1, {
+    checkedIcon: react.cloneElement(defaultCheckedIcon$1, {
       fontSize: size === 'small' ? 'small' : 'default'
     }),
     classes: {
@@ -2971,7 +2440,7 @@ var Radio$1 = withStyles(styles$l, {
   name: 'MuiRadio'
 })(Radio);
 
-var RadioGroup = /*#__PURE__*/react.forwardRef(function RadioGroup(props, ref) {
+var RadioGroup = react.forwardRef(function RadioGroup(props, ref) {
   var actions = props.actions,
       children = props.children,
       nameProp = props.name,
@@ -3057,7 +2526,7 @@ var styles$m = function styles(theme) {
   };
 };
 var defaultComponent = 'table';
-var Table = /*#__PURE__*/react.forwardRef(function Table(props, ref) {
+var Table = react.forwardRef(function Table(props, ref) {
   var classes = props.classes,
       className = props.className,
       _props$component = props.component,
@@ -3105,7 +2574,7 @@ var tablelvl2 = {
   variant: 'body'
 };
 var defaultComponent$1 = 'tbody';
-var TableBody = /*#__PURE__*/react.forwardRef(function TableBody(props, ref) {
+var TableBody = react.forwardRef(function TableBody(props, ref) {
   var classes = props.classes,
       className = props.className,
       _props$component = props.component,
@@ -3165,7 +2634,7 @@ var styles$o = function styles(theme) {
       '&$paddingCheckbox': {
         width: 24,
         // prevent the checkbox column from growing
-        padding: '0 12px 0 16px',
+        padding: '0px 12px 0 16px',
         '&:last-child': {
           paddingLeft: 12,
           paddingRight: 16
@@ -3231,7 +2700,7 @@ var styles$o = function styles(theme) {
  * or otherwise a `<td>` element.
  */
 
-var TableCell = /*#__PURE__*/react.forwardRef(function TableCell(props, ref) {
+var TableCell = react.forwardRef(function TableCell(props, ref) {
   var _props$align = props.align,
       align = _props$align === void 0 ? 'inherit' : _props$align,
       classes = props.classes,
@@ -3291,7 +2760,7 @@ var styles$p = {
     overflowX: 'auto'
   }
 };
-var TableContainer = /*#__PURE__*/react.forwardRef(function TableContainer(props, ref) {
+var TableContainer = react.forwardRef(function TableContainer(props, ref) {
   var classes = props.classes,
       className = props.className,
       _props$component = props.component,
@@ -3317,7 +2786,7 @@ var tablelvl2$1 = {
   variant: 'head'
 };
 var defaultComponent$2 = 'thead';
-var TableHead = /*#__PURE__*/react.forwardRef(function TableHead(props, ref) {
+var TableHead = react.forwardRef(function TableHead(props, ref) {
   var classes = props.classes,
       className = props.className,
       _props$component = props.component,
@@ -3363,7 +2832,7 @@ var styles$r = function styles(theme) {
     }
   };
 };
-var Toolbar = /*#__PURE__*/react.forwardRef(function Toolbar(props, ref) {
+var Toolbar = react.forwardRef(function Toolbar(props, ref) {
   var classes = props.classes,
       className = props.className,
       _props$component = props.component,
@@ -3419,7 +2888,7 @@ var defaultComponent$3 = 'tr';
  * based on the material table element parent (head, body, etc).
  */
 
-var TableRow = /*#__PURE__*/react.forwardRef(function TableRow(props, ref) {
+var TableRow = react.forwardRef(function TableRow(props, ref) {
   var classes = props.classes,
       className = props.className,
       _props$component = props.component,

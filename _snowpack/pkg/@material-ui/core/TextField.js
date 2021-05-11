@@ -1,74 +1,29 @@
-import { _ as _extends } from '../../common/_index-4fa100fd.js';
-import { b as _objectWithoutProperties, k as formatMuiErrorMessage, _ as _defineProperty, e as _slicedToArray, o as _typeof, p as mergeClasses } from '../../common/defaultTheme-8c5d9b28.js';
-import { r as react } from '../../common/index-fc424163.js';
-import '../../common/_index-7e2ecedb.js';
+import { c as createCommonjsModule, g as getDefaultExportFromCjs } from '../../common/_commonjsHelpers-53bde9c7.js';
+import { i as interopRequireDefault, _ as _extends_1 } from '../../common/extends-196a4166.js';
+import { i as interopRequireWildcard } from '../../common/interopRequireWildcard-9f601ccf.js';
+import { o as objectWithoutProperties } from '../../common/createMuiTheme-d0f80890.js';
+import { r as react } from '../../common/index-4f10c776.js';
+import { p as propTypes } from '../../common/index-6c76b257.js';
 import { _ as __pika_web_default_export_for_treeshaking__$1 } from '../../common/clsx.m-e1755476.js';
-import { w as withStyles, c as capitalize } from '../../common/capitalize-79d2d23e.js';
-import { b as useFormControl, i as isFilled, c as FormControlContext, u as useFormControl$1, g as getScrollbarSize, a as List, P as Popover, F as FormControl } from '../../common/Popover-c6281951.js';
-import { c as createCommonjsModule } from '../../common/_commonjsHelpers-8c19dec8.js';
-import { d as debounce, o as ownerDocument } from '../../common/ownerWindow-73ff67d6.js';
-import { r as reactDom } from '../../common/index-0f6db834.js';
-import { u as useForkRef, s as setRef } from '../../common/useForkRef-346f9653.js';
-import { u as useTheme } from '../../common/useTheme-1ab64cac.js';
-import { u as useControlled } from '../../common/useControlled-1d107f15.js';
-import { c as createSvgIcon } from '../../common/createSvgIcon-11b81004.js';
-import '../../common/hoist-non-react-statics.cjs-43de917e.js';
-import '../../common/createChainedFunction-005a4b16.js';
-import '../../common/useEventCallback-2e5a3b8e.js';
-import '../../common/Grow-cff53f9f.js';
-import '../../common/TransitionGroupContext-8c4776dd.js';
-import '../../common/Paper-86a34112.js';
-
-/** @license React v17.0.1
- * react-is.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-var b=60103,c=60106,d=60107,e=60108,f=60114,g=60109,h=60110,k=60112,l=60113,m=60120,n=60115,p=60116,q=60121,r=60122,u=60117,v=60129,w=60131;
-if("function"===typeof Symbol&&Symbol.for){var x=Symbol.for;b=x("react.element");c=x("react.portal");d=x("react.fragment");e=x("react.strict_mode");f=x("react.profiler");g=x("react.provider");h=x("react.context");k=x("react.forward_ref");l=x("react.suspense");m=x("react.suspense_list");n=x("react.memo");p=x("react.lazy");q=x("react.block");r=x("react.server.block");u=x("react.fundamental");v=x("react.debug_trace_mode");w=x("react.legacy_hidden");}
-function y(a){if("object"===typeof a&&null!==a){var t=a.$$typeof;switch(t){case b:switch(a=a.type,a){case d:case f:case e:case l:case m:return a;default:switch(a=a&&a.$$typeof,a){case h:case k:case p:case n:case g:return a;default:return t}}case c:return t}}}var z=g,A=b,B=k,C=d,D=p,E=n,F=c,G=f,H=e,I=l;var ContextConsumer=h;var ContextProvider=z;var Element=A;var ForwardRef=B;var Fragment=C;var Lazy=D;var Memo=E;var Portal=F;var Profiler=G;var StrictMode=H;
-var Suspense=I;var isAsyncMode=function(){return !1};var isConcurrentMode=function(){return !1};var isContextConsumer=function(a){return y(a)===h};var isContextProvider=function(a){return y(a)===g};var isElement=function(a){return "object"===typeof a&&null!==a&&a.$$typeof===b};var isForwardRef=function(a){return y(a)===k};var isFragment=function(a){return y(a)===d};var isLazy=function(a){return y(a)===p};var isMemo=function(a){return y(a)===n};
-var isPortal=function(a){return y(a)===c};var isProfiler=function(a){return y(a)===f};var isStrictMode=function(a){return y(a)===e};var isSuspense=function(a){return y(a)===l};var isValidElementType=function(a){return "string"===typeof a||"function"===typeof a||a===d||a===f||a===v||a===e||a===l||a===m||a===w||"object"===typeof a&&null!==a&&(a.$$typeof===p||a.$$typeof===n||a.$$typeof===g||a.$$typeof===h||a.$$typeof===k||a.$$typeof===u||a.$$typeof===q||a[0]===r)?!0:!1};
-var typeOf=y;
-
-var reactIs_production_min = {
-	ContextConsumer: ContextConsumer,
-	ContextProvider: ContextProvider,
-	Element: Element,
-	ForwardRef: ForwardRef,
-	Fragment: Fragment,
-	Lazy: Lazy,
-	Memo: Memo,
-	Portal: Portal,
-	Profiler: Profiler,
-	StrictMode: StrictMode,
-	Suspense: Suspense,
-	isAsyncMode: isAsyncMode,
-	isConcurrentMode: isConcurrentMode,
-	isContextConsumer: isContextConsumer,
-	isContextProvider: isContextProvider,
-	isElement: isElement,
-	isForwardRef: isForwardRef,
-	isFragment: isFragment,
-	isLazy: isLazy,
-	isMemo: isMemo,
-	isPortal: isPortal,
-	isProfiler: isProfiler,
-	isStrictMode: isStrictMode,
-	isSuspense: isSuspense,
-	isValidElementType: isValidElementType,
-	typeOf: typeOf
-};
-
-createCommonjsModule(function (module) {
-
-{
-  module.exports = reactIs_production_min;
-}
-});
+import { b as useFormControl, i as isFilled, c as FormControlContext, F as FormControl$1, u as useFormControl$1, g as getScrollbarSize, a as List, P as Popover } from '../../common/Popover-86a551ae.js';
+import { w as withStyles_1 } from '../../common/withStyles-26123ebc.js';
+import { _ as _extends } from '../../common/extends-7477639a.js';
+import { _ as _objectWithoutProperties, e as mergeClasses } from '../../common/withStyles-79c501f3.js';
+import { w as withStyles, c as capitalize } from '../../common/SvgIcon-74a91a81.js';
+import { u as useForkRef, s as setRef } from '../../common/TransitionGroupContext-cc6d71cd.js';
+import { d as debounce, o as ownerDocument, u as useControlled } from '../../common/useControlled-c628fc5e.js';
+import { a as _defineProperty, _ as _slicedToArray, b as _toConsumableArray, e as _typeof } from '../../common/spacing-9369306c.js';
+import { u as useTheme } from '../../common/Grow-805e2977.js';
+import '../../common/index-b1a4b8f9.js';
+import { r as reactDom } from '../../common/index-419aa426.js';
+import { c as createSvgIcon } from '../../common/useEventCallback-b4e9224e.js';
+import '../../common/typography-7748feff.js';
+import '../../common/defaultTheme-19559074.js';
+import '../../common/styled-493b2a24.js';
+import '../../common/hoist-non-react-statics.cjs-8d567bb6.js';
+import '../../common/useTheme-4361569e.js';
+import '../../common/Paper-c7050fab.js';
+import '../../common/objectWithoutPropertiesLoose-d5128f55.js';
 
 function formControlState(_ref) {
   var props = _ref.props,
@@ -108,7 +63,7 @@ var styles = {
     transform: 'translateZ(0)'
   }
 };
-var TextareaAutosize = /*#__PURE__*/react.forwardRef(function TextareaAutosize(props, ref) {
+var TextareaAutosize = react.forwardRef(function TextareaAutosize(props, ref) {
   var onChange = props.onChange,
       rows = props.rows,
       rowsMax = props.rowsMax,
@@ -138,14 +93,6 @@ var TextareaAutosize = /*#__PURE__*/react.forwardRef(function TextareaAutosize(p
     var inputShallow = shadowRef.current;
     inputShallow.style.width = computedStyle.width;
     inputShallow.value = input.value || props.placeholder || 'x';
-
-    if (inputShallow.value.slice(-1) === '\n') {
-      // Certain fonts which overflow the line height will cause the textarea
-      // to report a different scrollHeight depending on whether the last line
-      // is empty. Make it non-empty to avoid this issue.
-      inputShallow.value += ' ';
-    }
-
     var boxSizing = computedStyle['box-sizing'];
     var padding = getStyleValue(computedStyle, 'padding-bottom') + getStyleValue(computedStyle, 'padding-top');
     var border = getStyleValue(computedStyle, 'border-bottom-width') + getStyleValue(computedStyle, 'border-top-width'); // The height of the inner content
@@ -231,7 +178,7 @@ var TextareaAutosize = /*#__PURE__*/react.forwardRef(function TextareaAutosize(p
     readOnly: true,
     ref: shadowRef,
     tabIndex: -1,
-    style: _extends({}, styles.shadow, style)
+    style: _extends({}, styles.shadow, {}, style)
   }));
 });
 
@@ -252,8 +199,12 @@ var styles$1 = function styles(theme) {
   };
   return {
     '@global': {
-      '@keyframes mui-auto-fill': {},
-      '@keyframes mui-auto-fill-cancel': {}
+      '@keyframes mui-auto-fill': {
+        from: {}
+      },
+      '@keyframes mui-auto-fill-cancel': {
+        from: {}
+      }
     },
 
     /* Styles applied to the root element. */
@@ -313,7 +264,6 @@ var styles$1 = function styles(theme) {
     /* Styles applied to the `input` element. */
     input: {
       font: 'inherit',
-      letterSpacing: 'inherit',
       color: 'currentColor',
       padding: "".concat(8 - 2, "px 0 ").concat(8 - 1, "px"),
       border: 0,
@@ -330,7 +280,6 @@ var styles$1 = function styles(theme) {
       width: '100%',
       // Fix IE 11 width issue
       animationName: 'mui-auto-fill-cancel',
-      animationDuration: '10ms',
       '&::-webkit-input-placeholder': placeholder,
       '&::-moz-placeholder': placeholder,
       // Firefox 19+
@@ -412,27 +361,27 @@ var useEnhancedEffect$1 = typeof window === 'undefined' ? react.useEffect : reac
  * It contains a load of style reset and some state logic.
  */
 
-var InputBase = /*#__PURE__*/react.forwardRef(function InputBase(props, ref) {
+var InputBase = react.forwardRef(function InputBase(props, ref) {
   var ariaDescribedby = props['aria-describedby'],
       autoComplete = props.autoComplete,
       autoFocus = props.autoFocus,
       classes = props.classes,
-      className = props.className;
-      props.color;
-      var defaultValue = props.defaultValue,
+      className = props.className,
+      color = props.color,
+      defaultValue = props.defaultValue,
       disabled = props.disabled,
-      endAdornment = props.endAdornment;
-      props.error;
-      var _props$fullWidth = props.fullWidth,
+      endAdornment = props.endAdornment,
+      error = props.error,
+      _props$fullWidth = props.fullWidth,
       fullWidth = _props$fullWidth === void 0 ? false : _props$fullWidth,
       id = props.id,
       _props$inputComponent = props.inputComponent,
       inputComponent = _props$inputComponent === void 0 ? 'input' : _props$inputComponent,
       _props$inputProps = props.inputProps,
       inputPropsProp = _props$inputProps === void 0 ? {} : _props$inputProps,
-      inputRefProp = props.inputRef;
-      props.margin;
-      var _props$multiline = props.multiline,
+      inputRefProp = props.inputRef,
+      margin = props.margin,
+      _props$multiline = props.multiline,
       multiline = _props$multiline === void 0 ? false : _props$multiline,
       name = props.name,
       onBlur = props.onBlur,
@@ -551,7 +500,7 @@ var InputBase = /*#__PURE__*/react.forwardRef(function InputBase(props, ref) {
       var element = event.target || inputRef.current;
 
       if (element == null) {
-        throw new Error(formatMuiErrorMessage(1));
+        throw new TypeError('Material-UI: Expected valid input target. ' + 'Did you use a custom `inputComponent` and forget to forward refs? ' + 'See https://material-ui.com/r/input-component-ref-interface for more info.');
       }
 
       checkDirty({
@@ -788,9 +737,8 @@ var styles$2 = function styles(theme) {
     input: {
       padding: '27px 12px 10px',
       '&:-webkit-autofill': {
-        WebkitBoxShadow: theme.palette.type === 'light' ? null : '0 0 0 100px #266798 inset',
-        WebkitTextFillColor: theme.palette.type === 'light' ? null : '#fff',
-        caretColor: theme.palette.type === 'light' ? null : '#fff',
+        WebkitBoxShadow: theme.palette.type === 'dark' ? '0 0 0 100px #266798 inset' : null,
+        WebkitTextFillColor: theme.palette.type === 'dark' ? '#fff' : null,
         borderTopLeftRadius: 'inherit',
         borderTopRightRadius: 'inherit'
       }
@@ -828,7 +776,7 @@ var styles$2 = function styles(theme) {
     }
   };
 };
-var FilledInput = /*#__PURE__*/react.forwardRef(function FilledInput(props, ref) {
+var FilledInput = react.forwardRef(function FilledInput(props, ref) {
   var disableUnderline = props.disableUnderline,
       classes = props.classes,
       _props$fullWidth = props.fullWidth,
@@ -854,9 +802,15 @@ var FilledInput = /*#__PURE__*/react.forwardRef(function FilledInput(props, ref)
   }, other));
 });
 FilledInput.muiName = 'Input';
-var FilledInput$1 = withStyles(styles$2, {
+var require$$6 = withStyles(styles$2, {
   name: 'MuiFilledInput'
 })(FilledInput);
+
+var FormControl = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  'default': FormControl$1,
+  useFormControl: useFormControl$1
+});
 
 var styles$3 = function styles(theme) {
   return {
@@ -902,20 +856,20 @@ var styles$3 = function styles(theme) {
     required: {}
   };
 };
-var FormHelperText = /*#__PURE__*/react.forwardRef(function FormHelperText(props, ref) {
+var FormHelperText = react.forwardRef(function FormHelperText(props, ref) {
   var children = props.children,
       classes = props.classes,
       className = props.className,
       _props$component = props.component,
-      Component = _props$component === void 0 ? 'p' : _props$component;
-      props.disabled;
-      props.error;
-      props.filled;
-      props.focused;
-      props.margin;
-      props.required;
-      props.variant;
-      var other = _objectWithoutProperties(props, ["children", "classes", "className", "component", "disabled", "error", "filled", "focused", "margin", "required", "variant"]);
+      Component = _props$component === void 0 ? 'p' : _props$component,
+      disabled = props.disabled,
+      error = props.error,
+      filled = props.filled,
+      focused = props.focused,
+      margin = props.margin,
+      required = props.required,
+      variant = props.variant,
+      other = _objectWithoutProperties(props, ["children", "classes", "className", "component", "disabled", "error", "filled", "focused", "margin", "required", "variant"]);
 
   var muiFormControl = useFormControl$1();
   var fcs = formControlState({
@@ -935,7 +889,7 @@ var FormHelperText = /*#__PURE__*/react.forwardRef(function FormHelperText(props
     }
   }) : children);
 });
-var FormHelperText$1 = withStyles(styles$3, {
+var require$$10 = withStyles(styles$3, {
   name: 'MuiFormHelperText'
 })(FormHelperText);
 
@@ -988,19 +942,19 @@ var styles$4 = function styles(theme) {
     }
   };
 };
-var FormLabel = /*#__PURE__*/react.forwardRef(function FormLabel(props, ref) {
+var FormLabel = react.forwardRef(function FormLabel(props, ref) {
   var children = props.children,
       classes = props.classes,
-      className = props.className;
-      props.color;
-      var _props$component = props.component,
-      Component = _props$component === void 0 ? 'label' : _props$component;
-      props.disabled;
-      props.error;
-      props.filled;
-      props.focused;
-      props.required;
-      var other = _objectWithoutProperties(props, ["children", "classes", "className", "color", "component", "disabled", "error", "filled", "focused", "required"]);
+      className = props.className,
+      color = props.color,
+      _props$component = props.component,
+      Component = _props$component === void 0 ? 'label' : _props$component,
+      disabled = props.disabled,
+      error = props.error,
+      filled = props.filled,
+      focused = props.focused,
+      required = props.required,
+      other = _objectWithoutProperties(props, ["children", "classes", "className", "color", "component", "disabled", "error", "filled", "focused", "required"]);
 
   var muiFormControl = useFormControl$1();
   var fcs = formControlState({
@@ -1012,7 +966,6 @@ var FormLabel = /*#__PURE__*/react.forwardRef(function FormLabel(props, ref) {
     className: __pika_web_default_export_for_treeshaking__$1(classes.root, classes["color".concat(capitalize(fcs.color || 'primary'))], className, fcs.disabled && classes.disabled, fcs.error && classes.error, fcs.filled && classes.filled, fcs.focused && classes.focused, fcs.required && classes.required),
     ref: ref
   }, other), children, fcs.required && /*#__PURE__*/react.createElement("span", {
-    "aria-hidden": true,
     className: __pika_web_default_export_for_treeshaking__$1(classes.asterisk, fcs.error && classes.error)
   }, "\u2009", '*'));
 });
@@ -1126,7 +1079,7 @@ var styles$5 = function styles(theme) {
     inputTypeSearch: {}
   };
 };
-var Input = /*#__PURE__*/react.forwardRef(function Input(props, ref) {
+var Input = react.forwardRef(function Input(props, ref) {
   var disableUnderline = props.disableUnderline,
       classes = props.classes,
       _props$fullWidth = props.fullWidth,
@@ -1152,7 +1105,7 @@ var Input = /*#__PURE__*/react.forwardRef(function Input(props, ref) {
   }, other));
 });
 Input.muiName = 'Input';
-var Input$1 = withStyles(styles$5, {
+var require$$5 = withStyles(styles$5, {
   name: 'MuiInput'
 })(Input);
 
@@ -1243,15 +1196,15 @@ var styles$6 = function styles(theme) {
     }
   };
 };
-var InputLabel = /*#__PURE__*/react.forwardRef(function InputLabel(props, ref) {
+var InputLabel = react.forwardRef(function InputLabel(props, ref) {
   var classes = props.classes,
       className = props.className,
       _props$disableAnimati = props.disableAnimation,
-      disableAnimation = _props$disableAnimati === void 0 ? false : _props$disableAnimati;
-      props.margin;
-      var shrinkProp = props.shrink;
-      props.variant;
-      var other = _objectWithoutProperties(props, ["classes", "className", "disableAnimation", "margin", "shrink", "variant"]);
+      disableAnimation = _props$disableAnimati === void 0 ? false : _props$disableAnimati,
+      margin = props.margin,
+      shrinkProp = props.shrink,
+      variant = props.variant,
+      other = _objectWithoutProperties(props, ["classes", "className", "disableAnimation", "margin", "shrink", "variant"]);
 
   var muiFormControl = useFormControl$1();
   var shrink = shrinkProp;
@@ -1281,7 +1234,7 @@ var InputLabel = /*#__PURE__*/react.forwardRef(function InputLabel(props, ref) {
     ref: ref
   }, other));
 });
-var InputLabel$1 = withStyles(styles$6, {
+var require$$8 = withStyles(styles$6, {
   name: 'MuiInputLabel'
 })(InputLabel);
 
@@ -1369,7 +1322,7 @@ var useEnhancedEffect$2 = typeof window === 'undefined' ? react.useEffect : reac
  * the focus is placed inside the component it is fully keyboard accessible.
  */
 
-var MenuList = /*#__PURE__*/react.forwardRef(function MenuList(props, ref) {
+var MenuList = react.forwardRef(function MenuList(props, ref) {
   var actions = props.actions,
       _props$autoFocus = props.autoFocus,
       autoFocus = _props$autoFocus === void 0 ? false : _props$autoFocus,
@@ -1489,7 +1442,7 @@ var MenuList = /*#__PURE__*/react.forwardRef(function MenuList(props, ref) {
   // item and use the first valid item as a fallback
 
   react.Children.forEach(children, function (child, index) {
-    if (! /*#__PURE__*/react.isValidElement(child)) {
+    if (!react.isValidElement(child)) {
       return;
     }
 
@@ -1513,7 +1466,7 @@ var MenuList = /*#__PURE__*/react.forwardRef(function MenuList(props, ref) {
         newChildProps.tabIndex = 0;
       }
 
-      return /*#__PURE__*/react.cloneElement(child, newChildProps);
+      return react.cloneElement(child, newChildProps);
     }
 
     return child;
@@ -1552,7 +1505,7 @@ var styles$7 = {
     outline: 0
   }
 };
-var Menu = /*#__PURE__*/react.forwardRef(function Menu(props, ref) {
+var Menu = react.forwardRef(function Menu(props, ref) {
   var _props$autoFocus = props.autoFocus,
       autoFocus = _props$autoFocus === void 0 ? true : _props$autoFocus,
       children = props.children,
@@ -1613,7 +1566,7 @@ var Menu = /*#__PURE__*/react.forwardRef(function Menu(props, ref) {
   // item and use the first valid item as a fallback
 
   react.Children.map(children, function (child, index) {
-    if (! /*#__PURE__*/react.isValidElement(child)) {
+    if (!react.isValidElement(child)) {
       return;
     }
 
@@ -1627,7 +1580,7 @@ var Menu = /*#__PURE__*/react.forwardRef(function Menu(props, ref) {
   });
   var items = react.Children.map(children, function (child, index) {
     if (index === activeItemIndex) {
-      return /*#__PURE__*/react.cloneElement(child, {
+      return react.cloneElement(child, {
         ref: function ref(instance) {
           // #StrictMode ready
           contentAnchorRef.current = reactDom.findDOMNode(instance);
@@ -1671,7 +1624,7 @@ var Menu$1 = withStyles(styles$7, {
  * @ignore - internal component.
  */
 
-var NativeSelectInput = /*#__PURE__*/react.forwardRef(function NativeSelectInput(props, ref) {
+var NativeSelectInput = react.forwardRef(function NativeSelectInput(props, ref) {
   var classes = props.classes,
       className = props.className,
       disabled = props.disabled,
@@ -1760,9 +1713,7 @@ var styles$8 = function styles(theme) {
     /* Styles applied to the select component `selectMenu` class. */
     selectMenu: {
       height: 'auto',
-      // Resets for multpile select with chips
-      minHeight: '1.1876em',
-      // Required for select\text-field height consistency
+      // Reset
       textOverflow: 'ellipsis',
       whiteSpace: 'nowrap',
       overflow: 'hidden'
@@ -1800,34 +1751,24 @@ var styles$8 = function styles(theme) {
     /* Styles applied to the icon component if `variant="outlined"`. */
     iconOutlined: {
       right: 7
-    },
-
-    /* Styles applied to the underlying native input component. */
-    nativeInput: {
-      bottom: 0,
-      left: 0,
-      position: 'absolute',
-      opacity: 0,
-      pointerEvents: 'none',
-      width: '100%'
     }
   };
 };
-var defaultInput = /*#__PURE__*/react.createElement(Input$1, null);
+var defaultInput = /*#__PURE__*/react.createElement(require$$5, null);
 /**
  * An alternative to `<Select native />` with a much smaller bundle size footprint.
  */
 
-var NativeSelect = /*#__PURE__*/react.forwardRef(function NativeSelect(props, ref) {
+var NativeSelect = react.forwardRef(function NativeSelect(props, ref) {
   var children = props.children,
       classes = props.classes,
       _props$IconComponent = props.IconComponent,
       IconComponent = _props$IconComponent === void 0 ? ArrowDropDownIcon : _props$IconComponent,
       _props$input = props.input,
       input = _props$input === void 0 ? defaultInput : _props$input,
-      inputProps = props.inputProps;
-      props.variant;
-      var other = _objectWithoutProperties(props, ["children", "classes", "IconComponent", "input", "inputProps", "variant"]);
+      inputProps = props.inputProps,
+      variant = props.variant,
+      other = _objectWithoutProperties(props, ["children", "classes", "IconComponent", "input", "inputProps", "variant"]);
 
   var muiFormControl = useFormControl$1();
   var fcs = formControlState({
@@ -1835,7 +1776,7 @@ var NativeSelect = /*#__PURE__*/react.forwardRef(function NativeSelect(props, re
     muiFormControl: muiFormControl,
     states: ['variant']
   });
-  return /*#__PURE__*/react.cloneElement(input, _extends({
+  return react.cloneElement(input, _extends({
     // Most of the logic is implemented in `NativeSelectInput`.
     // The `Select` component is a simple API wrapper to expose something better to play with.
     inputComponent: NativeSelectInput,
@@ -1845,7 +1786,7 @@ var NativeSelect = /*#__PURE__*/react.forwardRef(function NativeSelect(props, re
       IconComponent: IconComponent,
       variant: fcs.variant,
       type: undefined
-    }, inputProps, input ? input.props.inputProps : {}),
+    }, inputProps, {}, input ? input.props.inputProps : {}),
     ref: ref
   }, other));
 });
@@ -1864,12 +1805,12 @@ var styles$9 = function styles(theme) {
       top: -5,
       left: 0,
       margin: 0,
-      padding: '0 8px',
+      padding: 0,
+      paddingLeft: 8,
       pointerEvents: 'none',
       borderRadius: 'inherit',
       borderStyle: 'solid',
-      borderWidth: 1,
-      overflow: 'hidden'
+      borderWidth: 1
     },
 
     /* Styles applied to the legend element when `labelWidth` is provided. */
@@ -1921,9 +1862,9 @@ var styles$9 = function styles(theme) {
  * @ignore - internal component.
  */
 
-var NotchedOutline = /*#__PURE__*/react.forwardRef(function NotchedOutline(props, ref) {
-  props.children;
-      var classes = props.classes,
+var NotchedOutline = react.forwardRef(function NotchedOutline(props, ref) {
+  var children = props.children,
+      classes = props.classes,
       className = props.className,
       label = props.label,
       labelWidthProp = props.labelWidth,
@@ -2048,9 +1989,8 @@ var styles$a = function styles(theme) {
     input: {
       padding: '18.5px 14px',
       '&:-webkit-autofill': {
-        WebkitBoxShadow: theme.palette.type === 'light' ? null : '0 0 0 100px #266798 inset',
-        WebkitTextFillColor: theme.palette.type === 'light' ? null : '#fff',
-        caretColor: theme.palette.type === 'light' ? null : '#fff',
+        WebkitBoxShadow: theme.palette.type === 'dark' ? '0 0 0 100px #266798 inset' : null,
+        WebkitTextFillColor: theme.palette.type === 'dark' ? '#fff' : null,
         borderRadius: 'inherit'
       }
     },
@@ -2077,7 +2017,7 @@ var styles$a = function styles(theme) {
     }
   };
 };
-var OutlinedInput = /*#__PURE__*/react.forwardRef(function OutlinedInput(props, ref) {
+var OutlinedInput = react.forwardRef(function OutlinedInput(props, ref) {
   var classes = props.classes,
       _props$fullWidth = props.fullWidth,
       fullWidth = _props$fullWidth === void 0 ? false : _props$fullWidth,
@@ -2114,7 +2054,7 @@ var OutlinedInput = /*#__PURE__*/react.forwardRef(function OutlinedInput(props, 
   }, other));
 });
 OutlinedInput.muiName = 'Input';
-var OutlinedInput$1 = withStyles(styles$a, {
+var require$$7 = withStyles(styles$a, {
   name: 'MuiOutlinedInput'
 })(OutlinedInput);
 
@@ -2134,7 +2074,7 @@ function isEmpty(display) {
  */
 
 
-var SelectInput = /*#__PURE__*/react.forwardRef(function SelectInput(props, ref) {
+var SelectInput = react.forwardRef(function SelectInput(props, ref) {
   var ariaLabel = props['aria-label'],
       autoFocus = props.autoFocus,
       autoWidth = props.autoWidth,
@@ -2159,19 +2099,20 @@ var SelectInput = /*#__PURE__*/react.forwardRef(function SelectInput(props, ref)
       openProp = props.open,
       readOnly = props.readOnly,
       renderValue = props.renderValue,
+      required = props.required,
       _props$SelectDisplayP = props.SelectDisplayProps,
       SelectDisplayProps = _props$SelectDisplayP === void 0 ? {} : _props$SelectDisplayP,
-      tabIndexProp = props.tabIndex;
-      props.type;
-      var valueProp = props.value,
+      tabIndexProp = props.tabIndex,
+      type = props.type,
+      valueProp = props.value,
       _props$variant = props.variant,
       variant = _props$variant === void 0 ? 'standard' : _props$variant,
-      other = _objectWithoutProperties(props, ["aria-label", "autoFocus", "autoWidth", "children", "classes", "className", "defaultValue", "disabled", "displayEmpty", "IconComponent", "inputRef", "labelId", "MenuProps", "multiple", "name", "onBlur", "onChange", "onClose", "onFocus", "onOpen", "open", "readOnly", "renderValue", "SelectDisplayProps", "tabIndex", "type", "value", "variant"]);
+      other = _objectWithoutProperties(props, ["aria-label", "autoFocus", "autoWidth", "children", "classes", "className", "defaultValue", "disabled", "displayEmpty", "IconComponent", "inputRef", "labelId", "MenuProps", "multiple", "name", "onBlur", "onChange", "onClose", "onFocus", "onOpen", "open", "readOnly", "renderValue", "required", "SelectDisplayProps", "tabIndex", "type", "value", "variant"]);
 
   var _useControlled = useControlled({
     controlled: valueProp,
     default: defaultValue,
-    name: 'Select'
+    name: 'SelectInput'
   }),
       _useControlled2 = _slicedToArray(_useControlled, 2),
       value = _useControlled2[0],
@@ -2209,26 +2150,6 @@ var SelectInput = /*#__PURE__*/react.forwardRef(function SelectInput(props, ref)
       displayNode.focus();
     }
   }, [autoFocus, displayNode]);
-  react.useEffect(function () {
-    if (displayNode) {
-      var label = ownerDocument(displayNode).getElementById(labelId);
-
-      if (label) {
-        var handler = function handler() {
-          if (getSelection().isCollapsed) {
-            displayNode.focus();
-          }
-        };
-
-        label.addEventListener('click', handler);
-        return function () {
-          label.removeEventListener('click', handler);
-        };
-      }
-    }
-
-    return undefined;
-  }, [labelId, displayNode]);
 
   var update = function update(open, event) {
     if (open) {
@@ -2261,25 +2182,6 @@ var SelectInput = /*#__PURE__*/react.forwardRef(function SelectInput(props, ref)
     update(false, event);
   };
 
-  var childrenArray = react.Children.toArray(children); // Support autofill.
-
-  var handleChange = function handleChange(event) {
-    var index = childrenArray.map(function (child) {
-      return child.props.value;
-    }).indexOf(event.target.value);
-
-    if (index === -1) {
-      return;
-    }
-
-    var child = childrenArray[index];
-    setValue(child.props.value);
-
-    if (onChange) {
-      onChange(event, child);
-    }
-  };
-
   var handleItemClick = function handleItemClick(child) {
     return function (event) {
       if (!multiple) {
@@ -2289,7 +2191,7 @@ var SelectInput = /*#__PURE__*/react.forwardRef(function SelectInput(props, ref)
       var newValue;
 
       if (multiple) {
-        newValue = Array.isArray(value) ? value.slice() : [];
+        newValue = Array.isArray(value) ? _toConsumableArray(value) : [];
         var itemIndex = value.indexOf(child.props.value);
 
         if (itemIndex === -1) {
@@ -2299,10 +2201,6 @@ var SelectInput = /*#__PURE__*/react.forwardRef(function SelectInput(props, ref)
         }
       } else {
         newValue = child.props.value;
-      }
-
-      if (child.props.onClick) {
-        child.props.onClick(event);
       }
 
       if (value === newValue) {
@@ -2373,8 +2271,8 @@ var SelectInput = /*#__PURE__*/react.forwardRef(function SelectInput(props, ref)
     }
   }
 
-  var items = childrenArray.map(function (child) {
-    if (! /*#__PURE__*/react.isValidElement(child)) {
+  var items = react.Children.map(children, function (child) {
+    if (!react.isValidElement(child)) {
       return null;
     }
 
@@ -2382,7 +2280,7 @@ var SelectInput = /*#__PURE__*/react.forwardRef(function SelectInput(props, ref)
 
     if (multiple) {
       if (!Array.isArray(value)) {
-        throw new Error(formatMuiErrorMessage(2));
+        throw new Error('Material-UI: the `value` prop must be an array ' + 'when using the `Select` component with `multiple`.');
       }
 
       selected = value.some(function (v) {
@@ -2400,7 +2298,7 @@ var SelectInput = /*#__PURE__*/react.forwardRef(function SelectInput(props, ref)
       }
     }
 
-    return /*#__PURE__*/react.cloneElement(child, {
+    return react.cloneElement(child, {
       'aria-selected': selected ? 'true' : undefined,
       onClick: handleItemClick(child),
       onKeyUp: function onKeyUp(event) {
@@ -2411,8 +2309,10 @@ var SelectInput = /*#__PURE__*/react.forwardRef(function SelectInput(props, ref)
           event.preventDefault();
         }
 
-        if (child.props.onKeyUp) {
-          child.props.onKeyUp(event);
+        var onKeyUp = child.props.onKeyUp;
+
+        if (typeof onKeyUp === 'function') {
+          onKeyUp(event);
         }
       },
       role: 'option',
@@ -2473,10 +2373,7 @@ var SelectInput = /*#__PURE__*/react.forwardRef(function SelectInput(props, ref)
     value: Array.isArray(value) ? value.join(',') : value,
     name: name,
     ref: inputRef,
-    "aria-hidden": true,
-    onChange: handleChange,
-    tabIndex: -1,
-    className: classes.nativeInput,
+    type: "hidden",
     autoFocus: autoFocus
   }, other)), /*#__PURE__*/react.createElement(IconComponent, {
     className: __pika_web_default_export_for_treeshaking__$1(classes.icon, classes["icon".concat(capitalize(variant))], open && classes.iconOpen, disabled && classes.disabled)
@@ -2501,11 +2398,11 @@ var SelectInput = /*#__PURE__*/react.forwardRef(function SelectInput(props, ref)
 
 var styles$b = styles$8;
 
-var _ref = /*#__PURE__*/react.createElement(Input$1, null);
+var _ref = /*#__PURE__*/react.createElement(require$$5, null);
 
-var _ref2 = /*#__PURE__*/react.createElement(FilledInput$1, null);
+var _ref2 = /*#__PURE__*/react.createElement(require$$6, null);
 
-var Select = /*#__PURE__*/react.forwardRef(function Select(props, ref) {
+var Select = react.forwardRef(function Select(props, ref) {
   var _props$autoWidth = props.autoWidth,
       autoWidth = _props$autoWidth === void 0 ? false : _props$autoWidth,
       children = props.children,
@@ -2545,13 +2442,13 @@ var Select = /*#__PURE__*/react.forwardRef(function Select(props, ref) {
   var variant = fcs.variant || variantProps;
   var InputComponent = input || {
     standard: _ref,
-    outlined: /*#__PURE__*/react.createElement(OutlinedInput$1, {
+    outlined: /*#__PURE__*/react.createElement(require$$7, {
       label: label,
       labelWidth: labelWidth
     }),
     filled: _ref2
   }[variant];
-  return /*#__PURE__*/react.cloneElement(InputComponent, _extends({
+  return react.cloneElement(InputComponent, _extends({
     // Most of the logic is implemented in `SelectInput`.
     // The `Select` component is a simple API wrapper to expose something better to play with.
     inputComponent: inputComponent,
@@ -2576,7 +2473,7 @@ var Select = /*#__PURE__*/react.forwardRef(function Select(props, ref) {
       SelectDisplayProps: _extends({
         id: id
       }, SelectDisplayProps)
-    }, inputProps, {
+    }, {}, inputProps, {
       classes: inputProps ? mergeClasses({
         baseClasses: classes,
         newClasses: inputProps.classes,
@@ -2587,16 +2484,55 @@ var Select = /*#__PURE__*/react.forwardRef(function Select(props, ref) {
   }, other));
 });
 Select.muiName = 'Select';
-var Select$1 = withStyles(styles$b, {
+var require$$11 = withStyles(styles$b, {
   name: 'MuiSelect'
 })(Select);
 
+var TextField_1 = createCommonjsModule(function (module, exports) {
+
+
+
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.styles = void 0;
+
+var _extends2 = interopRequireDefault(_extends_1);
+
+var _objectWithoutProperties2 = interopRequireDefault(objectWithoutProperties);
+
+var React = interopRequireWildcard(react);
+
+var _propTypes = interopRequireDefault(propTypes);
+
+var _clsx = interopRequireDefault(__pika_web_default_export_for_treeshaking__$1);
+
+
+
+var _Input = interopRequireDefault(require$$5);
+
+var _FilledInput = interopRequireDefault(require$$6);
+
+var _OutlinedInput = interopRequireDefault(require$$7);
+
+var _InputLabel = interopRequireDefault(require$$8);
+
+var _FormControl = interopRequireDefault(FormControl);
+
+var _FormHelperText = interopRequireDefault(require$$10);
+
+var _Select = interopRequireDefault(require$$11);
+
+var _withStyles = interopRequireDefault(withStyles_1);
+
 var variantComponent = {
-  standard: Input$1,
-  filled: FilledInput$1,
-  outlined: OutlinedInput$1
+  standard: _Input.default,
+  filled: _FilledInput.default,
+  outlined: _OutlinedInput.default
 };
-var styles$c = {
+var styles = {
   /* Styles applied to the root element. */
   root: {}
 };
@@ -2633,7 +2569,8 @@ var styles$c = {
  * - using the underlying components directly as shown in the demos
  */
 
-var TextField = /*#__PURE__*/react.forwardRef(function TextField(props, ref) {
+exports.styles = styles;
+var TextField = React.forwardRef(function TextField(props, ref) {
   var autoComplete = props.autoComplete,
       _props$autoFocus = props.autoFocus,
       autoFocus = _props$autoFocus === void 0 ? false : _props$autoFocus,
@@ -2676,7 +2613,7 @@ var TextField = /*#__PURE__*/react.forwardRef(function TextField(props, ref) {
       value = props.value,
       _props$variant = props.variant,
       variant = _props$variant === void 0 ? 'standard' : _props$variant,
-      other = _objectWithoutProperties(props, ["autoComplete", "autoFocus", "children", "classes", "className", "color", "defaultValue", "disabled", "error", "FormHelperTextProps", "fullWidth", "helperText", "hiddenLabel", "id", "InputLabelProps", "inputProps", "InputProps", "inputRef", "label", "multiline", "name", "onBlur", "onChange", "onFocus", "placeholder", "required", "rows", "rowsMax", "select", "SelectProps", "type", "value", "variant"]);
+      other = (0, _objectWithoutProperties2.default)(props, ["autoComplete", "autoFocus", "children", "classes", "className", "color", "defaultValue", "disabled", "error", "FormHelperTextProps", "fullWidth", "helperText", "hiddenLabel", "id", "InputLabelProps", "inputProps", "InputProps", "inputRef", "label", "multiline", "name", "onBlur", "onChange", "onFocus", "placeholder", "required", "rows", "rowsMax", "select", "SelectProps", "type", "value", "variant"]);
 
   var InputMore = {};
 
@@ -2686,10 +2623,7 @@ var TextField = /*#__PURE__*/react.forwardRef(function TextField(props, ref) {
     }
 
     if (label) {
-      var _InputLabelProps$requ;
-
-      var displayRequired = (_InputLabelProps$requ = InputLabelProps === null || InputLabelProps === void 0 ? void 0 : InputLabelProps.required) !== null && _InputLabelProps$requ !== void 0 ? _InputLabelProps$requ : required;
-      InputMore.label = /*#__PURE__*/react.createElement(react.Fragment, null, label, displayRequired && "\xA0*");
+      InputMore.label = /*#__PURE__*/React.createElement(React.Fragment, null, label, required && "\xA0*");
     }
   }
 
@@ -2705,7 +2639,7 @@ var TextField = /*#__PURE__*/react.forwardRef(function TextField(props, ref) {
   var helperTextId = helperText && id ? "".concat(id, "-helper-text") : undefined;
   var inputLabelId = label && id ? "".concat(id, "-label") : undefined;
   var InputComponent = variantComponent[variant];
-  var InputElement = /*#__PURE__*/react.createElement(InputComponent, _extends({
+  var InputElement = /*#__PURE__*/React.createElement(InputComponent, (0, _extends2.default)({
     "aria-describedby": helperTextId,
     autoComplete: autoComplete,
     autoFocus: autoFocus,
@@ -2725,8 +2659,8 @@ var TextField = /*#__PURE__*/react.forwardRef(function TextField(props, ref) {
     placeholder: placeholder,
     inputProps: inputProps
   }, InputMore, InputProps));
-  return /*#__PURE__*/react.createElement(FormControl, _extends({
-    className: __pika_web_default_export_for_treeshaking__$1(classes.root, className),
+  return /*#__PURE__*/React.createElement(_FormControl.default, (0, _extends2.default)({
+    className: (0, _clsx.default)(classes.root, className),
     disabled: disabled,
     error: error,
     fullWidth: fullWidth,
@@ -2735,21 +2669,44 @@ var TextField = /*#__PURE__*/react.forwardRef(function TextField(props, ref) {
     required: required,
     color: color,
     variant: variant
-  }, other), label && /*#__PURE__*/react.createElement(InputLabel$1, _extends({
+  }, other), label && /*#__PURE__*/React.createElement(_InputLabel.default, (0, _extends2.default)({
     htmlFor: id,
     id: inputLabelId
-  }, InputLabelProps), label), select ? /*#__PURE__*/react.createElement(Select$1, _extends({
+  }, InputLabelProps), label), select ? /*#__PURE__*/React.createElement(_Select.default, (0, _extends2.default)({
     "aria-describedby": helperTextId,
     id: id,
     labelId: inputLabelId,
     value: value,
     input: InputElement
-  }, SelectProps), children) : InputElement, helperText && /*#__PURE__*/react.createElement(FormHelperText$1, _extends({
+  }, SelectProps), children) : InputElement, helperText && /*#__PURE__*/React.createElement(_FormHelperText.default, (0, _extends2.default)({
     id: helperTextId
   }, FormHelperTextProps), helperText));
 });
-var __pika_web_default_export_for_treeshaking__ = withStyles(styles$c, {
+
+var _default = (0, _withStyles.default)(styles, {
   name: 'MuiTextField'
 })(TextField);
+
+exports.default = _default;
+});
+
+var TextField = createCommonjsModule(function (module, exports) {
+
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "default", {
+  enumerable: true,
+  get: function get() {
+    return _TextField.default;
+  }
+});
+
+var _TextField = interopRequireDefault(TextField_1);
+});
+
+var __pika_web_default_export_for_treeshaking__ = /*@__PURE__*/getDefaultExportFromCjs(TextField);
 
 export default __pika_web_default_export_for_treeshaking__;

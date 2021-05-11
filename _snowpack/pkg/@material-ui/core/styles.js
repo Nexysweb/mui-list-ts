@@ -1,32 +1,24 @@
-import { _ as _extends } from '../../common/_index-4fa100fd.js';
-import { c as makeStyles$1, d as defaultTheme } from '../../common/defaultTheme-8c5d9b28.js';
-import '../../common/index-fc424163.js';
-import '../../common/_commonjsHelpers-8c19dec8.js';
-import '../../common/_index-7e2ecedb.js';
+import { s as styles } from '../../common/index-8e6dbd6f.js';
+import '../../common/_commonjsHelpers-53bde9c7.js';
+import '../../common/extends-196a4166.js';
+import '../../common/createMuiTheme-d0f80890.js';
+import '../../common/spacing-9369306c.js';
+import '../../common/extends-7477639a.js';
+import '../../common/index-6c76b257.js';
+import '../../common/index-b1a4b8f9.js';
+import '../../common/typography-7748feff.js';
+import '../../common/withStyles-26123ebc.js';
+import '../../common/withStyles-79c501f3.js';
+import '../../common/objectWithoutPropertiesLoose-d5128f55.js';
+import '../../common/index-4f10c776.js';
+import '../../common/hoist-non-react-statics.cjs-8d567bb6.js';
+import '../../common/useTheme-4361569e.js';
+import '../../common/styled-493b2a24.js';
+import '../../common/clsx.m-e1755476.js';
+import '../../common/useTheme-b7a73919.js';
 
-function createStyles(styles) {
-  return styles;
-}
 
-// To remove in v5
 
-function createStyles$1(styles) {
-  // warning(
-  //   warnOnce,
-  //   [
-  //     'Material-UI: createStyles from @material-ui/core/styles is deprecated.',
-  //     'Please use @material-ui/styles/createStyles',
-  //   ].join('\n'),
-  // );
-  // warnOnce = true;
-  return createStyles(styles);
-}
-
-function makeStyles(stylesOrCreator) {
-  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  return makeStyles$1(stylesOrCreator, _extends({
-    defaultTheme: defaultTheme
-  }, options));
-}
-
-export { createStyles$1 as createStyles, makeStyles };
+var createStyles = styles.createStyles;
+var makeStyles = styles.makeStyles;
+export { createStyles, makeStyles };

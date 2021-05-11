@@ -1,25 +1,31 @@
-import { _ as _extends$1 } from '../../common/_index-4fa100fd.js';
-import { b as _objectWithoutProperties, u as useTheme, g as fade, _ as _defineProperty, e as _slicedToArray, q as deepmerge } from '../../common/defaultTheme-8c5d9b28.js';
-import { r as react } from '../../common/index-fc424163.js';
-import { r as reactDom } from '../../common/index-0f6db834.js';
-import '../../common/_index-7e2ecedb.js';
+import { c as createCommonjsModule, g as getDefaultExportFromCjs } from '../../common/_commonjsHelpers-53bde9c7.js';
+import { i as interopRequireDefault, _ as _extends_1 } from '../../common/extends-196a4166.js';
+import { i as interopRequireWildcard } from '../../common/interopRequireWildcard-9f601ccf.js';
+import { s as slicedToArray } from '../../common/slicedToArray-00fb3003.js';
+import { o as objectWithoutProperties, d as defineProperty$1, e as esm, c as colorManipulator } from '../../common/createMuiTheme-d0f80890.js';
+import { r as react } from '../../common/index-4f10c776.js';
+import { r as reactDom } from '../../common/index-419aa426.js';
+import { p as propTypes } from '../../common/index-6c76b257.js';
 import { _ as __pika_web_default_export_for_treeshaking__ } from '../../common/clsx.m-e1755476.js';
-import { w as withStyles, c as capitalize } from '../../common/capitalize-79d2d23e.js';
-import { u as useForkRef, s as setRef } from '../../common/useForkRef-346f9653.js';
-import { u as useId } from '../../common/unstable_useId-cc55985c.js';
-import { u as useIsFocusVisible } from '../../common/useIsFocusVisible-e490cc77.js';
-import { u as useControlled } from '../../common/useControlled-1d107f15.js';
-import { u as useTheme$1 } from '../../common/useTheme-1ab64cac.js';
-import { g as global } from '../../common/polyfill-node:global-21e5c503.js';
-import { c as createChainedFunction } from '../../common/createChainedFunction-005a4b16.js';
-import { P as Portal, G as Grow } from '../../common/Grow-cff53f9f.js';
-import '../../common/_commonjsHelpers-8c19dec8.js';
-import '../../common/hoist-non-react-statics.cjs-43de917e.js';
-import '../../common/TransitionGroupContext-8c4776dd.js';
+import { w as withStyles_1 } from '../../common/withStyles-26123ebc.js';
+import { u as useTheme_1 } from '../../common/useTheme-b7a73919.js';
+import { c as createChainedFunction, P as Portal, G as Grow } from '../../common/Grow-805e2977.js';
+import { _ as _extends$1 } from '../../common/extends-7477639a.js';
+import { _ as _objectWithoutProperties } from '../../common/withStyles-79c501f3.js';
+import { g as global } from '../../common/_polyfill-node:global-acbc543a.js';
+import { u as useForkRef, s as setRef } from '../../common/TransitionGroupContext-cc6d71cd.js';
+import { u as useTheme } from '../../common/useTheme-4361569e.js';
+import '../../common/spacing-9369306c.js';
+import '../../common/index-b1a4b8f9.js';
+import '../../common/typography-7748feff.js';
+import '../../common/styled-493b2a24.js';
+import '../../common/hoist-non-react-statics.cjs-8d567bb6.js';
+import '../../common/defaultTheme-19559074.js';
+import '../../common/objectWithoutPropertiesLoose-d5128f55.js';
 
 /**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
- * @version 1.16.1-lts
+ * @version 1.16.1
  * @license
  * Copyright (c) 2016 Federico Zivolo and contributors
  *
@@ -2666,7 +2672,7 @@ var defaultPopperOptions = {};
  * Poppers rely on the 3rd party library [Popper.js](https://popper.js.org/docs/v1/) for positioning.
  */
 
-var Popper$1 = /*#__PURE__*/react.forwardRef(function Popper$1(props, ref) {
+var Popper$1 = react.forwardRef(function Popper$1(props, ref) {
   var anchorEl = props.anchorEl,
       children = props.children,
       container = props.container,
@@ -2732,7 +2738,7 @@ var Popper$1 = /*#__PURE__*/react.forwardRef(function Popper$1(props, ref) {
       setPlacement(data.placement);
     };
 
-    getAnchorEl(anchorEl);
+    var resolvedAnchorEl = getAnchorEl(anchorEl);
 
     var popper = new Popper(getAnchorEl(anchorEl), tooltipRef.current, _extends$1({
       placement: rtlPlacement
@@ -2742,7 +2748,7 @@ var Popper$1 = /*#__PURE__*/react.forwardRef(function Popper$1(props, ref) {
         preventOverflow: {
           boundariesElement: 'window'
         }
-      }, modifiers, popperOptions.modifiers),
+      }, {}, modifiers, {}, popperOptions.modifiers),
       // We could have been using a custom modifier like react-popper is doing.
       // But it seems this is the best public API for this use case.
       onCreate: createChainedFunction(handlePopperUpdate, popperOptions.onCreate),
@@ -2773,6 +2779,10 @@ var Popper$1 = /*#__PURE__*/react.forwardRef(function Popper$1(props, ref) {
     handleClose();
   };
 
+  react.useEffect(function () {
+    // Let's update the popper position.
+    handleOpen();
+  }, [handleOpen]);
   react.useEffect(function () {
     return function () {
       handleClose();
@@ -2813,11 +2823,363 @@ var Popper$1 = /*#__PURE__*/react.forwardRef(function Popper$1(props, ref) {
       position: 'fixed',
       // Fix Popper.js display issue
       top: 0,
-      left: 0,
-      display: !open && keepMounted && !transition ? 'none' : null
+      left: 0
     }, style)
   }), typeof children === 'function' ? children(childProps) : children));
 });
+
+var capitalize_1 = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = capitalize;
+
+// It should to be noted that this function isn't equivalent to `text-transform: capitalize`.
+//
+// A strict capitalization should uppercase the first letter of each word a the sentence.
+// We only handle the first word.
+function capitalize(string) {
+
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+});
+
+var setRef_1 = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = setRef;
+
+// TODO v5: consider to make it private
+function setRef(ref, value) {
+  if (typeof ref === 'function') {
+    ref(value);
+  } else if (ref) {
+    ref.current = value;
+  }
+}
+});
+
+var useForkRef_1 = createCommonjsModule(function (module, exports) {
+
+
+
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = useForkRef;
+
+var React = interopRequireWildcard(react);
+
+var _setRef = interopRequireDefault(setRef_1);
+
+function useForkRef(refA, refB) {
+  /**
+   * This will create a new function if the ref props change and are defined.
+   * This means react will call the old forkRef with `null` and the new forkRef
+   * with the ref. Cleanup naturally emerges from this behavior
+   */
+  return React.useMemo(function () {
+    if (refA == null && refB == null) {
+      return null;
+    }
+
+    return function (refValue) {
+      (0, _setRef.default)(refA, refValue);
+      (0, _setRef.default)(refB, refValue);
+    };
+  }, [refA, refB]);
+}
+});
+
+var unstable_useId = createCommonjsModule(function (module, exports) {
+
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = useId;
+
+var React = interopRequireWildcard(react);
+
+/**
+ * Private module reserved for @material-ui/x packages.
+ */
+function useId(idOverride) {
+  var _React$useState = React.useState(idOverride),
+      defaultId = _React$useState[0],
+      setDefaultId = _React$useState[1];
+
+  var id = idOverride || defaultId;
+  React.useEffect(function () {
+    if (defaultId == null) {
+      // Fallback to this default id when possible.
+      // Use the random value for client-side rendering only.
+      // We can't use it server-side.
+      setDefaultId("mui-".concat(Math.round(Math.random() * 1e5)));
+    }
+  }, [defaultId]);
+  return id;
+}
+});
+
+var useIsFocusVisible_1 = createCommonjsModule(function (module, exports) {
+
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.teardown = teardown;
+exports.default = useIsFocusVisible;
+
+var React = interopRequireWildcard(react);
+
+var ReactDOM = interopRequireWildcard(reactDom);
+
+// based on https://github.com/WICG/focus-visible/blob/v4.1.5/src/focus-visible.js
+var hadKeyboardEvent = true;
+var hadFocusVisibleRecently = false;
+var hadFocusVisibleRecentlyTimeout = null;
+var inputTypesWhitelist = {
+  text: true,
+  search: true,
+  url: true,
+  tel: true,
+  email: true,
+  password: true,
+  number: true,
+  date: true,
+  month: true,
+  week: true,
+  time: true,
+  datetime: true,
+  'datetime-local': true
+};
+/**
+ * Computes whether the given element should automatically trigger the
+ * `focus-visible` class being added, i.e. whether it should always match
+ * `:focus-visible` when focused.
+ * @param {Element} node
+ * @return {boolean}
+ */
+
+function focusTriggersKeyboardModality(node) {
+  var type = node.type,
+      tagName = node.tagName;
+
+  if (tagName === 'INPUT' && inputTypesWhitelist[type] && !node.readOnly) {
+    return true;
+  }
+
+  if (tagName === 'TEXTAREA' && !node.readOnly) {
+    return true;
+  }
+
+  if (node.isContentEditable) {
+    return true;
+  }
+
+  return false;
+}
+/**
+ * Keep track of our keyboard modality state with `hadKeyboardEvent`.
+ * If the most recent user interaction was via the keyboard;
+ * and the key press did not include a meta, alt/option, or control key;
+ * then the modality is keyboard. Otherwise, the modality is not keyboard.
+ * @param {KeyboardEvent} event
+ */
+
+
+function handleKeyDown(event) {
+  if (event.metaKey || event.altKey || event.ctrlKey) {
+    return;
+  }
+
+  hadKeyboardEvent = true;
+}
+/**
+ * If at any point a user clicks with a pointing device, ensure that we change
+ * the modality away from keyboard.
+ * This avoids the situation where a user presses a key on an already focused
+ * element, and then clicks on a different element, focusing it with a
+ * pointing device, while we still think we're in keyboard modality.
+ */
+
+
+function handlePointerDown() {
+  hadKeyboardEvent = false;
+}
+
+function handleVisibilityChange() {
+  if (this.visibilityState === 'hidden') {
+    // If the tab becomes active again, the browser will handle calling focus
+    // on the element (Safari actually calls it twice).
+    // If this tab change caused a blur on an element with focus-visible,
+    // re-apply the class when the user switches back to the tab.
+    if (hadFocusVisibleRecently) {
+      hadKeyboardEvent = true;
+    }
+  }
+}
+
+function prepare(doc) {
+  doc.addEventListener('keydown', handleKeyDown, true);
+  doc.addEventListener('mousedown', handlePointerDown, true);
+  doc.addEventListener('pointerdown', handlePointerDown, true);
+  doc.addEventListener('touchstart', handlePointerDown, true);
+  doc.addEventListener('visibilitychange', handleVisibilityChange, true);
+}
+
+function teardown(doc) {
+  doc.removeEventListener('keydown', handleKeyDown, true);
+  doc.removeEventListener('mousedown', handlePointerDown, true);
+  doc.removeEventListener('pointerdown', handlePointerDown, true);
+  doc.removeEventListener('touchstart', handlePointerDown, true);
+  doc.removeEventListener('visibilitychange', handleVisibilityChange, true);
+}
+
+function isFocusVisible(event) {
+  var target = event.target;
+
+  try {
+    return target.matches(':focus-visible');
+  } catch (error) {} // browsers not implementing :focus-visible will throw a SyntaxError
+  // we use our own heuristic for those browsers
+  // rethrow might be better if it's not the expected error but do we really
+  // want to crash if focus-visible malfunctioned?
+  // no need for validFocusTarget check. the user does that by attaching it to
+  // focusable events only
+
+
+  return hadKeyboardEvent || focusTriggersKeyboardModality(target);
+}
+/**
+ * Should be called if a blur event is fired on a focus-visible element
+ */
+
+
+function handleBlurVisible() {
+  // To detect a tab/window switch, we look for a blur event followed
+  // rapidly by a visibility change.
+  // If we don't see a visibility change within 100ms, it's probably a
+  // regular focus change.
+  hadFocusVisibleRecently = true;
+  window.clearTimeout(hadFocusVisibleRecentlyTimeout);
+  hadFocusVisibleRecentlyTimeout = window.setTimeout(function () {
+    hadFocusVisibleRecently = false;
+  }, 100);
+}
+
+function useIsFocusVisible() {
+  var ref = React.useCallback(function (instance) {
+    var node = ReactDOM.findDOMNode(instance);
+
+    if (node != null) {
+      prepare(node.ownerDocument);
+    }
+  }, []);
+
+  return {
+    isFocusVisible: isFocusVisible,
+    onBlurVisible: handleBlurVisible,
+    ref: ref
+  };
+}
+});
+
+var useControlled_1 = createCommonjsModule(function (module, exports) {
+
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = useControlled;
+
+var React = interopRequireWildcard(react);
+
+/* eslint-disable react-hooks/rules-of-hooks, react-hooks/exhaustive-deps */
+function useControlled(_ref) {
+  var controlled = _ref.controlled,
+      defaultProp = _ref.default,
+      name = _ref.name,
+      _ref$state = _ref.state;
+
+  var _React$useRef = React.useRef(controlled !== undefined),
+      isControlled = _React$useRef.current;
+
+  var _React$useState = React.useState(defaultProp),
+      valueState = _React$useState[0],
+      setValue = _React$useState[1];
+
+  var value = isControlled ? controlled : valueState;
+
+  var setValueIfUncontrolled = React.useCallback(function (newValue) {
+    if (!isControlled) {
+      setValue(newValue);
+    }
+  }, []);
+  return [value, setValueIfUncontrolled];
+}
+});
+
+var Tooltip_1 = createCommonjsModule(function (module, exports) {
+
+
+
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.testReset = testReset;
+exports.default = exports.styles = void 0;
+
+var _extends2 = interopRequireDefault(_extends_1);
+
+var _slicedToArray2 = interopRequireDefault(slicedToArray);
+
+var _objectWithoutProperties2 = interopRequireDefault(objectWithoutProperties);
+
+var _defineProperty2 = interopRequireDefault(defineProperty$1);
+
+var React = interopRequireWildcard(react);
+
+var ReactDOM = interopRequireWildcard(reactDom);
+
+var _propTypes = interopRequireDefault(propTypes);
+
+var _clsx = interopRequireDefault(__pika_web_default_export_for_treeshaking__);
+
+
+
+
+
+var _withStyles = interopRequireDefault(withStyles_1);
+
+var _capitalize = interopRequireDefault(capitalize_1);
+
+var _Grow = interopRequireDefault(Grow);
+
+var _Popper = interopRequireDefault(Popper$1);
+
+var _useForkRef = interopRequireDefault(useForkRef_1);
+
+var _unstable_useId = interopRequireDefault(unstable_useId);
+
+var _setRef = interopRequireDefault(setRef_1);
+
+var _useIsFocusVisible2 = interopRequireDefault(useIsFocusVisible_1);
+
+var _useControlled3 = interopRequireDefault(useControlled_1);
+
+var _useTheme = interopRequireDefault(useTheme_1);
 
 function round(value) {
   return Math.round(value * 1e5) / 1e5;
@@ -2826,45 +3188,61 @@ function round(value) {
 function arrowGenerator() {
   return {
     '&[x-placement*="bottom"] $arrow': {
+      flip: false,
       top: 0,
       left: 0,
-      marginTop: '-0.71em',
+      marginTop: '-0.95em',
       marginLeft: 4,
       marginRight: 4,
+      width: '2em',
+      height: '1em',
       '&::before': {
-        transformOrigin: '0 100%'
+        flip: false,
+        borderWidth: '0 1em 1em 1em',
+        borderColor: 'transparent transparent currentcolor transparent'
       }
     },
     '&[x-placement*="top"] $arrow': {
+      flip: false,
       bottom: 0,
       left: 0,
-      marginBottom: '-0.71em',
+      marginBottom: '-0.95em',
       marginLeft: 4,
       marginRight: 4,
+      width: '2em',
+      height: '1em',
       '&::before': {
-        transformOrigin: '100% 0'
+        flip: false,
+        borderWidth: '1em 1em 0 1em',
+        borderColor: 'currentcolor transparent transparent transparent'
       }
     },
     '&[x-placement*="right"] $arrow': {
+      flip: false,
       left: 0,
-      marginLeft: '-0.71em',
-      height: '1em',
-      width: '0.71em',
+      marginLeft: '-0.95em',
       marginTop: 4,
       marginBottom: 4,
+      height: '2em',
+      width: '1em',
       '&::before': {
-        transformOrigin: '100% 100%'
+        flip: false,
+        borderWidth: '1em 1em 1em 0',
+        borderColor: 'transparent currentcolor transparent transparent'
       }
     },
     '&[x-placement*="left"] $arrow': {
+      flip: false,
       right: 0,
-      marginRight: '-0.71em',
-      height: '1em',
-      width: '0.71em',
+      marginRight: '-0.95em',
       marginTop: 4,
       marginBottom: 4,
+      height: '2em',
+      width: '1em',
       '&::before': {
-        transformOrigin: '0 0'
+        flip: false,
+        borderWidth: '1em 0 1em 1em',
+        borderColor: 'transparent transparent transparent currentcolor'
       }
     }
   };
@@ -2875,7 +3253,8 @@ var styles = function styles(theme) {
     /* Styles applied to the Popper component. */
     popper: {
       zIndex: theme.zIndex.tooltip,
-      pointerEvents: 'none' // disable jss-rtl plugin
+      pointerEvents: 'none',
+      flip: false // disable jss-rtl plugin
 
     },
 
@@ -2889,7 +3268,7 @@ var styles = function styles(theme) {
 
     /* Styles applied to the tooltip (label wrapper) element. */
     tooltip: {
-      backgroundColor: fade(theme.palette.grey[700], 0.9),
+      backgroundColor: (0, colorManipulator.fade)(theme.palette.grey[700], 0.9),
       borderRadius: theme.shape.borderRadius,
       color: theme.palette.common.white,
       fontFamily: theme.typography.fontFamily,
@@ -2909,22 +3288,16 @@ var styles = function styles(theme) {
 
     /* Styles applied to the arrow element. */
     arrow: {
-      overflow: 'hidden',
       position: 'absolute',
-      width: '1em',
-      height: '0.71em'
-      /* = width / sqrt(2) = (length of the hypotenuse) */
-      ,
-      boxSizing: 'border-box',
-      color: fade(theme.palette.grey[700], 0.9),
+      fontSize: 6,
+      color: (0, colorManipulator.fade)(theme.palette.grey[700], 0.9),
       '&::before': {
         content: '""',
         margin: 'auto',
         display: 'block',
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'currentColor',
-        transform: 'rotate(45deg)'
+        width: 0,
+        height: 0,
+        borderStyle: 'solid'
       }
     },
 
@@ -2937,7 +3310,7 @@ var styles = function styles(theme) {
     },
 
     /* Styles applied to the tooltip (label wrapper) element if `placement` contains "left". */
-    tooltipPlacementLeft: _defineProperty({
+    tooltipPlacementLeft: (0, _defineProperty2.default)({
       transformOrigin: 'right center',
       margin: '0 24px '
     }, theme.breakpoints.up('sm'), {
@@ -2945,7 +3318,7 @@ var styles = function styles(theme) {
     }),
 
     /* Styles applied to the tooltip (label wrapper) element if `placement` contains "right". */
-    tooltipPlacementRight: _defineProperty({
+    tooltipPlacementRight: (0, _defineProperty2.default)({
       transformOrigin: 'left center',
       margin: '0 24px'
     }, theme.breakpoints.up('sm'), {
@@ -2953,7 +3326,7 @@ var styles = function styles(theme) {
     }),
 
     /* Styles applied to the tooltip (label wrapper) element if `placement` contains "top". */
-    tooltipPlacementTop: _defineProperty({
+    tooltipPlacementTop: (0, _defineProperty2.default)({
       transformOrigin: 'center bottom',
       margin: '24px 0'
     }, theme.breakpoints.up('sm'), {
@@ -2961,7 +3334,7 @@ var styles = function styles(theme) {
     }),
 
     /* Styles applied to the tooltip (label wrapper) element if `placement` contains "bottom". */
-    tooltipPlacementBottom: _defineProperty({
+    tooltipPlacementBottom: (0, _defineProperty2.default)({
       transformOrigin: 'center top',
       margin: '24px 0'
     }, theme.breakpoints.up('sm'), {
@@ -2969,9 +3342,17 @@ var styles = function styles(theme) {
     })
   };
 };
+
+exports.styles = styles;
 var hystersisOpen = false;
 var hystersisTimer = null;
-var Tooltip = /*#__PURE__*/react.forwardRef(function Tooltip(props, ref) {
+
+function testReset() {
+  hystersisOpen = false;
+  clearTimeout(hystersisTimer);
+}
+
+var Tooltip = React.forwardRef(function Tooltip(props, ref) {
   var _props$arrow = props.arrow,
       arrow = _props$arrow === void 0 ? false : _props$arrow,
       children = props.children,
@@ -3000,45 +3381,42 @@ var Tooltip = /*#__PURE__*/react.forwardRef(function Tooltip(props, ref) {
       openProp = props.open,
       _props$placement = props.placement,
       placement = _props$placement === void 0 ? 'bottom' : _props$placement,
-      _props$PopperComponen = props.PopperComponent,
-      PopperComponent = _props$PopperComponen === void 0 ? Popper$1 : _props$PopperComponen,
       PopperProps = props.PopperProps,
       title = props.title,
       _props$TransitionComp = props.TransitionComponent,
-      TransitionComponent = _props$TransitionComp === void 0 ? Grow : _props$TransitionComp,
+      TransitionComponent = _props$TransitionComp === void 0 ? _Grow.default : _props$TransitionComp,
       TransitionProps = props.TransitionProps,
-      other = _objectWithoutProperties(props, ["arrow", "children", "classes", "disableFocusListener", "disableHoverListener", "disableTouchListener", "enterDelay", "enterNextDelay", "enterTouchDelay", "id", "interactive", "leaveDelay", "leaveTouchDelay", "onClose", "onOpen", "open", "placement", "PopperComponent", "PopperProps", "title", "TransitionComponent", "TransitionProps"]);
+      other = (0, _objectWithoutProperties2.default)(props, ["arrow", "children", "classes", "disableFocusListener", "disableHoverListener", "disableTouchListener", "enterDelay", "enterNextDelay", "enterTouchDelay", "id", "interactive", "leaveDelay", "leaveTouchDelay", "onClose", "onOpen", "open", "placement", "PopperProps", "title", "TransitionComponent", "TransitionProps"]);
+  var theme = (0, _useTheme.default)();
 
-  var theme = useTheme$1();
-
-  var _React$useState = react.useState(),
+  var _React$useState = React.useState(),
       childNode = _React$useState[0],
       setChildNode = _React$useState[1];
 
-  var _React$useState2 = react.useState(null),
+  var _React$useState2 = React.useState(null),
       arrowRef = _React$useState2[0],
       setArrowRef = _React$useState2[1];
 
-  var ignoreNonTouchEvents = react.useRef(false);
-  var closeTimer = react.useRef();
-  var enterTimer = react.useRef();
-  var leaveTimer = react.useRef();
-  var touchTimer = react.useRef();
+  var ignoreNonTouchEvents = React.useRef(false);
+  var closeTimer = React.useRef();
+  var enterTimer = React.useRef();
+  var leaveTimer = React.useRef();
+  var touchTimer = React.useRef();
 
-  var _useControlled = useControlled({
+  var _useControlled = (0, _useControlled3.default)({
     controlled: openProp,
     default: false,
     name: 'Tooltip',
     state: 'open'
   }),
-      _useControlled2 = _slicedToArray(_useControlled, 2),
+      _useControlled2 = (0, _slicedToArray2.default)(_useControlled, 2),
       openState = _useControlled2[0],
       setOpenState = _useControlled2[1];
 
   var open = openState;
 
-  var id = useId(idProp);
-  react.useEffect(function () {
+  var id = (0, _unstable_useId.default)(idProp);
+  React.useEffect(function () {
     return function () {
       clearTimeout(closeTimer.current);
       clearTimeout(enterTimer.current);
@@ -3094,12 +3472,12 @@ var Tooltip = /*#__PURE__*/react.forwardRef(function Tooltip(props, ref) {
     };
   };
 
-  var _useIsFocusVisible = useIsFocusVisible(),
+  var _useIsFocusVisible = (0, _useIsFocusVisible2.default)(),
       isFocusVisible = _useIsFocusVisible.isFocusVisible,
       onBlurVisible = _useIsFocusVisible.onBlurVisible,
       focusVisibleRef = _useIsFocusVisible.ref;
 
-  var _React$useState3 = react.useState(false),
+  var _React$useState3 = React.useState(false),
       childIsFocusVisible = _React$useState3[0],
       setChildIsFocusVisible = _React$useState3[1];
 
@@ -3176,17 +3554,14 @@ var Tooltip = /*#__PURE__*/react.forwardRef(function Tooltip(props, ref) {
     };
   };
 
-  var detectTouchStart = function detectTouchStart(event) {
+  var handleTouchStart = function handleTouchStart(event) {
     ignoreNonTouchEvents.current = true;
     var childrenProps = children.props;
 
     if (childrenProps.onTouchStart) {
       childrenProps.onTouchStart(event);
     }
-  };
 
-  var handleTouchStart = function handleTouchStart(event) {
-    detectTouchStart(event);
     clearTimeout(leaveTimer.current);
     clearTimeout(closeTimer.current);
     clearTimeout(touchTimer.current);
@@ -3209,14 +3584,14 @@ var Tooltip = /*#__PURE__*/react.forwardRef(function Tooltip(props, ref) {
     }, leaveTouchDelay);
   };
 
-  var handleUseRef = useForkRef(setChildNode, ref);
-  var handleFocusRef = useForkRef(focusVisibleRef, handleUseRef); // can be removed once we drop support for non ref forwarding class components
+  var handleUseRef = (0, _useForkRef.default)(setChildNode, ref);
+  var handleFocusRef = (0, _useForkRef.default)(focusVisibleRef, handleUseRef); // can be removed once we drop support for non ref forwarding class components
 
-  var handleOwnRef = react.useCallback(function (instance) {
+  var handleOwnRef = React.useCallback(function (instance) {
     // #StrictMode ready
-    setRef(handleFocusRef, reactDom.findDOMNode(instance));
+    (0, _setRef.default)(handleFocusRef, ReactDOM.findDOMNode(instance));
   }, [handleFocusRef]);
-  var handleRef = useForkRef(children.ref, handleOwnRef); // There is no point in displaying an empty tooltip.
+  var handleRef = (0, _useForkRef.default)(children.ref, handleOwnRef); // There is no point in displaying an empty tooltip.
 
   if (title === '') {
     open = false;
@@ -3228,16 +3603,13 @@ var Tooltip = /*#__PURE__*/react.forwardRef(function Tooltip(props, ref) {
 
 
   var shouldShowNativeTitle = !open && !disableHoverListener;
-
-  var childrenProps = _extends$1({
+  var childrenProps = (0, _extends2.default)({
     'aria-describedby': open ? id : null,
     title: shouldShowNativeTitle && typeof title === 'string' ? title : null
-  }, other, children.props, {
-    className: __pika_web_default_export_for_treeshaking__(other.className, children.props.className),
-    onTouchStart: detectTouchStart,
+  }, other, {}, children.props, {
+    className: (0, _clsx.default)(other.className, children.props.className),
     ref: handleRef
   });
-
   var interactiveWrapperListeners = {};
 
   if (!disableTouchListener) {
@@ -3265,8 +3637,8 @@ var Tooltip = /*#__PURE__*/react.forwardRef(function Tooltip(props, ref) {
     }
   }
 
-  var mergedPopperProps = react.useMemo(function () {
-    return deepmerge({
+  var mergedPopperProps = React.useMemo(function () {
+    return (0, esm.deepmerge)({
       popperOptions: {
         modifiers: {
           arrow: {
@@ -3277,8 +3649,8 @@ var Tooltip = /*#__PURE__*/react.forwardRef(function Tooltip(props, ref) {
       }
     }, PopperProps);
   }, [arrowRef, PopperProps]);
-  return /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.cloneElement(children, childrenProps), /*#__PURE__*/react.createElement(PopperComponent, _extends$1({
-    className: __pika_web_default_export_for_treeshaking__(classes.popper, interactive && classes.popperInteractive, arrow && classes.popperArrow),
+  return /*#__PURE__*/React.createElement(React.Fragment, null, React.cloneElement(children, childrenProps), /*#__PURE__*/React.createElement(_Popper.default, (0, _extends2.default)({
+    className: (0, _clsx.default)(classes.popper, interactive && classes.popperInteractive, arrow && classes.popperArrow),
     placement: placement,
     anchorEl: childNode,
     open: childNode ? open : false,
@@ -3287,19 +3659,41 @@ var Tooltip = /*#__PURE__*/react.forwardRef(function Tooltip(props, ref) {
   }, interactiveWrapperListeners, mergedPopperProps), function (_ref) {
     var placementInner = _ref.placement,
         TransitionPropsInner = _ref.TransitionProps;
-    return /*#__PURE__*/react.createElement(TransitionComponent, _extends$1({
+    return /*#__PURE__*/React.createElement(TransitionComponent, (0, _extends2.default)({
       timeout: theme.transitions.duration.shorter
-    }, TransitionPropsInner, TransitionProps), /*#__PURE__*/react.createElement("div", {
-      className: __pika_web_default_export_for_treeshaking__(classes.tooltip, classes["tooltipPlacement".concat(capitalize(placementInner.split('-')[0]))], ignoreNonTouchEvents.current && classes.touch, arrow && classes.tooltipArrow)
-    }, title, arrow ? /*#__PURE__*/react.createElement("span", {
+    }, TransitionPropsInner, TransitionProps), /*#__PURE__*/React.createElement("div", {
+      className: (0, _clsx.default)(classes.tooltip, classes["tooltipPlacement".concat((0, _capitalize.default)(placementInner.split('-')[0]))], ignoreNonTouchEvents.current && classes.touch, arrow && classes.tooltipArrow)
+    }, title, arrow ? /*#__PURE__*/React.createElement("span", {
       className: classes.arrow,
       ref: setArrowRef
     }) : null));
   }));
 });
-var Tooltip$1 = withStyles(styles, {
-  name: 'MuiTooltip',
-  flip: false
+
+var _default = (0, _withStyles.default)(styles, {
+  name: 'MuiTooltip'
 })(Tooltip);
+
+exports.default = _default;
+});
+
+var Tooltip = createCommonjsModule(function (module, exports) {
+
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "default", {
+  enumerable: true,
+  get: function get() {
+    return _Tooltip.default;
+  }
+});
+
+var _Tooltip = interopRequireDefault(Tooltip_1);
+});
+
+var Tooltip$1 = /*@__PURE__*/getDefaultExportFromCjs(Tooltip);
 
 export default Tooltip$1;
