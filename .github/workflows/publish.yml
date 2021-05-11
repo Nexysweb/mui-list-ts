@@ -12,28 +12,8 @@ jobs:
         with:
           node-version: 13
       - run: yarn
-      - run: yarn buildpackage
       - run: yarn test
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v1
-        with:
-          name: artifacts
-          path: ./dist
-
-  publishNpm:
-    name: 'Publish to npm'
-    runs-on: ubuntu-latest
-    needs: test
-    if: contains(github.ref, 'refs/tags/v')
-
-    strategy:
-      matrix:
-        node-version: [14.x]
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
+      - run: yarn buildpackage
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
