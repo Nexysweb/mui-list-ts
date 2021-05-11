@@ -221,10 +221,10 @@ export const transformFilterPropToStateFilter = <A>(
     }, {});
 };
 
-export const debounce = (wait = 200) => {
-  let timeout: NodeJS.Timeout;
+export const debounce = (wait:number = 200):(func: () => void) => void => {
+  let timeout: any//NodeJS.Timeout
 
-  return (func: () => void) => {
+  return (func: () => void):void => {
     clearTimeout(timeout);
     timeout = setTimeout(func, wait);
   };
