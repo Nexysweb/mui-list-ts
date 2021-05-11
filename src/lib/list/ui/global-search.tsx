@@ -20,14 +20,12 @@ const GlobalSearch = (props: Props): JSX.Element | null => {
   const value = filters[keyName];
 
   return (
-    <div className="pull-right">
-      <SearchUnit
-        onChange={(k): void => onChange({ name: keyName, value: k.value })}
-        name={keyName}
-        value={value}
-        wait={debounceWait}
-      />
-    </div>
+    <SearchUnit
+      onChange={(k): void => onChange({ name: keyName, value: k.value })}
+      name={keyName}
+      value={value}
+      wait={debounceWait}
+    />
   );
 };
 
