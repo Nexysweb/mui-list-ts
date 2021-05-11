@@ -1,8 +1,7 @@
 {
   "name": "@nexys/mui-list",
-  "version": "2.4.2",
+  "version": "2.5.0",
   "license": "MIT",
-  "dependencies": {},
   "keywords": [
     "typescript",
     "mui-list",
