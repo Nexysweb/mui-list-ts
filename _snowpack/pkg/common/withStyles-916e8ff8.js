@@ -1,13 +1,13 @@
 import { c as createCommonjsModule } from './_commonjsHelpers-53bde9c7.js';
 import { i as interopRequireDefault, _ as _extends_1 } from './extends-196a4166.js';
-import { a as _createClass, S as SheetsRegistry, c as createGenerateClassName, d as StylesProvider, n as nested, _ as _objectWithoutProperties, g as getThemeProps, j as jssPreset, m as makeStyles, e as mergeClasses, w as withStyles, s as sheetsManager, f as StylesContext } from './withStyles-79c501f3.js';
-import { _ as _classCallCheck, s as styled } from './styled-493b2a24.js';
-import { _ as _extends } from './extends-7477639a.js';
 import { r as react } from './index-4f10c776.js';
+import { a as _createClass, S as SheetsRegistry, d as createGenerateClassName, e as StylesProvider, n as nested, _ as _objectWithoutProperties, g as getThemeProps, j as jssPreset, c as makeStyles, m as mergeClasses, w as withStyles, s as sheetsManager, f as StylesContext } from './withStyles-aee6c48a.js';
+import { _ as _classCallCheck, s as styled } from './styled-86c5c31f.js';
+import { _ as _extends } from './extends-7477639a.js';
 import './index-6c76b257.js';
 import { u as useTheme, T as ThemeContext } from './useTheme-4361569e.js';
 import { h as hoistNonReactStatics_cjs } from './hoist-non-react-statics.cjs-8d567bb6.js';
-import { a as createMuiTheme_1 } from './createMuiTheme-d0f80890.js';
+import { a as createMuiTheme_1 } from './createMuiTheme-d9782252.js';
 
 function createStyles(styles) {
   return styles;
@@ -164,6 +164,28 @@ var _default = defaultTheme;
 exports.default = _default;
 });
 
+var useTheme_1 = createCommonjsModule(function (module, exports) {
+
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = useTheme;
+
+
+
+var _react = interopRequireDefault(react);
+
+var _defaultTheme = interopRequireDefault(defaultTheme_1);
+
+function useTheme() {
+  var theme = (0, esm.useTheme)() || _defaultTheme.default;
+
+  return theme;
+}
+});
+
 var withStyles_1 = createCommonjsModule(function (module, exports) {
 
 
@@ -189,4 +211,4 @@ var _default = withStyles;
 exports.default = _default;
 });
 
-export { defaultTheme_1 as d, esm as e, withStyles_1 as w };
+export { defaultTheme_1 as d, esm as e, useTheme_1 as u, withStyles_1 as w };

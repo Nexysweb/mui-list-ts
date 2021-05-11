@@ -1,15 +1,46 @@
 import { _ as _extends } from './extends-7477639a.js';
-import { b as _assertThisInitialized, _ as _objectWithoutProperties } from './withStyles-79c501f3.js';
 import { r as react } from './index-4f10c776.js';
+import { r as require$$2, w as withStyles } from './SvgIcon-0e2b2a02.js';
+import { b as _assertThisInitialized, _ as _objectWithoutProperties } from './withStyles-aee6c48a.js';
 import './index-6c76b257.js';
 import { r as reactDom } from './index-419aa426.js';
 import { _ as __pika_web_default_export_for_treeshaking__ } from './clsx.m-e1755476.js';
 import { T as TransitionGroupContext, u as useForkRef } from './TransitionGroupContext-cc6d71cd.js';
-import { u as useEventCallback } from './useEventCallback-b4e9224e.js';
-import { w as withStyles } from './SvgIcon-74a91a81.js';
-import { b as _toConsumableArray } from './spacing-9369306c.js';
+import { b as _toConsumableArray } from './spacing-c43e981a.js';
 import { _ as _objectWithoutPropertiesLoose } from './objectWithoutPropertiesLoose-d5128f55.js';
 import { _ as _inheritsLoose } from './hoist-non-react-statics.cjs-8d567bb6.js';
+
+/**
+ * Private module reserved for @material-ui/x packages.
+ */
+
+function createSvgIcon(path, displayName) {
+  var Component = react.memo(react.forwardRef(function (props, ref) {
+    return /*#__PURE__*/react.createElement(require$$2, _extends({
+      ref: ref
+    }, props), path);
+  }));
+
+  Component.muiName = require$$2.muiName;
+  return Component;
+}
+
+var useEnhancedEffect = typeof window !== 'undefined' ? react.useLayoutEffect : react.useEffect;
+/**
+ * https://github.com/facebook/react/issues/14099#issuecomment-440013892
+ *
+ * @param {function} fn
+ */
+
+function useEventCallback(fn) {
+  var ref = react.useRef(fn);
+  useEnhancedEffect(function () {
+    ref.current = fn;
+  });
+  return react.useCallback(function () {
+    return (ref.current).apply(void 0, arguments);
+  }, []);
+}
 
 // based on https://github.com/WICG/focus-visible/blob/v4.1.5/src/focus-visible.js
 var hadKeyboardEvent = true;
@@ -416,7 +447,7 @@ var TransitionGroup = /*#__PURE__*/function (_React$Component) {
 TransitionGroup.propTypes =  {};
 TransitionGroup.defaultProps = defaultProps;
 
-var useEnhancedEffect = typeof window === 'undefined' ? react.useEffect : react.useLayoutEffect;
+var useEnhancedEffect$1 = typeof window === 'undefined' ? react.useEffect : react.useLayoutEffect;
 /**
  * @ignore - internal component.
  */
@@ -447,7 +478,7 @@ function Ripple(props) {
   var childClassName = __pika_web_default_export_for_treeshaking__(classes.child, leaving && classes.childLeaving, pulsate && classes.childPulsate);
   var handleExited = useEventCallback(onExited); // Ripple is used for user feedback (e.g. click or press) so we want to apply styles with the highest priority
 
-  useEnhancedEffect(function () {
+  useEnhancedEffect$1(function () {
     if (!inProp) {
       // react-transition-group#onExit
       setLeaving(true); // react-transition-group#onExited
@@ -1058,4 +1089,4 @@ var ButtonBase$1 = withStyles(styles$1, {
   name: 'MuiButtonBase'
 })(ButtonBase);
 
-export { ButtonBase$1 as B, useIsFocusVisible as u };
+export { ButtonBase$1 as B, useIsFocusVisible as a, createSvgIcon as c, useEventCallback as u };

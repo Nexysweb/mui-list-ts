@@ -1,7 +1,6 @@
 {
   "imports": {
     "@material-ui/core": "./@material-ui/core.js",
-    "@material-ui/core/TextField": "./@material-ui/core/TextField.js",
     "@material-ui/core/Tooltip": "./@material-ui/core/Tooltip.js",
     "@material-ui/core/styles": "./@material-ui/core/styles.js",
     "@material-ui/core/styles/createMuiTheme": "./@material-ui/core/styles/createMuiTheme.js",

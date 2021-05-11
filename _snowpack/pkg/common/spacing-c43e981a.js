@@ -337,4 +337,4 @@ function spacing(props) {
 spacing.propTypes =  {};
 spacing.filterProps = spacingKeys;
 
-export { _slicedToArray as _, _defineProperty as a, _toConsumableArray as b, createUnarySpacing as c, deepmerge as d, _typeof as e, breakpoints as f, handleBreakpoints as h, merge as m, spacing as s };
+export { _slicedToArray as _, _defineProperty as a, _toConsumableArray as b, _typeof as c, deepmerge as d, createUnarySpacing as e, breakpoints as f, handleBreakpoints as h, merge as m, spacing as s };

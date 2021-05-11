@@ -9,9 +9,9 @@ const Copyright = () => {
     variant: "body2",
     color: "textSecondary",
     align: "center"
-  }, "Copyright © Nexys ", new Date().getFullYear(), /* @__PURE__ */ React.createElement("p", null, /* @__PURE__ */ React.createElement("small", null, /* @__PURE__ */ React.createElement("a", {
+  }, "Copyright © Nexys ", new Date().getFullYear(), /* @__PURE__ */ React.createElement("small", null, /* @__PURE__ */ React.createElement("a", {
     href: shaUrl
-  }, sha))));
+  }, sha)));
 };
 const Footer = () => {
   return /* @__PURE__ */ React.createElement(Box, {

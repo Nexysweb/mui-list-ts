@@ -66,4 +66,25 @@ function useControlled(_ref) {
   return [value, setValueIfUncontrolled];
 }
 
-export { ownerWindow as a, debounce as d, isMuiElement as i, ownerDocument as o, useControlled as u };
+/**
+ * Private module reserved for @material-ui/x packages.
+ */
+
+function useId(idOverride) {
+  var _React$useState = react.useState(idOverride),
+      defaultId = _React$useState[0],
+      setDefaultId = _React$useState[1];
+
+  var id = idOverride || defaultId;
+  react.useEffect(function () {
+    if (defaultId == null) {
+      // Fallback to this default id when possible.
+      // Use the random value for client-side rendering only.
+      // We can't use it server-side.
+      setDefaultId("mui-".concat(Math.round(Math.random() * 1e5)));
+    }
+  }, [defaultId]);
+  return id;
+}
+
+export { ownerWindow as a, useId as b, debounce as d, isMuiElement as i, ownerDocument as o, useControlled as u };
