@@ -7643,12 +7643,13 @@ function cleanupAtContainer(container) {
 
 /* eslint func-name-matching:0 */
 
+var _process$env;
 // or teardown then we'll automatically run cleanup afterEach test
 // this ensures that tests run in isolation from each other
 // if you don't like this then either import the `pure` module
 // or set the RTL_SKIP_AUTO_CLEANUP env variable to 'true'.
 
-{
+if (typeof process === "undefined" || !((_process$env = process.env) != null && _process$env.RTL_SKIP_AUTO_CLEANUP)) {
   // ignore teardown() in code coverage because Jest does not support it
 
   /* istanbul ignore else */
