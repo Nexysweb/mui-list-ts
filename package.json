@@ -16,7 +16,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://https://github.com/Nexysweb/mui-list-ts.git"
+    "url": "https://github.com/Nexysweb/mui-list-ts.git"
   },
   "scripts": {
     "start": "SNOWPACK_PUBLIC_URL= snowpack dev  --polyfill-node",
