@@ -14,6 +14,8 @@ Multi-purpose data-table/business list for MUI
 
 See here: https://nexys-system.github.io/mui-list-ts/
 
+Relies on https://github.com/nexys-system/core-list
+
 ## Get started
 
 `yarn install @nexys/mui-list`
