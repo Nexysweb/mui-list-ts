@@ -1,8 +1,11 @@
 import React from "../_snowpack/pkg/react.js";
 import List from "../lib/list/index.js";
-import {withPagination} from "../lib/list/utils/pagination-utils.js";
-import {applyFilter, toFilterArray} from "../lib/list/utils/filter-utils.js";
-import {order} from "../lib/list/utils/order-utils.js";
+import {withPagination} from "../_snowpack/pkg/@nexys/core-list/dist/list/utils/pagination-utils.js";
+import {
+  applyFilter,
+  toFilterArray
+} from "../_snowpack/pkg/@nexys/core-list/dist/list/utils/filter-utils.js";
+import {order} from "../_snowpack/pkg/@nexys/core-list/dist/list/utils/order-utils.js";
 const af = {id: 1, name: "Africa"};
 const eu = {id: 2, name: "Europe"};
 const as = {id: 3, name: "Asia"};
