@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useReducer, Reducer } from 'react';
 
-import { Loader } from './ui';
-
 import {
   Config,
   Definition,
@@ -51,7 +49,8 @@ const ListSuper =
     ListHeader,
     ListBody,
     RecordInfo,
-    Pagination
+    Pagination,
+    Loader
   }: OuterProps<A>) =>
   (props: InnerProps<A>): JSX.Element => {
     const {

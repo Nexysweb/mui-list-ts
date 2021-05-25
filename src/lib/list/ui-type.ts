@@ -138,4 +138,5 @@ export interface OuterProps<A> {
   ListBody: (props: ListBodyProps) => JSX.Element;
   RecordInfo: (props: RecordInfoProps) => JSX.Element | null;
   Pagination: (props: PaginationProps) => JSX.Element | null;
+  Loader: () => JSX.Element;
 }
