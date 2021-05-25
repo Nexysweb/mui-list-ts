@@ -2,17 +2,17 @@
 
 [![npm version](https://badge.fury.io/js/%40nexys%2Fmui-list.svg)](https://www.npmjs.com/package/@nexys/mui-list)
 [![npm version](https://img.shields.io/npm/v/@nexys/mui-list.svg)](https://www.npmjs.com/package/@nexys/mui-list)
-[![Build Package](https://github.com/Nexysweb/mui-list-ts/actions/workflows/build-package.yml/badge.svg)](https://github.com/Nexysweb/mui-list-ts/actions/workflows/build-package.yml)
-[![Deployment](https://github.com/Nexysweb/mui-list-ts/actions/workflows/deploy.yml/badge.svg)](https://github.com/Nexysweb/mui-list-ts/actions/workflows/deploy.yml)
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/nexysweb/mui-list-ts.svg)](http://isitmaintained.com/project/nexysweb/mui-list-ts "Average time to resolve an issue")
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/nexysweb/mui-list-ts.svg)](http://isitmaintained.com/project/nexysweb/mui-list-ts "Percentage of issues still open")
+[![Build Package](https://github.com/nexys-system/mui-list-ts/actions/workflows/build-package.yml/badge.svg)](https://github.com/nexys-system/mui-list-ts/actions/workflows/build-package.yml)
+[![Deployment](https://github.com/nexys-system/mui-list-ts/actions/workflows/deploy.yml/badge.svg)](https://github.com/nexys-system/mui-list-ts/actions/workflows/deploy.yml)
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/nexys-system/mui-list-ts.svg)](http://isitmaintained.com/project/nexys-system/mui-list-ts "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/nexys-system/mui-list-ts.svg)](http://isitmaintained.com/project/nexys-system/mui-list-ts "Percentage of issues still open")
 ![Code style](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)
 [![Bundlephobia](https://badgen.net/bundlephobia/min/@nexys/mui-list)](https://bundlephobia.com/result?p=@nexys/mui-list@2.3.0)
 
 
 Multi-purpose data-table/business list for MUI
 
-See here: https://nexysweb.github.io/mui-list-ts/
+See here: https://nexys-system.github.io/mui-list-ts/
 
 ## Get started
 
@@ -63,7 +63,7 @@ export default (): JSX.Element => (
 
 ## API 
 
-all interfaces/types are described here: https://github.com/Nexysweb/mui-list-ts/tree/master/src/lib/types
+all interfaces/types are described here: https://github.com/nexys-system/mui-list-ts/tree/master/src/lib/types
 
 
 ### `def`
@@ -139,7 +139,7 @@ This is the content of the table.
 
 ## Examples
 
-The source code for the examples can be found in: https://github.com/Nexysweb/mui-list-ts/tree/master/src/list
+The source code for the examples can be found in: https://github.com/nexys-system/mui-list-ts/tree/master/src/list
 
 ## References
 
