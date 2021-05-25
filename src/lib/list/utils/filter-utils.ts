@@ -1,6 +1,5 @@
-import { DefinitionItem } from '../../types';
+import { DefinitionItem, Filter, FiltersType } from '../../types';
 import { PropFiltersType } from '../../types/config';
-import { Filter, FiltersType } from '../../types';
 
 export const compareString = (main: string, searchString: string): boolean =>
   main.toLowerCase().indexOf(searchString.toLowerCase()) > -1;
@@ -221,10 +220,10 @@ export const transformFilterPropToStateFilter = <A>(
     }, {});
 };
 
-export const debounce = (wait:number = 200):(func: () => void) => void => {
-  let timeout: any//NodeJS.Timeout
+export const debounce = (wait: number = 200): ((func: () => void) => void) => {
+  let timeout: any; //NodeJS.Timeout
 
-  return (func: () => void):void => {
+  return (func: () => void): void => {
     clearTimeout(timeout);
     timeout = setTimeout(func, wait);
   };

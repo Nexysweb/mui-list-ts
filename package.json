@@ -1,22 +1,18 @@
 {
-  "name": "@nexys/mui-list",
-  "version": "2.5.3",
+  "name": "@nexys/core-list",
+  "version": "0.0.0",
   "license": "MIT",
   "keywords": [
     "typescript",
-    "mui-list",
     "datatable",
     "react",
-    "material-ui",
     "ui-independent",
     "table",
-    "list",
-    "mui-data",
-    "mui-datatables"
+    "list"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Nexysweb/mui-list-ts.git"
+    "url": "https://github.com/Nexysweb/core-list.git"
   },
   "scripts": {
     "start": "SNOWPACK_PUBLIC_URL= snowpack dev  --polyfill-node",
