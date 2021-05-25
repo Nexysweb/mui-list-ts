@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { SearchUnit } from './form';
-import { GlobalSearchProps } from '../ui-type';
+import { GlobalSearchProps } from '@nexys/core-list/dist/list/ui-type';
 
 const keyName = 'globalSearch';
 

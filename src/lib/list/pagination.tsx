@@ -1,7 +1,13 @@
 import React from 'react';
 
-import { getPagination, getPageTiles } from './utils/pagination-utils';
-import { PaginationPropsInner, PaginationProps } from './ui-type';
+import {
+  getPagination,
+  getPageTiles
+} from '@nexys/core-list/dist/list/utils/pagination-utils';
+import {
+  PaginationPropsInner,
+  PaginationProps
+} from '@nexys/core-list/dist/list/ui-type';
 
 const Pagination =
   ({ PaginationUnit, PaginationWrapper }: PaginationPropsInner) =>

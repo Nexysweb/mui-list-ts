@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Definition } from '../lib/types/definition';
+import { Definition } from '@nexys/core-list/dist/types/definition';
 import List from '../lib/list';
 
 // data taken from

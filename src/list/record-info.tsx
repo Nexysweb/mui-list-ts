@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Definition } from '../lib/types/definition';
+import { Definition } from '@nexys/core-list/dist/types/definition';
 import List from '../lib/list';
 
 interface Continent {
@@ -116,7 +116,7 @@ const def: Definition<Animal> = [
       func: (a, b): boolean =>
         a.country.name
           .toLocaleLowerCase()
-          .includes(((b as unknown) as string).toLocaleLowerCase())
+          .includes((b as unknown as string).toLocaleLowerCase())
     },
     render: (x): string => x.country.name
   },

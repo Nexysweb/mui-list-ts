@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 
 import { TextField } from '@material-ui/core';
-import { debounce } from '../utils/filter-utils';
+import { debounce } from '@nexys/core-list/dist/list/utils/filter-utils';
 
 export interface InputValue {
   name: string;

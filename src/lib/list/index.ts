@@ -10,7 +10,8 @@ import {
   ListWrapper,
   ListContainer,
   ListHeader,
-  ListBody
+  ListBody,
+  Loader
 } from './ui';
 
 import ListSuper, { InnerProps } from './list-super';
@@ -33,7 +34,8 @@ const List = <A>(props: InnerProps<A>): JSX.Element =>
     ListHeader,
     ListBody,
     RecordInfo,
-    Pagination
+    Pagination,
+    Loader
   })(props);
 
 export default List;

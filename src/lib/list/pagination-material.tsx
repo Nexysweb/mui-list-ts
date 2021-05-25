@@ -9,8 +9,8 @@
 import React from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import PaginationMaterial from '@material-ui/lab/Pagination';
-import { getPagination } from './utils/pagination-utils';
-import { PaginationProps } from './ui-type';
+import { getPagination } from '@nexys/core-list/dist/list/utils/pagination-utils';
+import { PaginationProps } from '@nexys/core-list/dist/list/ui-type';
 
 const useStyles = makeStyles(theme =>
   createStyles({

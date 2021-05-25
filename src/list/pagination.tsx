@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Grid } from '@material-ui/core';
 
-import { Definition } from '../lib/types/definition';
+import { Definition } from '@nexys/core-list/dist/types/definition';
 import List from '../lib/list';
 
 // data taken from
@@ -105,7 +105,7 @@ const Pagination = (): JSX.Element => {
       </Grid>
 
       <List<Country>
-        data={(data as unknown) as Country[]}
+        data={data as unknown as Country[]}
         def={columns}
         config={{ nPerPage: itemsPerPage }}
       />

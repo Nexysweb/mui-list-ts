@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useReducer, Reducer } from 'react';
 
-import { Loader } from './ui';
-
 import {
   Config,
   Definition,
@@ -9,23 +7,23 @@ import {
   AsyncDataConfig,
   AsyncDataReturn,
   FiltersType
-} from '../types';
-import { OuterProps } from './ui-type';
+} from '@nexys/core-list/dist/types';
+import { OuterProps } from '@nexys/core-list/dist/list/ui-type';
 
-import { order, getSort } from './utils/order-utils';
+import { order, getSort } from '@nexys/core-list/dist/list/utils/order-utils';
 import {
   applyFilter,
   updateFilters,
   transformFilterPropToStateFilter
-} from './utils/filter-utils';
-import { withPagination } from './utils/pagination-utils';
+} from '@nexys/core-list/dist/list/utils/filter-utils';
+import { withPagination } from '@nexys/core-list/dist/list/utils/pagination-utils';
 import {
   listSuperReducer,
   getInitialState,
   Action,
   ActionType,
   State
-} from './list-super-partials';
+} from '@nexys/core-list/dist/list/list-super-partials';
 
 export interface InnerProps<A> {
   def: Definition<A>;
@@ -51,7 +49,8 @@ const ListSuper =
     ListHeader,
     ListBody,
     RecordInfo,
-    Pagination
+    Pagination,
+    Loader
   }: OuterProps<A>) =>
   (props: InnerProps<A>): JSX.Element => {
     const {

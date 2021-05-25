@@ -2,10 +2,12 @@ import React from 'react';
 
 import { Definition, AsyncDataConfig, AsyncDataReturn } from '../lib/types';
 import List from '../lib/list';
-import { withPagination } from '../lib/list/utils/pagination-utils';
-import { applyFilter, toFilterArray } from '../lib/list/utils/filter-utils';
-import { order } from '../lib/list/utils/order-utils';
-
+import { withPagination } from '@nexys/core-list/dist/list/utils/pagination-utils';
+import {
+  applyFilter,
+  toFilterArray
+} from '@nexys/core-list/dist/list/utils/filter-utils';
+import { order } from '@nexys/core-list/dist/list/utils/order-utils';
 interface Continent {
   id: number;
   name: string;

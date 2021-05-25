@@ -1,9 +1,9 @@
 import React from 'react';
 
-import * as UIType from '../ui-type';
+import * as UIType from '@nexys/core-list/dist/list/ui-type';
+import { paginationBoundaries } from '@nexys/core-list/dist/list/utils/pagination-utils';
 
 import Alert from '../../components/alert';
-import { paginationBoundaries } from '../utils/pagination-utils';
 import GlobalSearch from './global-search';
 import PopoverFilter from './popover-filter';
 import FilterUnit from './filter-unit';
@@ -37,7 +37,7 @@ import {
   PaginationWrapperProps,
   OrderControllerUpAndDownProps,
   OrderControllerProps
-} from '../ui-type';
+} from '@nexys/core-list/dist/list/ui-type';
 
 export const NoRow = (props: NoRowProps): JSX.Element | null => {
   if (props.n > 0) {

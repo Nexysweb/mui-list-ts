@@ -8,7 +8,7 @@ import {
   Checkbox
 } from '@material-ui/core';
 
-import { Filter, OptionUnit } from '../../types/filter';
+import { Filter, OptionUnit } from '@nexys/core-list/dist/types/filter';
 import { SearchUnit } from './form';
 import PopoverFilter from './popover-filter';
 

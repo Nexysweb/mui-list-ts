@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { render, fireEvent, screen } from '../../../test/test-utils';
-import { Filter } from '../../../types';
+import { Filter } from '@nexys/core-list/dist/types';
 import FilterUnit from '../filter-unit';
 
 interface DummyData {

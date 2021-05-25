@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Definition } from '../lib/types/definition';
+import { Definition } from '@nexys/core-list/dist/types/definition';
 import List from '../lib/list';
 
 // data taken from
@@ -127,7 +127,7 @@ const Filters = (): JSX.Element => {
     <>
       <h2>Filter example</h2>
       <List<Country>
-        data={(data as unknown) as Country[]}
+        data={data as unknown as Country[]}
         def={columns}
         config={{
           search: true,
