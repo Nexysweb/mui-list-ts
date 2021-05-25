@@ -2,7 +2,7 @@ import { i as interopRequireWildcard } from '../common/interopRequireWildcard-80
 import { c as createCommonjsModule, b as getDefaultExportFromNamespaceIfNotNamed, a as commonjsGlobal } from '../common/_commonjsHelpers-37fa8da4.js';
 import { i as interopRequireDefault, _ as _extends_1 } from '../common/extends-8f2605c9.js';
 import { g as global } from '../common/_polyfill-node:global-acbc543a.js';
-import { a as ansiStyles, l as lib } from '../common/index-0d1dec94.js';
+import { a as ansiStyles, l as lib } from '../common/index-fa68edbc.js';
 
 var minIndent = string => {
 	const match = string.match(/^[ \t]*(?=\S)/gm);

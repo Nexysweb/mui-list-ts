@@ -1787,7 +1787,7 @@ var shared = createCommonjsModule(function (module) {
 (module.exports = function (key, value) {
   return sharedStore[key] || (sharedStore[key] = value !== undefined ? value : {});
 })('versions', []).push({
-  version: '3.12.1',
+  version: '3.13.0',
   mode:  'pure' ,
   copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
 });
