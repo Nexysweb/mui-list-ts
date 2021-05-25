@@ -14,13 +14,6 @@ jobs:
       - run: yarn
       - run: yarn test
       - run: yarn buildpackage
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          always-auth: true
-          node-version: ${{ matrix.node-version }}
-
       - name: Publish package
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc
