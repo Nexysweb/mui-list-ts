@@ -1,5 +1,7 @@
 import React from 'react';
 
+import * as UIType from '../ui-type';
+
 import Alert from '../../components/alert';
 import { paginationBoundaries } from '../utils/pagination-utils';
 import GlobalSearch from './global-search';
@@ -22,9 +24,20 @@ import {
   UnfoldMore as SortDefault
 } from '@material-ui/icons';
 
-interface NoRowProps {
-  n: number;
-}
+import {
+  PaginationUnitProps,
+  NoRowProps,
+  ListWrapperProps,
+  ListContainerProps,
+  ListBodyProps,
+  RecordInfoProps,
+  ListHeaderProps,
+  RowProps,
+  ColCellProps,
+  PaginationWrapperProps,
+  OrderControllerUpAndDownProps,
+  OrderControllerProps
+} from '../ui-type';
 
 export const NoRow = (props: NoRowProps): JSX.Element | null => {
   if (props.n > 0) {
@@ -33,10 +46,6 @@ export const NoRow = (props: NoRowProps): JSX.Element | null => {
 
   return <Alert type="warning">No rows found</Alert>;
 };
-
-interface PaginationWrapperProps {
-  children: React.ReactNode | JSX.Element;
-}
 
 export const PaginationWrapper = (
   props: PaginationWrapperProps
@@ -47,13 +56,6 @@ export const PaginationWrapper = (
     </nav>
   );
 };
-
-interface PaginationUnitProps {
-  children: React.ReactNode | JSX.Element;
-  isActive?: boolean;
-  isDisabled?: boolean;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-}
 
 export const PaginationUnit = (
   props: PaginationUnitProps
@@ -77,12 +79,6 @@ export const PaginationUnit = (
   );
 };
 
-interface ColCellProps {
-  children: React.ReactNode | JSX.Element;
-  colSpan?: number;
-  style?: React.CSSProperties;
-}
-
 export const ColCell = (props: ColCellProps): JSX.Element => {
   const { children, colSpan, style } = props;
   return (
@@ -92,19 +88,11 @@ export const ColCell = (props: ColCellProps): JSX.Element => {
   );
 };
 
-interface HeaderUnitProps {
-  children: React.ReactNode | JSX.Element;
-}
-
-export const HeaderUnit = (props: HeaderUnitProps): JSX.Element => {
+export const HeaderUnit = (props: UIType.HeaderUnitProps): JSX.Element => {
   const { children } = props;
 
   return <TableCell style={{ fontWeight: 'bold' }}>{children}</TableCell>;
 };
-
-interface OrderControllerUpAndDownProps {
-  onClick: (isAscending: boolean) => void;
-}
 
 export const OrderControllerUpAndDown = (
   props: OrderControllerUpAndDownProps
@@ -120,11 +108,6 @@ export const OrderControllerUpAndDown = (
     </span>
   );
 };
-
-interface OrderControllerProps {
-  descAsc: boolean | null;
-  onClick: (a: null) => void;
-}
 
 export const OrderController = (props: OrderControllerProps): JSX.Element => {
   const { onClick, descAsc } = props;
@@ -148,20 +131,10 @@ export const OrderController = (props: OrderControllerProps): JSX.Element => {
   );
 };
 
-interface ListWrapperProps {
-  children: React.ReactNode | JSX.Element;
-}
-
 export const ListWrapper = (props: ListWrapperProps): JSX.Element => {
   const { children } = props;
   return <div className="table-responsive-sm">{children}</div>;
 };
-
-interface ListContainerProps {
-  children: React.ReactNode | JSX.Element;
-  maxHeight?: number;
-  stickyHeader?: boolean;
-}
 
 export const ListContainer = (props: ListContainerProps): JSX.Element => {
   const { children, maxHeight, stickyHeader = false } = props;
@@ -174,38 +147,20 @@ export const ListContainer = (props: ListContainerProps): JSX.Element => {
   );
 };
 
-interface RowProps {
-  children: React.ReactNode | JSX.Element;
-}
-
 export const Row = (props: RowProps): JSX.Element => {
   const { children } = props;
   return <TableRow>{children}</TableRow>;
 };
-
-interface ListHeaderProps {
-  children: React.ReactNode | JSX.Element;
-}
 
 export const ListHeader = (props: ListHeaderProps): JSX.Element => {
   const { children } = props;
   return <TableHead>{children}</TableHead>;
 };
 
-interface ListBodyProps {
-  children: React.ReactNode | JSX.Element;
-}
-
 export const ListBody = (props: ListBodyProps): JSX.Element => {
   const { children } = props;
   return <TableBody>{children}</TableBody>;
 };
-
-interface RecordInfoProps {
-  idx: number;
-  n: number;
-  nPerPage: number;
-}
 
 export const RecordInfo = (props: RecordInfoProps): JSX.Element | null => {
   const { nPerPage, idx, n } = props;

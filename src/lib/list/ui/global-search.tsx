@@ -1,16 +1,11 @@
 import React from 'react';
 
 import { SearchUnit } from './form';
-interface Props {
-  filters: any;
-  onChange: (inputValue: { name: 'globalSearch'; value: any }) => void;
-  debounceWait?: number;
-  search?: boolean;
-}
+import { GlobalSearchProps } from '../ui-type';
 
 const keyName = 'globalSearch';
 
-const GlobalSearch = (props: Props): JSX.Element | null => {
+const GlobalSearch = (props: GlobalSearchProps): JSX.Element | null => {
   const { onChange, filters, debounceWait, search } = props;
 
   if (!search) {

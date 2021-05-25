@@ -10,6 +10,7 @@ import React from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import PaginationMaterial from '@material-ui/lab/Pagination';
 import { getPagination } from './utils/pagination-utils';
+import { PaginationProps } from './ui-type';
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -21,14 +22,7 @@ const useStyles = makeStyles(theme =>
   })
 );
 
-export interface InnerProps {
-  idx: number;
-  n: number;
-  nPerPage: number;
-  onClick: (num: number) => void;
-}
-
-const Pagination = (props: InnerProps): JSX.Element | null => {
+const Pagination = (props: PaginationProps): JSX.Element | null => {
   const { n, nPerPage, idx, onClick } = props;
   const classes = useStyles();
 

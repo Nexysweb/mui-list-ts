@@ -1,28 +1,17 @@
 import React, { useCallback, useEffect, useReducer, Reducer } from 'react';
 
-import {
-  GlobalSearch,
-  HeaderUnit,
-  OrderController,
-  Row,
-  ColCell,
-  RecordInfo,
-  NoRow,
-  ListWrapper,
-  ListContainer,
-  ListHeader,
-  ListBody,
-  FilterUnit,
-  Loader
-} from './ui';
-import { InnerProps as PaginationProps } from './pagination';
+import { Loader } from './ui';
+
 import {
   Config,
   Definition,
   DefinitionItem,
   AsyncDataConfig,
-  AsyncDataReturn
+  AsyncDataReturn,
+  FiltersType
 } from '../types';
+import { OuterProps } from './ui-type';
+
 import { order, getSort } from './utils/order-utils';
 import {
   applyFilter,
@@ -37,23 +26,6 @@ import {
   ActionType,
   State
 } from './list-super-partials';
-import { FiltersType } from '../types';
-
-export interface Props {
-  HeaderUnit: typeof HeaderUnit;
-  FilterUnit: typeof FilterUnit;
-  OrderController: typeof OrderController;
-  ColCell: typeof ColCell;
-  GlobalSearch: typeof GlobalSearch;
-  NoRow: typeof NoRow;
-  Row: typeof Row;
-  ListWrapper: typeof ListWrapper;
-  ListContainer: typeof ListContainer;
-  ListHeader: typeof ListHeader;
-  ListBody: typeof ListBody;
-  RecordInfo: typeof RecordInfo;
-  Pagination: (props: PaginationProps) => JSX.Element | null;
-}
 
 export interface InnerProps<A> {
   def: Definition<A>;
@@ -65,22 +37,23 @@ export interface InnerProps<A> {
   CustomListItem?: (rowData: A) => JSX.Element;
 }
 
-const ListSuper = <A,>({
-  HeaderUnit,
-  FilterUnit,
-  OrderController,
-  ColCell,
-  GlobalSearch,
-  NoRow,
-  Row,
-  ListWrapper,
-  ListContainer,
-  ListHeader,
-  ListBody,
-  RecordInfo,
-  Pagination
-}: Props) =>
-  function InnerListSuper(props: InnerProps<A>): JSX.Element {
+const ListSuper =
+  <A,>({
+    HeaderUnit,
+    FilterUnit,
+    OrderController,
+    ColCell,
+    GlobalSearch,
+    NoRow,
+    Row,
+    ListWrapper,
+    ListContainer,
+    ListHeader,
+    ListBody,
+    RecordInfo,
+    Pagination
+  }: OuterProps<A>) =>
+  (props: InnerProps<A>): JSX.Element => {
     const {
       def,
       config = {},
@@ -292,9 +265,8 @@ const ListSuper = <A,>({
               <Row>
                 {def.map((h, j) => (
                   <ColCell key={j}>
-                    {h.render
-                      ? h.render(row)
-                      :  row[h.name as keyof A]} {/* // Utils.ds.get(h.name.toString(), row) } */}
+                    {h.render ? h.render(row) : row[h.name as keyof A]}{' '}
+                    {/* // Utils.ds.get(h.name.toString(), row) } */}
                   </ColCell>
                 ))}
               </Row>

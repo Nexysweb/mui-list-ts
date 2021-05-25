@@ -11,7 +11,6 @@ import {
   ListContainer,
   ListHeader,
   ListBody
-  //PaginationUnit,PaginationWrapper
 } from './ui';
 
 import ListSuper, { InnerProps } from './list-super';

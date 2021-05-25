@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import {TextField} from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import { debounce } from '../utils/filter-utils';
 
 export interface InputValue {
@@ -23,8 +23,6 @@ export const SearchUnit = <A,>({
   wait,
   value: pValue
 }: Props<A>): JSX.Element => {
-  //const [value, setValue] = React.useState(pValue || '');
-
   const memoizedDebounce = useMemo(() => debounce(wait), [wait]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -34,16 +32,11 @@ export const SearchUnit = <A,>({
     memoizedDebounce(() => {
       onChange(v);
     });
-
-    //setValue(value);
   };
 
   const sName = String(name);
 
-
-  //return <input type="text" value={pValue} onChange={handleChange} placeholder={placeholder}/>
-
-  return  (
+  return (
     <TextField
       name={sName}
       value={pValue}
