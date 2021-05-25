@@ -1,4 +1,4 @@
-export const SNOWPACK_PUBLIC_GIT_SHA = "ddc0187c968f204c90212682d8a342a493a7c46b";
+export const SNOWPACK_PUBLIC_GIT_SHA = "f9619ebbcf4801449aa53d8184c7e7a07b4c0c34";
 export const SNOWPACK_PUBLIC_URL = "/mui-list-ts";
 export const MODE = "production";
 export const NODE_ENV = "production";
