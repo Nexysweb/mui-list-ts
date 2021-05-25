@@ -1,9 +1,14 @@
 # https://medium.com/@cmichel/how-to-deploy-a-create-react-app-with-github-actions-5e01f7a7b6b
 name: Build Package
-on: [push]
+
+on:
+  push:
+    branches-ignore: # https://stackoverflow.com/questions/57699839/github-actions-how-to-target-all-branches-except-master
+      - master # excludes master (since it deploys the code already)
 
 jobs:
-  deploy:
+  test:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - name: Install Packages
