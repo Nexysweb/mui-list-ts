@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { render, screen } from '../../test/test-utils';
-import { DefinitionItem } from '../../types';
+import { DefinitionItem } from '@nexys/core-list/dist/types';
 import ListSuper from '../index';
 
 interface DummyData {
