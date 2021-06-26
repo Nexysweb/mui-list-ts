@@ -1,8 +1,7 @@
-import { i as interopRequireWildcard } from '../common/interopRequireWildcard-80a303f6.js';
 import { c as createCommonjsModule, b as getDefaultExportFromNamespaceIfNotNamed, a as commonjsGlobal } from '../common/_commonjsHelpers-37fa8da4.js';
 import { i as interopRequireDefault, _ as _extends_1 } from '../common/extends-8f2605c9.js';
 import { g as global } from '../common/_polyfill-node:global-acbc543a.js';
-import { a as ansiStyles, l as lib } from '../common/index-fa68edbc.js';
+import { q as queryIdRefs, c as computeTextAlternative, a as computeAccessibleName, g as getRole, b as ansiStyles, l as lib } from '../common/index-b513d027.js';
 
 var minIndent = string => {
 	const match = string.match(/^[ \t]*(?=\S)/gm);
@@ -10474,9 +10473,9 @@ var Set$1 = _getNative(_root, 'Set');
 var _Set = Set$1;
 
 /* Built-in method references that are verified to be native. */
-var WeakMap = _getNative(_root, 'WeakMap');
+var WeakMap$1 = _getNative(_root, 'WeakMap');
 
-var _WeakMap = WeakMap;
+var _WeakMap = WeakMap$1;
 
 /** `Object#toString` result references. */
 var mapTag$2 = '[object Map]',
@@ -11094,6 +11093,137 @@ function toHaveTextContent(node, checkWith, options = {
     message: () => {
       const to = this.isNot ? 'not to' : 'to';
       return (0, utils.getMessage)(this, this.utils.matcherHint(`${this.isNot ? '.not' : ''}.toHaveTextContent`, 'element', ''), checkingWithEmptyString ? `Checking with empty string will always match, use .toBeEmptyDOMElement() instead` : `Expected element ${to} have text content`, checkWith, 'Received', textContent);
+    }
+  };
+}
+});
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) {
+      symbols = symbols.filter(function(sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+    }
+    keys.push.apply(keys, symbols);
+  }
+  return keys;
+}
+function _objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function(key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function(key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+  return target;
+}
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {value, enumerable: true, configurable: true, writable: true});
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
+function computeAccessibleDescription(root) {
+  var options = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+  var description = queryIdRefs(root, "aria-describedby").map(function(element) {
+    return computeTextAlternative(element, _objectSpread(_objectSpread({}, options), {}, {
+      compute: "description"
+    }));
+  }).join(" ");
+  if (description === "") {
+    var title = root.getAttribute("title");
+    description = title === null ? "" : title;
+  }
+  return description;
+}
+
+var dist = /*#__PURE__*/Object.freeze({
+	__proto__: null,
+	computeAccessibleDescription: computeAccessibleDescription,
+	computeAccessibleName: computeAccessibleName,
+	getRole: getRole
+});
+
+var _domAccessibilityApi = /*@__PURE__*/getDefaultExportFromNamespaceIfNotNamed(dist);
+
+var toHaveAccessibleDescription_1 = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.toHaveAccessibleDescription = toHaveAccessibleDescription;
+
+
+
+
+
+function toHaveAccessibleDescription(htmlElement, expectedAccessibleDescription) {
+  (0, utils.checkHtmlElement)(htmlElement, toHaveAccessibleDescription, this);
+  const actualAccessibleDescription = (0, _domAccessibilityApi.computeAccessibleDescription)(htmlElement);
+  const missingExpectedValue = arguments.length === 1;
+  let pass = false;
+
+  if (missingExpectedValue) {
+    // When called without an expected value we only want to validate that the element has an
+    // accessible description, whatever it may be.
+    pass = actualAccessibleDescription !== '';
+  } else {
+    pass = expectedAccessibleDescription instanceof RegExp ? expectedAccessibleDescription.test(actualAccessibleDescription) : this.equals(actualAccessibleDescription, expectedAccessibleDescription);
+  }
+
+  return {
+    pass,
+    message: () => {
+      const to = this.isNot ? 'not to' : 'to';
+      return (0, utils.getMessage)(this, this.utils.matcherHint(`${this.isNot ? '.not' : ''}.${toHaveAccessibleDescription.name}`, 'element', ''), `Expected element ${to} have accessible description`, expectedAccessibleDescription, 'Received', actualAccessibleDescription);
+    }
+  };
+}
+});
+
+var toHaveAccessibleName_1 = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.toHaveAccessibleName = toHaveAccessibleName;
+
+
+
+
+
+function toHaveAccessibleName(htmlElement, expectedAccessibleName) {
+  (0, utils.checkHtmlElement)(htmlElement, toHaveAccessibleName, this);
+  const actualAccessibleName = (0, _domAccessibilityApi.computeAccessibleName)(htmlElement);
+  const missingExpectedValue = arguments.length === 1;
+  let pass = false;
+
+  if (missingExpectedValue) {
+    // When called without an expected value we only want to validate that the element has an
+    // accessible name, whatever it may be.
+    pass = actualAccessibleName !== '';
+  } else {
+    pass = expectedAccessibleName instanceof RegExp ? expectedAccessibleName.test(actualAccessibleName) : this.equals(actualAccessibleName, expectedAccessibleName);
+  }
+
+  return {
+    pass,
+    message: () => {
+      const to = this.isNot ? 'not to' : 'to';
+      return (0, utils.getMessage)(this, this.utils.matcherHint(`${this.isNot ? '.not' : ''}.${toHaveAccessibleName.name}`, 'element', ''), `Expected element ${to} have accessible name`, expectedAccessibleName, 'Received', actualAccessibleName);
     }
   };
 }
@@ -12587,6 +12717,7 @@ exports.toHaveDescription = toHaveDescription;
 
 // See algoritm: https://www.w3.org/TR/accname-1.1/#mapping_additional_nd_description
 function toHaveDescription(htmlElement, checkWith) {
+  (0, utils.deprecate)('toBeInTheDOM', 'Please use toBeInTheDocument for searching the entire document and toContainElement for searching a specific container.');
   (0, utils.checkHtmlElement)(htmlElement, toHaveDescription, this);
   const expectsDescription = checkWith !== undefined;
   const descriptionIDRaw = htmlElement.getAttribute('aria-describedby') || '';
@@ -12604,6 +12735,50 @@ function toHaveDescription(htmlElement, checkWith) {
     message: () => {
       const to = this.isNot ? 'not to' : 'to';
       return (0, utils.getMessage)(this, this.utils.matcherHint(`${this.isNot ? '.not' : ''}.toHaveDescription`, 'element', ''), `Expected the element ${to} have description`, this.utils.printExpected(checkWith), 'Received', this.utils.printReceived(description));
+    }
+  };
+}
+});
+
+var toHaveErrormessage = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.toHaveErrorMessage = toHaveErrorMessage;
+
+
+
+// See aria-errormessage spec https://www.w3.org/TR/wai-aria-1.2/#aria-errormessage
+function toHaveErrorMessage(htmlElement, checkWith) {
+  (0, utils.checkHtmlElement)(htmlElement, toHaveErrorMessage, this);
+
+  if (!htmlElement.hasAttribute('aria-invalid') || htmlElement.getAttribute('aria-invalid') === 'false') {
+    const not = this.isNot ? '.not' : '';
+    return {
+      pass: false,
+      message: () => {
+        return (0, utils.getMessage)(this, this.utils.matcherHint(`${not}.toHaveErrorMessage`, 'element', ''), `Expected the element to have invalid state indicated by`, 'aria-invalid="true"', 'Received', htmlElement.hasAttribute('aria-invalid') ? `aria-invalid="${htmlElement.getAttribute('aria-invalid')}"` : this.utils.printReceived(''));
+      }
+    };
+  }
+
+  const expectsErrorMessage = checkWith !== undefined;
+  const errormessageIDRaw = htmlElement.getAttribute('aria-errormessage') || '';
+  const errormessageIDs = errormessageIDRaw.split(/\s+/).filter(Boolean);
+  let errormessage = '';
+
+  if (errormessageIDs.length > 0) {
+    const document = htmlElement.ownerDocument;
+    const errormessageEls = errormessageIDs.map(errormessageID => document.getElementById(errormessageID)).filter(Boolean);
+    errormessage = (0, utils.normalize)(errormessageEls.map(el => el.textContent).join(' '));
+  }
+
+  return {
+    pass: expectsErrorMessage ? checkWith instanceof RegExp ? checkWith.test(errormessage) : this.equals(errormessage, checkWith) : Boolean(errormessage),
+    message: () => {
+      const to = this.isNot ? 'not to' : 'to';
+      return (0, utils.getMessage)(this, this.utils.matcherHint(`${this.isNot ? '.not' : ''}.toHaveErrorMessage`, 'element', ''), `Expected the element ${to} have error message`, this.utils.printExpected(checkWith), 'Received', this.utils.printReceived(errormessage));
     }
   };
 }
@@ -12654,6 +12829,18 @@ Object.defineProperty(exports, "toHaveTextContent", {
   enumerable: true,
   get: function () {
     return toHaveTextContent_1.toHaveTextContent;
+  }
+});
+Object.defineProperty(exports, "toHaveAccessibleDescription", {
+  enumerable: true,
+  get: function () {
+    return toHaveAccessibleDescription_1.toHaveAccessibleDescription;
+  }
+});
+Object.defineProperty(exports, "toHaveAccessibleName", {
+  enumerable: true,
+  get: function () {
+    return toHaveAccessibleName_1.toHaveAccessibleName;
   }
 });
 Object.defineProperty(exports, "toHaveAttribute", {
@@ -12752,14 +12939,27 @@ Object.defineProperty(exports, "toHaveDescription", {
     return toHaveDescription_1.toHaveDescription;
   }
 });
+Object.defineProperty(exports, "toHaveErrorMessage", {
+  enumerable: true,
+  get: function () {
+    return toHaveErrormessage.toHaveErrorMessage;
+  }
+});
 });
 
-var extensions = interopRequireWildcard(matchers);
+var extendExpect = createCommonjsModule(function (module) {
+
+var extensions = _interopRequireWildcard(matchers);
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 expect.extend(extensions);
+});
 
-var dist = {
+var dist$1 = {
 
 };
 
-export default dist;
+export default dist$1;

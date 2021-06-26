@@ -1,5 +1,714 @@
 import { c as createCommonjsModule, a as commonjsGlobal } from './_commonjsHelpers-37fa8da4.js';
 
+var toStr = Object.prototype.toString;
+function isCallable(fn) {
+  return typeof fn === "function" || toStr.call(fn) === "[object Function]";
+}
+function toInteger(value) {
+  var number = Number(value);
+  if (isNaN(number)) {
+    return 0;
+  }
+  if (number === 0 || !isFinite(number)) {
+    return number;
+  }
+  return (number > 0 ? 1 : -1) * Math.floor(Math.abs(number));
+}
+var maxSafeInteger = Math.pow(2, 53) - 1;
+function toLength(value) {
+  var len = toInteger(value);
+  return Math.min(Math.max(len, 0), maxSafeInteger);
+}
+function arrayFrom(arrayLike, mapFn) {
+  var C = Array;
+  var items = Object(arrayLike);
+  if (arrayLike == null) {
+    throw new TypeError("Array.from requires an array-like object - not null or undefined");
+  }
+  if (typeof mapFn !== "undefined") {
+    if (!isCallable(mapFn)) {
+      throw new TypeError("Array.from: when provided, the second argument must be a function");
+    }
+  }
+  var len = toLength(items.length);
+  var A = isCallable(C) ? Object(new C(len)) : new Array(len);
+  var k = 0;
+  var kValue;
+  while (k < len) {
+    kValue = items[k];
+    if (mapFn) {
+      A[k] = mapFn(kValue, k);
+    } else {
+      A[k] = kValue;
+    }
+    k += 1;
+  }
+  A.length = len;
+  return A;
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor)
+      descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps)
+    _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps)
+    _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {value, enumerable: true, configurable: true, writable: true});
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
+var SetLike = /* @__PURE__ */ function() {
+  function SetLike2() {
+    var items = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : [];
+    _classCallCheck(this, SetLike2);
+    _defineProperty(this, "items", void 0);
+    this.items = items;
+  }
+  _createClass(SetLike2, [{
+    key: "add",
+    value: function add(value) {
+      if (this.has(value) === false) {
+        this.items.push(value);
+      }
+      return this;
+    }
+  }, {
+    key: "clear",
+    value: function clear() {
+      this.items = [];
+    }
+  }, {
+    key: "delete",
+    value: function _delete(value) {
+      var previousLength = this.items.length;
+      this.items = this.items.filter(function(item) {
+        return item !== value;
+      });
+      return previousLength !== this.items.length;
+    }
+  }, {
+    key: "forEach",
+    value: function forEach(callbackfn) {
+      var _this = this;
+      this.items.forEach(function(item) {
+        callbackfn(item, item, _this);
+      });
+    }
+  }, {
+    key: "has",
+    value: function has(value) {
+      return this.items.indexOf(value) !== -1;
+    }
+  }, {
+    key: "size",
+    get: function get() {
+      return this.items.length;
+    }
+  }]);
+  return SetLike2;
+}();
+var SetLike$1 = typeof Set === "undefined" ? Set : SetLike;
+
+var localNameToRoleMappings = {
+  article: "article",
+  aside: "complementary",
+  body: "document",
+  button: "button",
+  datalist: "listbox",
+  dd: "definition",
+  details: "group",
+  dialog: "dialog",
+  dt: "term",
+  fieldset: "group",
+  figure: "figure",
+  form: "form",
+  footer: "contentinfo",
+  h1: "heading",
+  h2: "heading",
+  h3: "heading",
+  h4: "heading",
+  h5: "heading",
+  h6: "heading",
+  header: "banner",
+  hr: "separator",
+  legend: "legend",
+  li: "listitem",
+  math: "math",
+  main: "main",
+  menu: "list",
+  nav: "navigation",
+  ol: "list",
+  optgroup: "group",
+  option: "option",
+  output: "status",
+  progress: "progressbar",
+  section: "region",
+  summary: "button",
+  table: "table",
+  tbody: "rowgroup",
+  textarea: "textbox",
+  tfoot: "rowgroup",
+  td: "cell",
+  th: "columnheader",
+  thead: "rowgroup",
+  tr: "row",
+  ul: "list"
+};
+var prohibitedAttributes = {
+  caption: new Set(["aria-label", "aria-labelledby"]),
+  code: new Set(["aria-label", "aria-labelledby"]),
+  deletion: new Set(["aria-label", "aria-labelledby"]),
+  emphasis: new Set(["aria-label", "aria-labelledby"]),
+  generic: new Set(["aria-label", "aria-labelledby", "aria-roledescription"]),
+  insertion: new Set(["aria-label", "aria-labelledby"]),
+  paragraph: new Set(["aria-label", "aria-labelledby"]),
+  presentation: new Set(["aria-label", "aria-labelledby"]),
+  strong: new Set(["aria-label", "aria-labelledby"]),
+  subscript: new Set(["aria-label", "aria-labelledby"]),
+  superscript: new Set(["aria-label", "aria-labelledby"])
+};
+function hasGlobalAriaAttributes(element, role) {
+  return [
+    "aria-atomic",
+    "aria-busy",
+    "aria-controls",
+    "aria-current",
+    "aria-describedby",
+    "aria-details",
+    "aria-dropeffect",
+    "aria-flowto",
+    "aria-grabbed",
+    "aria-hidden",
+    "aria-keyshortcuts",
+    "aria-label",
+    "aria-labelledby",
+    "aria-live",
+    "aria-owns",
+    "aria-relevant",
+    "aria-roledescription"
+  ].some(function(attributeName) {
+    var _prohibitedAttributes;
+    return element.hasAttribute(attributeName) && !((_prohibitedAttributes = prohibitedAttributes[role]) !== null && _prohibitedAttributes !== void 0 && _prohibitedAttributes.has(attributeName));
+  });
+}
+function ignorePresentationalRole(element, implicitRole) {
+  return hasGlobalAriaAttributes(element, implicitRole);
+}
+function getRole(element) {
+  var explicitRole = getExplicitRole(element);
+  if (explicitRole === null || explicitRole === "presentation") {
+    var implicitRole = getImplicitRole(element);
+    if (explicitRole !== "presentation" || ignorePresentationalRole(element, implicitRole || "")) {
+      return implicitRole;
+    }
+  }
+  return explicitRole;
+}
+function getImplicitRole(element) {
+  var mappedByTag = localNameToRoleMappings[getLocalName(element)];
+  if (mappedByTag !== void 0) {
+    return mappedByTag;
+  }
+  switch (getLocalName(element)) {
+    case "a":
+    case "area":
+    case "link":
+      if (element.hasAttribute("href")) {
+        return "link";
+      }
+      break;
+    case "img":
+      if (element.getAttribute("alt") === "" && !ignorePresentationalRole(element, "img")) {
+        return "presentation";
+      }
+      return "img";
+    case "input": {
+      var _ref = element, type = _ref.type;
+      switch (type) {
+        case "button":
+        case "image":
+        case "reset":
+        case "submit":
+          return "button";
+        case "checkbox":
+        case "radio":
+          return type;
+        case "range":
+          return "slider";
+        case "email":
+        case "tel":
+        case "text":
+        case "url":
+          if (element.hasAttribute("list")) {
+            return "combobox";
+          }
+          return "textbox";
+        case "search":
+          if (element.hasAttribute("list")) {
+            return "combobox";
+          }
+          return "searchbox";
+        default:
+          return null;
+      }
+    }
+    case "select":
+      if (element.hasAttribute("multiple") || element.size > 1) {
+        return "listbox";
+      }
+      return "combobox";
+  }
+  return null;
+}
+function getExplicitRole(element) {
+  var role = element.getAttribute("role");
+  if (role !== null) {
+    var explicitRole = role.trim().split(" ")[0];
+    if (explicitRole.length > 0) {
+      return explicitRole;
+    }
+  }
+  return null;
+}
+
+function getLocalName(element) {
+  var _element$localName;
+  return (_element$localName = element.localName) !== null && _element$localName !== void 0 ? _element$localName : element.tagName.toLowerCase();
+}
+function isElement(node) {
+  return node !== null && node.nodeType === node.ELEMENT_NODE;
+}
+function isHTMLTableCaptionElement(node) {
+  return isElement(node) && getLocalName(node) === "caption";
+}
+function isHTMLInputElement(node) {
+  return isElement(node) && getLocalName(node) === "input";
+}
+function isHTMLOptGroupElement(node) {
+  return isElement(node) && getLocalName(node) === "optgroup";
+}
+function isHTMLSelectElement(node) {
+  return isElement(node) && getLocalName(node) === "select";
+}
+function isHTMLTableElement(node) {
+  return isElement(node) && getLocalName(node) === "table";
+}
+function isHTMLTextAreaElement(node) {
+  return isElement(node) && getLocalName(node) === "textarea";
+}
+function safeWindow(node) {
+  var _ref = node.ownerDocument === null ? node : node.ownerDocument, defaultView = _ref.defaultView;
+  if (defaultView === null) {
+    throw new TypeError("no window available");
+  }
+  return defaultView;
+}
+function isHTMLFieldSetElement(node) {
+  return isElement(node) && getLocalName(node) === "fieldset";
+}
+function isHTMLLegendElement(node) {
+  return isElement(node) && getLocalName(node) === "legend";
+}
+function isHTMLSlotElement(node) {
+  return isElement(node) && getLocalName(node) === "slot";
+}
+function isSVGElement(node) {
+  return isElement(node) && node.ownerSVGElement !== void 0;
+}
+function isSVGSVGElement(node) {
+  return isElement(node) && getLocalName(node) === "svg";
+}
+function isSVGTitleElement(node) {
+  return isSVGElement(node) && getLocalName(node) === "title";
+}
+function queryIdRefs(node, attributeName) {
+  if (isElement(node) && node.hasAttribute(attributeName)) {
+    var ids = node.getAttribute(attributeName).split(" ");
+    return ids.map(function(id) {
+      return node.ownerDocument.getElementById(id);
+    }).filter(function(element) {
+      return element !== null;
+    });
+  }
+  return [];
+}
+function hasAnyConcreteRoles(node, roles) {
+  if (isElement(node)) {
+    return roles.indexOf(getRole(node)) !== -1;
+  }
+  return false;
+}
+
+function asFlatString(s) {
+  return s.trim().replace(/\s\s+/g, " ");
+}
+function isHidden(node, getComputedStyleImplementation) {
+  if (!isElement(node)) {
+    return false;
+  }
+  if (node.hasAttribute("hidden") || node.getAttribute("aria-hidden") === "true") {
+    return true;
+  }
+  var style = getComputedStyleImplementation(node);
+  return style.getPropertyValue("display") === "none" || style.getPropertyValue("visibility") === "hidden";
+}
+function isControl(node) {
+  return hasAnyConcreteRoles(node, ["button", "combobox", "listbox", "textbox"]) || hasAbstractRole(node, "range");
+}
+function hasAbstractRole(node, role) {
+  if (!isElement(node)) {
+    return false;
+  }
+  switch (role) {
+    case "range":
+      return hasAnyConcreteRoles(node, ["meter", "progressbar", "scrollbar", "slider", "spinbutton"]);
+    default:
+      throw new TypeError("No knowledge about abstract role '".concat(role, "'. This is likely a bug :("));
+  }
+}
+function querySelectorAllSubtree(element, selectors) {
+  var elements = arrayFrom(element.querySelectorAll(selectors));
+  queryIdRefs(element, "aria-owns").forEach(function(root) {
+    elements.push.apply(elements, arrayFrom(root.querySelectorAll(selectors)));
+  });
+  return elements;
+}
+function querySelectedOptions(listbox) {
+  if (isHTMLSelectElement(listbox)) {
+    return listbox.selectedOptions || querySelectorAllSubtree(listbox, "[selected]");
+  }
+  return querySelectorAllSubtree(listbox, '[aria-selected="true"]');
+}
+function isMarkedPresentational(node) {
+  return hasAnyConcreteRoles(node, ["none", "presentation"]);
+}
+function isNativeHostLanguageTextAlternativeElement(node) {
+  return isHTMLTableCaptionElement(node);
+}
+function allowsNameFromContent(node) {
+  return hasAnyConcreteRoles(node, ["button", "cell", "checkbox", "columnheader", "gridcell", "heading", "label", "legend", "link", "menuitem", "menuitemcheckbox", "menuitemradio", "option", "radio", "row", "rowheader", "switch", "tab", "tooltip", "treeitem"]);
+}
+function isDescendantOfNativeHostLanguageTextAlternativeElement(node) {
+  return false;
+}
+function getValueOfTextbox(element) {
+  if (isHTMLInputElement(element) || isHTMLTextAreaElement(element)) {
+    return element.value;
+  }
+  return element.textContent || "";
+}
+function getTextualContent(declaration) {
+  var content = declaration.getPropertyValue("content");
+  if (/^["'].*["']$/.test(content)) {
+    return content.slice(1, -1);
+  }
+  return "";
+}
+function isLabelableElement(element) {
+  var localName = getLocalName(element);
+  return localName === "button" || localName === "input" && element.getAttribute("type") !== "hidden" || localName === "meter" || localName === "output" || localName === "progress" || localName === "select" || localName === "textarea";
+}
+function findLabelableElement(element) {
+  if (isLabelableElement(element)) {
+    return element;
+  }
+  var labelableElement = null;
+  element.childNodes.forEach(function(childNode) {
+    if (labelableElement === null && isElement(childNode)) {
+      var descendantLabelableElement = findLabelableElement(childNode);
+      if (descendantLabelableElement !== null) {
+        labelableElement = descendantLabelableElement;
+      }
+    }
+  });
+  return labelableElement;
+}
+function getControlOfLabel(label) {
+  if (label.control !== void 0) {
+    return label.control;
+  }
+  var htmlFor = label.getAttribute("for");
+  if (htmlFor !== null) {
+    return label.ownerDocument.getElementById(htmlFor);
+  }
+  return findLabelableElement(label);
+}
+function getLabels(element) {
+  var labelsProperty = element.labels;
+  if (labelsProperty === null) {
+    return labelsProperty;
+  }
+  if (labelsProperty !== void 0) {
+    return arrayFrom(labelsProperty);
+  }
+  if (!isLabelableElement(element)) {
+    return null;
+  }
+  var document = element.ownerDocument;
+  return arrayFrom(document.querySelectorAll("label")).filter(function(label) {
+    return getControlOfLabel(label) === element;
+  });
+}
+function getSlotContents(slot) {
+  var assignedNodes = slot.assignedNodes();
+  if (assignedNodes.length === 0) {
+    return arrayFrom(slot.childNodes);
+  }
+  return assignedNodes;
+}
+function computeTextAlternative(root) {
+  var options = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+  var consultedNodes = new SetLike$1();
+  var window = safeWindow(root);
+  var _options$compute = options.compute, compute = _options$compute === void 0 ? "name" : _options$compute, _options$computedStyl = options.computedStyleSupportsPseudoElements, computedStyleSupportsPseudoElements = _options$computedStyl === void 0 ? options.getComputedStyle !== void 0 : _options$computedStyl, _options$getComputedS = options.getComputedStyle, getComputedStyle = _options$getComputedS === void 0 ? window.getComputedStyle.bind(window) : _options$getComputedS;
+  function computeMiscTextAlternative(node, context) {
+    var accumulatedText = "";
+    if (isElement(node) && computedStyleSupportsPseudoElements) {
+      var pseudoBefore = getComputedStyle(node, "::before");
+      var beforeContent = getTextualContent(pseudoBefore);
+      accumulatedText = "".concat(beforeContent, " ").concat(accumulatedText);
+    }
+    var childNodes = isHTMLSlotElement(node) ? getSlotContents(node) : arrayFrom(node.childNodes).concat(queryIdRefs(node, "aria-owns"));
+    childNodes.forEach(function(child) {
+      var result = computeTextAlternative2(child, {
+        isEmbeddedInLabel: context.isEmbeddedInLabel,
+        isReferenced: false,
+        recursion: true
+      });
+      var display = isElement(child) ? getComputedStyle(child).getPropertyValue("display") : "inline";
+      var separator = display !== "inline" ? " " : "";
+      accumulatedText += "".concat(separator).concat(result).concat(separator);
+    });
+    if (isElement(node) && computedStyleSupportsPseudoElements) {
+      var pseudoAfter = getComputedStyle(node, "::after");
+      var afterContent = getTextualContent(pseudoAfter);
+      accumulatedText = "".concat(accumulatedText, " ").concat(afterContent);
+    }
+    return accumulatedText;
+  }
+  function computeElementTextAlternative(node) {
+    if (!isElement(node)) {
+      return null;
+    }
+    function useAttribute(element, attributeName) {
+      var attribute = element.getAttributeNode(attributeName);
+      if (attribute !== null && !consultedNodes.has(attribute) && attribute.value.trim() !== "") {
+        consultedNodes.add(attribute);
+        return attribute.value;
+      }
+      return null;
+    }
+    if (isHTMLFieldSetElement(node)) {
+      consultedNodes.add(node);
+      var children = arrayFrom(node.childNodes);
+      for (var i = 0; i < children.length; i += 1) {
+        var child = children[i];
+        if (isHTMLLegendElement(child)) {
+          return computeTextAlternative2(child, {
+            isEmbeddedInLabel: false,
+            isReferenced: false,
+            recursion: false
+          });
+        }
+      }
+    } else if (isHTMLTableElement(node)) {
+      consultedNodes.add(node);
+      var _children = arrayFrom(node.childNodes);
+      for (var _i = 0; _i < _children.length; _i += 1) {
+        var _child = _children[_i];
+        if (isHTMLTableCaptionElement(_child)) {
+          return computeTextAlternative2(_child, {
+            isEmbeddedInLabel: false,
+            isReferenced: false,
+            recursion: false
+          });
+        }
+      }
+    } else if (isSVGSVGElement(node)) {
+      consultedNodes.add(node);
+      var _children2 = arrayFrom(node.childNodes);
+      for (var _i2 = 0; _i2 < _children2.length; _i2 += 1) {
+        var _child2 = _children2[_i2];
+        if (isSVGTitleElement(_child2)) {
+          return _child2.textContent;
+        }
+      }
+      return null;
+    } else if (getLocalName(node) === "img" || getLocalName(node) === "area") {
+      var nameFromAlt = useAttribute(node, "alt");
+      if (nameFromAlt !== null) {
+        return nameFromAlt;
+      }
+    } else if (isHTMLOptGroupElement(node)) {
+      var nameFromLabel = useAttribute(node, "label");
+      if (nameFromLabel !== null) {
+        return nameFromLabel;
+      }
+    }
+    if (isHTMLInputElement(node) && (node.type === "button" || node.type === "submit" || node.type === "reset")) {
+      var nameFromValue = useAttribute(node, "value");
+      if (nameFromValue !== null) {
+        return nameFromValue;
+      }
+      if (node.type === "submit") {
+        return "Submit";
+      }
+      if (node.type === "reset") {
+        return "Reset";
+      }
+    }
+    var labels = getLabels(node);
+    if (labels !== null && labels.length !== 0) {
+      consultedNodes.add(node);
+      return arrayFrom(labels).map(function(element) {
+        return computeTextAlternative2(element, {
+          isEmbeddedInLabel: true,
+          isReferenced: false,
+          recursion: true
+        });
+      }).filter(function(label) {
+        return label.length > 0;
+      }).join(" ");
+    }
+    if (isHTMLInputElement(node) && node.type === "image") {
+      var _nameFromAlt = useAttribute(node, "alt");
+      if (_nameFromAlt !== null) {
+        return _nameFromAlt;
+      }
+      var nameFromTitle = useAttribute(node, "title");
+      if (nameFromTitle !== null) {
+        return nameFromTitle;
+      }
+      return "Submit Query";
+    }
+    return useAttribute(node, "title");
+  }
+  function computeTextAlternative2(current, context) {
+    if (consultedNodes.has(current)) {
+      return "";
+    }
+    if (hasAnyConcreteRoles(current, ["menu"])) {
+      consultedNodes.add(current);
+      return "";
+    }
+    if (isHidden(current, getComputedStyle) && !context.isReferenced) {
+      consultedNodes.add(current);
+      return "";
+    }
+    var labelElements = queryIdRefs(current, "aria-labelledby");
+    if (compute === "name" && !context.isReferenced && labelElements.length > 0) {
+      return labelElements.map(function(element) {
+        return computeTextAlternative2(element, {
+          isEmbeddedInLabel: context.isEmbeddedInLabel,
+          isReferenced: true,
+          recursion: false
+        });
+      }).join(" ");
+    }
+    var skipToStep2E = context.recursion && isControl(current) && compute === "name";
+    if (!skipToStep2E) {
+      var ariaLabel = (isElement(current) && current.getAttribute("aria-label") || "").trim();
+      if (ariaLabel !== "" && compute === "name") {
+        consultedNodes.add(current);
+        return ariaLabel;
+      }
+      if (!isMarkedPresentational(current)) {
+        var elementTextAlternative = computeElementTextAlternative(current);
+        if (elementTextAlternative !== null) {
+          consultedNodes.add(current);
+          return elementTextAlternative;
+        }
+      }
+    }
+    if (skipToStep2E || context.isEmbeddedInLabel || context.isReferenced) {
+      if (hasAnyConcreteRoles(current, ["combobox", "listbox"])) {
+        consultedNodes.add(current);
+        var selectedOptions = querySelectedOptions(current);
+        if (selectedOptions.length === 0) {
+          return isHTMLInputElement(current) ? current.value : "";
+        }
+        return arrayFrom(selectedOptions).map(function(selectedOption) {
+          return computeTextAlternative2(selectedOption, {
+            isEmbeddedInLabel: context.isEmbeddedInLabel,
+            isReferenced: false,
+            recursion: true
+          });
+        }).join(" ");
+      }
+      if (hasAbstractRole(current, "range")) {
+        consultedNodes.add(current);
+        if (current.hasAttribute("aria-valuetext")) {
+          return current.getAttribute("aria-valuetext");
+        }
+        if (current.hasAttribute("aria-valuenow")) {
+          return current.getAttribute("aria-valuenow");
+        }
+        return current.getAttribute("value") || "";
+      }
+      if (hasAnyConcreteRoles(current, ["textbox"])) {
+        consultedNodes.add(current);
+        return getValueOfTextbox(current);
+      }
+    }
+    if (allowsNameFromContent(current) || isElement(current) && context.isReferenced || isNativeHostLanguageTextAlternativeElement(current) || isDescendantOfNativeHostLanguageTextAlternativeElement()) {
+      consultedNodes.add(current);
+      return computeMiscTextAlternative(current, {
+        isEmbeddedInLabel: context.isEmbeddedInLabel,
+        isReferenced: false
+      });
+    }
+    if (current.nodeType === current.TEXT_NODE) {
+      consultedNodes.add(current);
+      return current.textContent || "";
+    }
+    if (context.recursion) {
+      consultedNodes.add(current);
+      return computeMiscTextAlternative(current, {
+        isEmbeddedInLabel: context.isEmbeddedInLabel,
+        isReferenced: false
+      });
+    }
+    consultedNodes.add(current);
+    return "";
+  }
+  return asFlatString(computeTextAlternative2(root, {
+    isEmbeddedInLabel: false,
+    isReferenced: compute === "description",
+    recursion: false
+  }));
+}
+
+function prohibitsNaming(node) {
+  return hasAnyConcreteRoles(node, ["caption", "code", "deletion", "emphasis", "generic", "insertion", "paragraph", "presentation", "strong", "subscript", "superscript"]);
+}
+function computeAccessibleName(root) {
+  var options = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+  if (prohibitsNaming(root)) {
+    return "";
+  }
+  return computeTextAlternative(root, options);
+}
+
 var colorName = {
 	"aliceblue": [240, 248, 255],
 	"antiquewhite": [250, 235, 215],
@@ -1454,7 +2163,7 @@ var toObject = function (argument) {
 
 var hasOwnProperty = {}.hasOwnProperty;
 
-var has = function hasOwn(it, key) {
+var has = Object.hasOwn || function hasOwn(it, key) {
   return hasOwnProperty.call(toObject(it), key);
 };
 
@@ -1787,7 +2496,7 @@ var shared = createCommonjsModule(function (module) {
 (module.exports = function (key, value) {
   return sharedStore[key] || (sharedStore[key] = value !== undefined ? value : {});
 })('versions', []).push({
-  version: '3.13.0',
+  version: '3.15.1',
   mode:  'pure' ,
   copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
 });
@@ -1828,8 +2537,10 @@ var engineV8Version = version && +version;
 
 // eslint-disable-next-line es/no-object-getownpropertysymbols -- required for testing
 var nativeSymbol = !!Object.getOwnPropertySymbols && !fails(function () {
-  return !String(Symbol()) ||
-    // Chrome 38 Symbol has incorrect toString conversion
+  var symbol = Symbol();
+  // Chrome 38 Symbol has incorrect toString conversion
+  // `get-own-property-symbols` polyfill symbols converted to object are not Symbol instances
+  return !String(symbol) || !(Object(symbol) instanceof Symbol) ||
     // Chrome 38-40 symbols are not inherited from DOM collections prototypes to instances
     !Symbol.sham && engineV8Version && engineV8Version < 41;
 });
@@ -1870,7 +2581,7 @@ var floor = Math.floor;
 
 // `ToInteger` abstract operation
 // https://tc39.es/ecma262/#sec-tointeger
-var toInteger = function (argument) {
+var toInteger$1 = function (argument) {
   return isNaN(argument = +argument) ? 0 : (argument > 0 ? floor : ceil)(argument);
 };
 
@@ -1878,8 +2589,8 @@ var min = Math.min;
 
 // `ToLength` abstract operation
 // https://tc39.es/ecma262/#sec-tolength
-var toLength = function (argument) {
-  return argument > 0 ? min(toInteger(argument), 0x1FFFFFFFFFFFFF) : 0; // 2 ** 53 - 1 == 9007199254740991
+var toLength$1 = function (argument) {
+  return argument > 0 ? min(toInteger$1(argument), 0x1FFFFFFFFFFFFF) : 0; // 2 ** 53 - 1 == 9007199254740991
 };
 
 var TO_STRING_TAG = wellKnownSymbol('toStringTag');
@@ -1959,7 +2670,7 @@ var iterate = function (iterable, unboundFunction, options) {
     if (typeof iterFn != 'function') throw TypeError('Target is not iterable');
     // optimisation for array iterators
     if (isArrayIteratorMethod(iterFn)) {
-      for (index = 0, length = toLength(iterable.length); length > index; index++) {
+      for (index = 0, length = toLength$1(iterable.length); length > index; index++) {
         result = callFn(iterable[index]);
         if (result && result instanceof Result) return result;
       } return new Result(false);
@@ -2050,7 +2761,7 @@ var createMethod = function (TYPE) {
     var O = toObject($this);
     var self = indexedObject(O);
     var boundFunction = functionBindContext(callbackfn, that, 3);
-    var length = toLength(self.length);
+    var length = toLength$1(self.length);
     var index = 0;
     var create = specificCreate || arraySpeciesCreate;
     var target = IS_MAP ? create($this, length) : IS_FILTER || IS_FILTER_OUT ? create($this, 0) : undefined;
@@ -2104,7 +2815,7 @@ var arrayIteration = {
 
 var functionToString = Function.toString;
 
-// this helper broken in `3.4.1-3.4.4`, so we can't use `shared` helper
+// this helper broken in `core-js@3.4.1-3.4.4`, so we can't use `shared` helper
 if (typeof sharedStore.inspectSource != 'function') {
   sharedStore.inspectSource = function (it) {
     return functionToString.call(it);
@@ -2253,7 +2964,7 @@ var min$1 = Math.min;
 // Let integer be ? ToInteger(index).
 // If integer < 0, let result be max((length + integer), 0); else let result be min(integer, length).
 var toAbsoluteIndex = function (index, length) {
-  var integer = toInteger(index);
+  var integer = toInteger$1(index);
   return integer < 0 ? max(integer + length, 0) : min$1(integer, length);
 };
 
@@ -2261,7 +2972,7 @@ var toAbsoluteIndex = function (index, length) {
 var createMethod$1 = function (IS_INCLUDES) {
   return function ($this, el, fromIndex) {
     var O = toIndexedObject($this);
-    var length = toLength(O.length);
+    var length = toLength$1(O.length);
     var index = toAbsoluteIndex(fromIndex, length);
     var value;
     // Array#includes uses SameValueZero equality algorithm
@@ -2467,7 +3178,8 @@ var NEW_ITERATOR_PROTOTYPE = IteratorPrototype == undefined || fails(function ()
 
 if (NEW_ITERATOR_PROTOTYPE) IteratorPrototype = {};
 
-// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
+// `%IteratorPrototype%[@@iterator]()` method
+// https://tc39.es/ecma262/#sec-%iteratorprototype%-@@iterator
 if (( NEW_ITERATOR_PROTOTYPE) && !has(IteratorPrototype, ITERATOR$2)) {
   createNonEnumerableProperty(IteratorPrototype, ITERATOR$2, returnThis);
 }
@@ -2568,7 +3280,7 @@ var defineIterator = function (Iterable, NAME, IteratorConstructor, next, DEFAUL
     }
   }
 
-  // fix Array#{values, @@iterator}.name in V8 / FF
+  // fix Array.prototype.{ values, @@iterator }.name in V8 / FF
   if (DEFAULT == VALUES && nativeIterator && nativeIterator.name !== VALUES) {
     INCORRECT_VALUES_NAME = true;
     defaultIterator = function values() { return nativeIterator.call(this); };
@@ -2682,8 +3394,9 @@ var collectionStrong = {
     };
 
     redefineAll(C.prototype, {
-      // 23.1.3.1 Map.prototype.clear()
-      // 23.2.3.2 Set.prototype.clear()
+      // `{ Map, Set }.prototype.clear()` methods
+      // https://tc39.es/ecma262/#sec-map.prototype.clear
+      // https://tc39.es/ecma262/#sec-set.prototype.clear
       clear: function clear() {
         var that = this;
         var state = getInternalState(that);
@@ -2699,8 +3412,9 @@ var collectionStrong = {
         if (descriptors) state.size = 0;
         else that.size = 0;
       },
-      // 23.1.3.3 Map.prototype.delete(key)
-      // 23.2.3.4 Set.prototype.delete(value)
+      // `{ Map, Set }.prototype.delete(key)` methods
+      // https://tc39.es/ecma262/#sec-map.prototype.delete
+      // https://tc39.es/ecma262/#sec-set.prototype.delete
       'delete': function (key) {
         var that = this;
         var state = getInternalState(that);
@@ -2718,8 +3432,9 @@ var collectionStrong = {
           else that.size--;
         } return !!entry;
       },
-      // 23.2.3.6 Set.prototype.forEach(callbackfn, thisArg = undefined)
-      // 23.1.3.5 Map.prototype.forEach(callbackfn, thisArg = undefined)
+      // `{ Map, Set }.prototype.forEach(callbackfn, thisArg = undefined)` methods
+      // https://tc39.es/ecma262/#sec-map.prototype.foreach
+      // https://tc39.es/ecma262/#sec-set.prototype.foreach
       forEach: function forEach(callbackfn /* , that = undefined */) {
         var state = getInternalState(this);
         var boundFunction = functionBindContext(callbackfn, arguments.length > 1 ? arguments[1] : undefined, 3);
@@ -2730,25 +3445,29 @@ var collectionStrong = {
           while (entry && entry.removed) entry = entry.previous;
         }
       },
-      // 23.1.3.7 Map.prototype.has(key)
-      // 23.2.3.7 Set.prototype.has(value)
+      // `{ Map, Set}.prototype.has(key)` methods
+      // https://tc39.es/ecma262/#sec-map.prototype.has
+      // https://tc39.es/ecma262/#sec-set.prototype.has
       has: function has(key) {
         return !!getEntry(this, key);
       }
     });
 
     redefineAll(C.prototype, IS_MAP ? {
-      // 23.1.3.6 Map.prototype.get(key)
+      // `Map.prototype.get(key)` method
+      // https://tc39.es/ecma262/#sec-map.prototype.get
       get: function get(key) {
         var entry = getEntry(this, key);
         return entry && entry.value;
       },
-      // 23.1.3.9 Map.prototype.set(key, value)
+      // `Map.prototype.set(key, value)` method
+      // https://tc39.es/ecma262/#sec-map.prototype.set
       set: function set(key, value) {
         return define(this, key === 0 ? 0 : key, value);
       }
     } : {
-      // 23.2.3.1 Set.prototype.add(value)
+      // `Set.prototype.add(value)` method
+      // https://tc39.es/ecma262/#sec-set.prototype.add
       add: function add(value) {
         return define(this, value = value === 0 ? 0 : value, value);
       }
@@ -2764,8 +3483,15 @@ var collectionStrong = {
     var ITERATOR_NAME = CONSTRUCTOR_NAME + ' Iterator';
     var getInternalCollectionState = internalStateGetterFor$1(CONSTRUCTOR_NAME);
     var getInternalIteratorState = internalStateGetterFor$1(ITERATOR_NAME);
-    // add .keys, .values, .entries, [@@iterator]
-    // 23.1.3.4, 23.1.3.8, 23.1.3.11, 23.1.3.12, 23.2.3.5, 23.2.3.8, 23.2.3.10, 23.2.3.11
+    // `{ Map, Set }.prototype.{ keys, values, entries, @@iterator }()` methods
+    // https://tc39.es/ecma262/#sec-map.prototype.entries
+    // https://tc39.es/ecma262/#sec-map.prototype.keys
+    // https://tc39.es/ecma262/#sec-map.prototype.values
+    // https://tc39.es/ecma262/#sec-map.prototype-@@iterator
+    // https://tc39.es/ecma262/#sec-set.prototype.entries
+    // https://tc39.es/ecma262/#sec-set.prototype.keys
+    // https://tc39.es/ecma262/#sec-set.prototype.values
+    // https://tc39.es/ecma262/#sec-set.prototype-@@iterator
     defineIterator(C, CONSTRUCTOR_NAME, function (iterated, kind) {
       setInternalState$1(this, {
         type: ITERATOR_NAME,
@@ -2792,7 +3518,9 @@ var collectionStrong = {
       return { value: [entry.key, entry.value], done: false };
     }, IS_MAP ? 'entries' : 'values', !IS_MAP, true);
 
-    // add [@@species], 23.1.2.2, 23.2.2.2
+    // `{ Map, Set }.prototype[@@species]` accessors
+    // https://tc39.es/ecma262/#sec-get-map-@@species
+    // https://tc39.es/ecma262/#sec-get-set-@@species
     setSpecies(CONSTRUCTOR_NAME);
   }
 };
@@ -2807,7 +3535,7 @@ var es_map = collection('Map', function (init) {
 var createMethod$2 = function (CONVERT_TO_STRING) {
   return function ($this, pos) {
     var S = String(requireObjectCoercible($this));
-    var position = toInteger(pos);
+    var position = toInteger$1(pos);
     var size = S.length;
     var first, second;
     if (position < 0 || position >= size) return CONVERT_TO_STRING ? '' : undefined;
@@ -3442,7 +4170,7 @@ _export({ target: 'Array', proto: true, forced: FORCED }, {
     for (i = -1, length = arguments.length; i < length; i++) {
       E = i === -1 ? O : arguments[i];
       if (isConcatSpreadable(E)) {
-        len = toLength(E.length);
+        len = toLength$1(E.length);
         if (n + len > MAX_SAFE_INTEGER) throw TypeError(MAXIMUM_ALLOWED_INDEX_EXCEEDED);
         for (k = 0; k < len; k++, n++) if (k in E) createProperty(A, n, E[k]);
       } else {
@@ -3857,7 +4585,6 @@ var symbol$2 = symbol$1;
 var callWithSafeIterationClosing = function (iterator, fn, value, ENTRIES) {
   try {
     return ENTRIES ? fn(anObject(value)[0], value[1]) : fn(value);
-  // 7.4.6 IteratorClose(iterator, completion)
   } catch (error) {
     iteratorClose(iterator);
     throw error;
@@ -3866,7 +4593,7 @@ var callWithSafeIterationClosing = function (iterator, fn, value, ENTRIES) {
 
 // `Array.from` method implementation
 // https://tc39.es/ecma262/#sec-array.from
-var arrayFrom = function from(arrayLike /* , mapfn = undefined, thisArg = undefined */) {
+var arrayFrom$1 = function from(arrayLike /* , mapfn = undefined, thisArg = undefined */) {
   var O = toObject(arrayLike);
   var C = typeof this == 'function' ? this : Array;
   var argumentsLength = arguments.length;
@@ -3886,7 +4613,7 @@ var arrayFrom = function from(arrayLike /* , mapfn = undefined, thisArg = undefi
       createProperty(result, index, value);
     }
   } else {
-    length = toLength(O.length);
+    length = toLength$1(O.length);
     result = new C(length);
     for (;length > index; index++) {
       value = mapping ? mapfn(O[index], index) : O[index];
@@ -3942,7 +4669,7 @@ var INCORRECT_ITERATION = !checkCorrectnessOfIteration(function (iterable) {
 // `Array.from` method
 // https://tc39.es/ecma262/#sec-array.from
 _export({ target: 'Array', stat: true, forced: INCORRECT_ITERATION }, {
-  from: arrayFrom
+  from: arrayFrom$1
 });
 
 var from_1 = path.Array.from;
@@ -3963,7 +4690,7 @@ var max$1 = Math.max;
 _export({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
   slice: function slice(start, end) {
     var O = toIndexedObject(this);
-    var length = toLength(O.length);
+    var length = toLength$1(O.length);
     var k = toAbsoluteIndex(start, length);
     var fin = toAbsoluteIndex(end === undefined ? length : end, length);
     // inline `ArraySpeciesCreate` for usage native `Array#slice` where it's possible
@@ -9827,7 +10554,7 @@ var symbol$4 = symbol$3;
 
 var iterableToArrayLimit = createCommonjsModule(function (module) {
 function _iterableToArrayLimit(arr, i) {
-  var _i = arr && (typeof symbol$4 !== "undefined" && getIteratorMethod$1(arr) || arr["@@iterator"]);
+  var _i = arr == null ? null : typeof symbol$4 !== "undefined" && getIteratorMethod$1(arr) || arr["@@iterator"];
 
   if (_i == null) return;
   var _arr = [];
@@ -10241,4 +10968,4 @@ var roleElements = _roleElementMap.default;
 exports.roleElements = roleElements;
 });
 
-export { ansiStyles as a, lib as l };
+export { computeAccessibleName as a, ansiStyles as b, computeTextAlternative as c, getRole as g, lib as l, queryIdRefs as q };

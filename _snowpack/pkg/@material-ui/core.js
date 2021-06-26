@@ -1,20 +1,18 @@
 import { _ as _extends } from '../common/extends-7477639a.js';
-import { d as defaultTheme, a as duration, f as fade, z as zIndex, l as lighten, b as darken } from '../common/defaultTheme-735caa34.js';
-import { s as styled$1, _ as _classCallCheck } from '../common/styled-58c47805.js';
-import { c as css, a as compose, b as borders, d as display, f as flexbox, g as grid, p as positions, e as palette, h as boxShadow, s as sizing, t as typography } from '../common/typography-28428f87.js';
-import { s as spacing, _ as _slicedToArray, a as _defineProperty, b as _toConsumableArray, c as _typeof } from '../common/spacing-01c00a5d.js';
-import { _ as _objectWithoutProperties, a as _createClass, g as getThemeProps, m as mergeClasses } from '../common/withStyles-947bbb20.js';
+import { d as defaultTheme, a as duration, f as fade, z as zIndex, l as lighten, b as darken } from '../common/defaultTheme-8cb61126.js';
+import { s as styled$1, _ as _classCallCheck } from '../common/styled-0c8b61d3.js';
+import { c as css, a as compose, b as borders, d as display, f as flexbox, g as grid, p as positions, e as palette, h as boxShadow, s as sizing, t as typography } from '../common/typography-bc376672.js';
+import { s as spacing, _ as _slicedToArray, a as _defineProperty, b as _toConsumableArray, c as _typeof } from '../common/spacing-b56718ac.js';
+import { _ as _objectWithoutProperties, a as _createClass, g as getThemeProps, m as mergeClasses } from '../common/withStyles-8825664b.js';
 import { r as react } from '../common/index-8732a38f.js';
 import '../common/index-c103191b.js';
 import { _ as __pika_web_default_export_for_treeshaking__ } from '../common/clsx.m-e1755476.js';
-import { w as withStyles, c as capitalize } from '../common/SvgIcon-c2983ebb.js';
+import { w as withStyles, c as capitalize } from '../common/SvgIcon-fdd7e06c.js';
 import { u as useForkRef, s as setRef } from '../common/TransitionGroupContext-653e5677.js';
-import { u as useControlled, o as ownerDocument, a as ownerWindow, d as debounce, i as isMuiElement, b as useId } from '../common/unstable_useId-1068c146.js';
-import { P as Paper, I as IconButton } from '../common/IconButton-7f761c36.js';
-export { I as IconButton, P as Paper } from '../common/IconButton-7f761c36.js';
+import { P as Paper, c as createSvgIcon, u as useControlled, I as IconButton, a as useEventCallback, B as ButtonBase } from '../common/IconButton-f8ae6a87.js';
+export { I as IconButton, P as Paper } from '../common/IconButton-f8ae6a87.js';
 import { r as reactDom } from '../common/index-49c5b02e.js';
-import { c as createSvgIcon, u as useEventCallback, B as ButtonBase } from '../common/ButtonBase-468116e5.js';
-import { u as useTheme, T as Transition, r as reflow, g as getTransitionProps, c as createChainedFunction, P as Portal, G as Grow } from '../common/Grow-6e24f0fe.js';
+import { u as useTheme, T as Transition, r as reflow, g as getTransitionProps, c as createChainedFunction, P as Portal, G as Grow } from '../common/Grow-150611e9.js';
 import { u as useTheme$1 } from '../common/useTheme-1a1ae7a2.js';
 import '../common/index-133c7bba.js';
 import '../common/hoist-non-react-statics.cjs-c1f940a6.js';
@@ -29,6 +27,69 @@ var styled = function styled(Component) {
     }, options));
   };
 };
+
+// Corresponds to 10 frames at 60 Hz.
+// A few bytes payload overhead when lodash/debounce is ~3 kB and debounce ~300 B.
+function debounce(func) {
+  var wait = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 166;
+  var timeout;
+
+  function debounced() {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    // eslint-disable-next-line consistent-this
+    var that = this;
+
+    var later = function later() {
+      func.apply(that, args);
+    };
+
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  }
+
+  debounced.clear = function () {
+    clearTimeout(timeout);
+  };
+
+  return debounced;
+}
+
+function isMuiElement(element, muiNames) {
+  return react.isValidElement(element) && muiNames.indexOf(element.type.muiName) !== -1;
+}
+
+function ownerDocument(node) {
+  return node && node.ownerDocument || document;
+}
+
+function ownerWindow(node) {
+  var doc = ownerDocument(node);
+  return doc.defaultView || window;
+}
+
+/**
+ * Private module reserved for @material-ui/x packages.
+ */
+
+function useId(idOverride) {
+  var _React$useState = react.useState(idOverride),
+      defaultId = _React$useState[0],
+      setDefaultId = _React$useState[1];
+
+  var id = idOverride || defaultId;
+  react.useEffect(function () {
+    if (defaultId == null) {
+      // Fallback to this default id when possible.
+      // Use the random value for client-side rendering only.
+      // We can't use it server-side.
+      setDefaultId("mui-".concat(Math.round(Math.random() * 1e5)));
+    }
+  }, [defaultId]);
+  return id;
+}
 
 var styles = function styles(theme) {
   var backgroundColorDefault = theme.palette.type === 'light' ? theme.palette.grey[100] : theme.palette.grey[900];

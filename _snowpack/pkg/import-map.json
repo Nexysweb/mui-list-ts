@@ -8,7 +8,6 @@
     "@material-ui/icons/Close": "./@material-ui/icons/Close.js",
     "@material-ui/icons/FilterList": "./@material-ui/icons/FilterList.js",
     "@material-ui/lab": "./@material-ui/lab.js",
-    "@material-ui/lab/Pagination": "./@material-ui/lab/Pagination.js",
     "@material-ui/styles/ThemeProvider": "./@material-ui/styles/ThemeProvider.js",
     "@nexys/core-list/dist/list/list-super-partials": "./@nexys/core-list/dist/list/list-super-partials.js",
     "@nexys/core-list/dist/list/utils/filter-utils": "./@nexys/core-list/dist/list/utils/filter-utils.js",

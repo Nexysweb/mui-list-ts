@@ -1,7 +1,7 @@
 import { c as createCommonjsModule } from './_commonjsHelpers-37fa8da4.js';
 import { i as interopRequireDefault, _ as _extends_1 } from './extends-8f2605c9.js';
 import { r as react } from './index-8732a38f.js';
-import { r as require$$2 } from './SvgIcon-c2983ebb.js';
+import { r as require$$2 } from './SvgIcon-fdd7e06c.js';
 
 var createSvgIcon_1 = createCommonjsModule(function (module, exports) {
 
