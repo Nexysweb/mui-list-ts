@@ -8,7 +8,7 @@
  */
 import React from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import PaginationMaterial from '@material-ui/lab/Pagination';
+import { Pagination as PaginationMaterial } from '@material-ui/lab';
 import { getPagination } from '@nexys/core-list/dist/list/utils/pagination-utils';
 import { PaginationProps } from '@nexys/core-list/dist/list/ui-type';
 
