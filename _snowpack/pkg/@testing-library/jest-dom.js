@@ -1,7 +1,7 @@
 import { c as createCommonjsModule, b as getDefaultExportFromNamespaceIfNotNamed, a as commonjsGlobal } from '../common/_commonjsHelpers-37fa8da4.js';
 import { i as interopRequireDefault, _ as _extends_1 } from '../common/extends-8f2605c9.js';
 import { g as global } from '../common/_polyfill-node:global-acbc543a.js';
-import { q as queryIdRefs, c as computeTextAlternative, a as computeAccessibleName, g as getRole, b as ansiStyles, l as lib } from '../common/index-b513d027.js';
+import { q as queryIdRefs, c as computeTextAlternative, a as computeAccessibleName, g as getRole, b as ansiStyles, l as lib } from '../common/index-51ed4db6.js';
 
 var minIndent = string => {
 	const match = string.match(/^[ \t]*(?=\S)/gm);
